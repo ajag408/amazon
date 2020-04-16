@@ -26,7 +26,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.1",
+    "react-scripts": "3.4.0",
     "react-web-gifted-chat": "^0.6.7",
     "redux": "^4.0.5"
   },
@@ -51,5 +51,4 @@
       "last 1 safari version"
     ]
   }
-
 }
