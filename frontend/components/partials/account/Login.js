@@ -77,7 +77,11 @@ class Login extends Component {
                         </ul>
                         <div className="ps-tab active" id="sign-in">
                             <div className="ps-form__content">
+                            <div id='statusMessage' style={{color: 'red', display:'none'}}>
+
+                            </div>
                                 <h5>Log In Your Account</h5>
+
                                 <div className="form-group">
                                     <Form.Item>
                                         {getFieldDecorator('email', {

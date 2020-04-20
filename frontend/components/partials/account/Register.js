@@ -37,7 +37,9 @@ class Register extends Component {
       }
     
       onChangeType(e) {
-        this.setState({ type: e.target.value });
+ 
+        this.setState({ type: e })
+        
       }
     
       handleSubmit = e => {
@@ -55,24 +57,23 @@ class Register extends Component {
                     type,
                   };
                   console.log(userObject);
-                  var status = document.getElementById('statusMessage');
-                  status.innerHTML = 'Successful signup';
-                  status.style.display = "block";
-                //   axios.post('http://localhost:4000/users/new-user', userObject)
-                //     .then((res) => {
-                //       console.log(res);
-                //       if (res.data.name === "MongoError") {
+                  axios.post('http://localhost:4000/users/new-user', userObject)
+                    .then((res) => {
+                      console.log(res);
+                      if (res.data.name === "MongoError") {
    
-                //         var status = document.getElementById('statusMessage');
-                //         status.innerHTML = 'Unsuccessful signup; make sure email is unique';
-                //         status.style.display = "block";
-                //       } else {
+                        var status = document.getElementById('statusMessage');
+                        status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                        status.style.display = "block";
+                      } else {
 
-                //         var status = document.getElementById('statusMessage');
-                //         status.innerHTML = 'Successful signup';
-                //         status.style.display = "block";
-                //       }
-                //     });
+                        var status = document.getElementById('statusMessage');
+                        console.log(status);
+                        status.innerHTML = 'Successful signup';
+                        status.style.color = "green";
+                        status.style.display = "block";
+                      }
+                    });
                   this.setState({
                     name: '', email: '', password: '', type: '',
                   });
@@ -110,7 +111,7 @@ class Register extends Component {
                         </ul>
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                                <div id='statusMessage' style='color: red, display:none'>
+                                <div id='statusMessage' style={{color: 'red', display:'none'}}>
 
                                 </div>
                                 <h5>Register An Account</h5>
@@ -185,11 +186,11 @@ class Register extends Component {
                                                 },
                                             ],
                                         })(
-                                        <Select placeholder = "Select Account Type">
-                                            <Option onChange={this.onChangeType} value="Customer">Customer</Option>
-                                            <Option onChange={this.onChangeType} value="Seller">Seller</Option>
+                                        <Select placeholder = "Select Account Type" onChange={this.onChangeType}>
+                                            <Option value="Customer">Customer</Option>
+                                            <Option value="Seller">Seller</Option>
                                             
-                                          </Select>
+                                        </Select>
         
                                         )}
                                     </Form.Item>
