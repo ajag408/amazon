@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-
+import axios from 'axios';
 
 import { Form, Input, Select} from 'antd';
 
@@ -55,16 +55,24 @@ class Register extends Component {
                     type,
                   };
                   console.log(userObject);
-                  // axios.post('http://localhost:4000/companies/create-company', companyObject)
-                  //   .then((res) => {
-                  //     console.log(res);
-                  //     if (res.data.errno) {
-                  //       alert('Unsuccessful signup; make sure email is unique');
-                  //     } else {
-                  //       alert('Successful signup');
-                  //       window.location.href = '/company-signin';
-                  //     }
-                  //   });
+                  var status = document.getElementById('statusMessage');
+                  status.innerHTML = 'Successful signup';
+                  status.style.display = "block";
+                //   axios.post('http://localhost:4000/users/new-user', userObject)
+                //     .then((res) => {
+                //       console.log(res);
+                //       if (res.data.name === "MongoError") {
+   
+                //         var status = document.getElementById('statusMessage');
+                //         status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                //         status.style.display = "block";
+                //       } else {
+
+                //         var status = document.getElementById('statusMessage');
+                //         status.innerHTML = 'Successful signup';
+                //         status.style.display = "block";
+                //       }
+                //     });
                   this.setState({
                     name: '', email: '', password: '', type: '',
                   });
@@ -102,6 +110,9 @@ class Register extends Component {
                         </ul>
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
+                                <div id='statusMessage' style='color: red, display:none'>
+
+                                </div>
                                 <h5>Register An Account</h5>
                                 <div className="form-group form-forgot">
                                     <Form.Item>
