@@ -30,8 +30,8 @@ const SearchResultsPage = () => {
                     <SearchResult />
                 </div>
             </div>
-            <Newletters layout="container" />
-            <FooterDefault />
+            {/* <Newletters layout="container" />
+            <FooterDefault /> */}
         </div>
     );
 };

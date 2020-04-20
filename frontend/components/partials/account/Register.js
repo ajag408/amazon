@@ -1,28 +1,84 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { login } from '../../../store/auth/action';
+
 
 import { Form, Input, Select} from 'antd';
 
 const {Option} = Select;
-import { connect } from 'react-redux';
+
 class Register extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
-    }
 
-    handleSubmit = e => {
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangeType = this.onChangeType.bind(this);
+
+        this.state = {
+            name: '',
+            email: '',
+            password: '',
+            type: '',
+
+        };
+    }
+    onChangeName(e) {
+        this.setState({ name: e.target.value });
+      }
+    
+      onChangeEmail(e) {
+        this.setState({ email: e.target.value });
+      }
+    
+      onChangePassword(e) {
+        this.setState({ password: e.target.value });
+      }
+    
+      onChangeType(e) {
+        this.setState({ type: e.target.value });
+      }
+    
+      handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.dispatch(login());
+   
+                const {
+                    name, email, password, type
+                  } = this.state;
+                  const userObject = {
+                    name,
+                    email,
+                    password,
+                    type,
+                  };
+                  console.log(userObject);
+                  // axios.post('http://localhost:4000/companies/create-company', companyObject)
+                  //   .then((res) => {
+                  //     console.log(res);
+                  //     if (res.data.errno) {
+                  //       alert('Unsuccessful signup; make sure email is unique');
+                  //     } else {
+                  //       alert('Successful signup');
+                  //       window.location.href = '/company-signin';
+                  //     }
+                  //   });
+                  this.setState({
+                    name: '', email: '', password: '', type: '',
+                  });
+                
                 Router.push('/account/login');
             } else {
             }
         });
-    };
+    }
+
+    // handleSubmit = e => {
+    //     e.preventDefault();
+
+    // };
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -61,6 +117,7 @@ class Register extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="Name"
+                                                onChange={this.onChangeName}
                                                 placeholder="Name"
                                             />
                                         )}
@@ -80,6 +137,7 @@ class Register extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="email"
+                                                onChange={this.onChangeEmail}
                                                 placeholder="Email address"
                                             />
                                         )}
@@ -99,6 +157,7 @@ class Register extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="password"
+                                                onChange={this.onChangePassword}
                                                 placeholder="Password..."
                                             />
                                         )}
@@ -111,13 +170,13 @@ class Register extends Component {
                                                 {
                                                     required: true,
                                                     message:
-                                                        'Account Type Required!',
+                                                    'Account Type Required!',
                                                 },
                                             ],
                                         })(
                                         <Select placeholder = "Select Account Type">
-                                            <Option value="Customer">Customer</Option>
-                                            <Option value="Seller">Seller</Option>
+                                            <Option onChange={this.onChangeType} value="Customer">Customer</Option>
+                                            <Option onChange={this.onChangeType} value="Seller">Seller</Option>
                                             
                                           </Select>
         
@@ -127,6 +186,7 @@ class Register extends Component {
                                 <div className="form-group submit">
                                     <button
                                         type="submit"
+                                        // onSubmit={this.onSubmit}
                                         className="ps-btn ps-btn--fullwidth">
                                         Register
                                     </button>
@@ -165,7 +225,5 @@ class Register extends Component {
     }
 }
 const WrapFormRegister = Form.create()(Register);
-const mapStateToProps = state => {
-    return state.auth;
-};
-export default connect(mapStateToProps)(WrapFormRegister);
+
+export default WrapFormRegister;
