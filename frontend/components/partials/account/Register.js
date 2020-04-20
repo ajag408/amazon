@@ -109,7 +109,9 @@ class Register extends Component {
                                         {getFieldDecorator('type', {
                                             rules: [
                                                 {
-                                                    required: true
+                                                    required: true,
+                                                    message:
+                                                        'Account Type Required!',
                                                 },
                                             ],
                                         })(
