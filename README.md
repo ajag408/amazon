@@ -13,4 +13,9 @@
 	3rd tab - cd into backend/kafka-backend folder, run npm install, and then run nodemon server.js
 	
  
- 3) We need to have local Kafka/Zookeeper running with following topics set-up: (add topics here)
+ 3) We need to have local Kafka/Zookeeper running with following topics set-up: 
+ 
+ 	- response-topic
+	- user
+	
+	(add more topics here)

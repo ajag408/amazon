@@ -7,7 +7,7 @@ function ConnectionProvider() {
    
     this.client = new kafka.KafkaClient(
       // {kafkaHost:'54.196.13.220:9092'}
-      // {kafkaHost:'localhost:9092'}
+      {kafkaHost:'localhost:9092'}
       );
     this.kafkaConsumerConnection = new kafka.Consumer(this.client, [{ topic: topic_name, partition: 0 }]);
     this.client.on('ready', () => { console.log('client ready!'); 
@@ -23,7 +23,7 @@ function ConnectionProvider() {
      
       this.client = new kafka.KafkaClient(
         // {kafkaHost:'54.196.13.220:9092'}
-        // {kafkaHost:'localhost:9092'}
+        {kafkaHost:'localhost:9092'}
         )
         ;
 

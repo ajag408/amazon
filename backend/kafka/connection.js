@@ -6,7 +6,7 @@ function ConnectionProvider() {
 
   
     this.client = new kafka.KafkaClient(
-      // {kafkaHost:'localhost:9092'}
+      {kafkaHost:'localhost:9092'}
       // {kafkaHost:'54.196.13.220:9092'}
    
       );
@@ -22,7 +22,7 @@ function ConnectionProvider() {
     if (!this.kafkaProducerConnection) {
       this.client = new kafka.KafkaClient(
         // {kafkaHost:'localhost:9092'}
-        {kafkaHost:'54.196.13.220:9092'}
+        // {kafkaHost:'54.196.13.220:9092'}
         );
     
       const { HighLevelProducer } = kafka;

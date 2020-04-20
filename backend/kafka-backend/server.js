@@ -1,31 +1,34 @@
 const mongoose = require('mongoose');
 const connection = require('./kafka/Connection');
 // topics files
-// const studentService = require('./services/student');
+const userService = require('./services/user');
 // const companyService = require('./services/company');
 // const jobService = require('./services/job');
 // const applicationService = require('./services/application');
 // const eventService = require('./services/event');
 const dbConfig = require('../database/db');
 
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  reconnectTries: Number.MAX_VALUE,
-  reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 500,
-  bufferMaxEntries: 0,
-};
 
-mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, options, (err) => {
-  if (err) {
-    console.log("new server");
-    console.log('MongoDB Connection Failed');
-  } else {
-    console.log('MongoDB Connected');
-  }
-});
+//MongoDB connection
+
+// const options = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   reconnectTries: Number.MAX_VALUE,
+//   reconnectInterval: 500, // Reconnect every 500ms
+//   poolSize: 500,
+//   bufferMaxEntries: 0,
+// };
+
+// mongoose.Promise = global.Promise;
+// mongoose.connect(dbConfig.db, options, (err) => {
+//   if (err) {
+//     console.log("new server");
+//     console.log('MongoDB Connection Failed');
+//   } else {
+//     console.log('MongoDB Connected');
+//   }
+// });
 
 
 function handleTopicRequest(topic_name, fname) {
@@ -62,7 +65,7 @@ function handleTopicRequest(topic_name, fname) {
 // Add your TOPICs here
 // first argument is topic name
 // second argument is a function that will handle this topic request
-// handleTopicRequest('student', studentService);
+handleTopicRequest('user', userService);
 // handleTopicRequest('company', companyService);
 // handleTopicRequest('job', jobService);
 // handleTopicRequest('application', applicationService);

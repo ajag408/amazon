@@ -6,8 +6,32 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const dbConfig = require('./database/db');
 
-// const mysql = require('mysql');
+const mysql = require('mysql');
 
+
+//MongoDB connection
+
+// const options = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   reconnectTries: Number.MAX_VALUE,
+//   reconnectInterval: 500, // Reconnect every 500ms
+//   poolSize: 500,
+//   bufferMaxEntries: 0,
+// };
+
+
+// mongoose.Promise = global.Promise;
+// mongoose.connect(dbConfig.db, options, (err) => {
+//   if (err) {
+//     console.log("old server");
+//     console.log('MongoDB Connection Failed');
+//   } else {
+//     console.log('MongoDB Connected');
+//   }
+// });
+
+//MySQL connection
 
 // const mc = mysql.createConnection({
 //   host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
@@ -21,32 +45,13 @@ const dbConfig = require('./database/db');
 
 
 // Routes - replace with your route file in route folder
-// const studentRoute = require('./routes/student.route');
+const userRoute = require('./routes/user.route');
 // const companyRoute = require('./routes/company.route');
 // const jobRoute = require('./routes/jobs.route');
 // const applicationRoute = require('./routes/application.route');
 // const eventRoute = require('./routes/event.route');
 
 
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  reconnectTries: Number.MAX_VALUE,
-  reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 500,
-  bufferMaxEntries: 0,
-};
-
-
-mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, options, (err) => {
-  if (err) {
-    console.log("old server");
-    console.log('MongoDB Connection Failed');
-  } else {
-    console.log('MongoDB Connected');
-  }
-});
 
 const app = express();
 app.use(bodyParser.json());
@@ -74,7 +79,7 @@ app.use(session({
 app.use(cors({ origin: dbConfig.frontendURL, credentials: true }));
 
 //replace with your routes
-// app.use('/students', studentRoute);
+app.use('/users', userRoute);
 // app.use('/companies', companyRoute);
 // app.use('/jobs', jobRoute);
 // app.use('/applications', applicationRoute);

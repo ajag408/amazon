@@ -1,39 +1,55 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { login } from '../../../store/auth/action';
+// import { login } from '../../../store/auth/action';
 
 import { Form, Input, notification } from 'antd';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.state = {
+            email: '',
+            password: ''
+        };
     }
 
-    static getDerivedStateFromProps(props) {
-        if (props.isLoggedIn === true) {
-            Router.push('/');
-        }
-        return false;
-    }
+    // static getDerivedStateFromProps(props) {
+    //     if (props.isLoggedIn === true) {
+    //         Router.push('/');
+    //     }
+    //     return false;
+    // }
 
-    handleFeatureWillUpdate(e) {
-        e.preventDefault();
-        notification.open({
-            message: 'Opp! Something went wrong.',
-            description: 'This feature has been updated later!',
-            duration: 500,
-        });
-    }
-
+    // handleFeatureWillUpdate(e) {
+    //     e.preventDefault();
+    //     notification.open({
+    //         message: 'Opp! Something went wrong.',
+    //         description: 'This feature has been updated later!',
+    //         duration: 500,
+    //     });
+    // }
+    onChangeEmail(e) {
+        this.setState({ email: e.target.value });
+      }
+    
+      onChangePassword(e) {
+        this.setState({ password: e.target.value });
+      }
     handleLoginSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.dispatch(login());
-                Router.push('/');
+                const { email, password } = this.state;
+                const userObject = {
+                  email,
+                  password,
+                };
+                console.log(userObject)
+                // Router.push('/');
             } else {
             }
         });
@@ -61,22 +77,27 @@ class Login extends Component {
                         </ul>
                         <div className="ps-tab active" id="sign-in">
                             <div className="ps-form__content">
+                            <div id='statusMessage' style={{color: 'red', display:'none'}}>
+
+                            </div>
                                 <h5>Log In Your Account</h5>
+
                                 <div className="form-group">
                                     <Form.Item>
-                                        {getFieldDecorator('username', {
+                                        {getFieldDecorator('email', {
                                             rules: [
                                                 {
                                                     required: true,
                                                     message:
-                                                        'Please input your username!',
+                                                        'Please input your email!',
                                                 },
                                             ],
                                         })(
                                             <Input
                                                 className="form-control"
-                                                type="text"
-                                                placeholder="Username or email address"
+                                                type="email"
+                                                onChange={this.onChangeEmail}
+                                                placeholder="Email address"
                                             />
                                         )}
                                     </Form.Item>
@@ -95,24 +116,13 @@ class Login extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="password"
+                                                onChange={this.onChangePassword}
                                                 placeholder="Password..."
                                             />
                                         )}
                                     </Form.Item>
                                 </div>
-                                <div className="form-group">
-                                    <div className="ps-checkbox">
-                                        <input
-                                            className="form-control"
-                                            type="checkbox"
-                                            id="remember-me"
-                                            name="remember-me"
-                                        />
-                                        <label htmlFor="remember-me">
-                                            Rememeber me
-                                        </label>
-                                    </div>
-                                </div>
+
                                 <div className="form-group submit">
                                     <button
                                         type="submit"
@@ -122,7 +132,7 @@ class Login extends Component {
                                 </div>
                             </div>
                             <div className="ps-form__footer">
-                                <p>Connect with:</p>
+                                {/* <p>Connect with:</p>
                                 <ul className="ps-list--social">
                                     <li>
                                         <a
@@ -156,7 +166,7 @@ class Login extends Component {
                                             <i className="fa fa-instagram"></i>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </div>
                     </Form>
@@ -166,7 +176,7 @@ class Login extends Component {
     }
 }
 const WrapFormLogin = Form.create()(Login);
-const mapStateToProps = state => {
-    return state.auth;
-};
-export default connect(mapStateToProps)(WrapFormLogin);
+// const mapStateToProps = state => {
+//     return state.auth;
+// };
+export default WrapFormLogin;
