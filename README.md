@@ -6,7 +6,7 @@
 
 2) Open a terminal with 3 tabs
 
-	1st tab - cd into frontend folder, run npm install, and then run npm start
+	1st tab - cd into frontend folder, run npm install, and then run: npm run dev
 	
 	2nd tab - cd into backend folder, run npm install, and then run nodemon server.js
 	
