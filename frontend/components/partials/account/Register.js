@@ -3,7 +3,9 @@ import Link from 'next/link';
 import Router from 'next/router';
 import { login } from '../../../store/auth/action';
 
-import { Form, Input } from 'antd';
+import { Form, Input, Select} from 'antd';
+
+const {Option} = Select;
 import { connect } from 'react-redux';
 class Register extends Component {
     constructor(props) {
@@ -99,6 +101,24 @@ class Register extends Component {
                                                 type="password"
                                                 placeholder="Password..."
                                             />
+                                        )}
+                                    </Form.Item>
+                                </div>
+                                <div className="form-group form-forgot">
+                                    <Form.Item>
+                                        {getFieldDecorator('type', {
+                                            rules: [
+                                                {
+                                                    required: true
+                                                },
+                                            ],
+                                        })(
+                                        <Select placeholder = "Select Account Type">
+                                            <Option value="Customer">Customer</Option>
+                                            <Option value="Seller">Seller</Option>
+                                            
+                                          </Select>
+        
                                         )}
                                     </Form.Item>
                                 </div>
