@@ -42,6 +42,7 @@ mongoose.connect(process.env.MONGO_DB_URL, mongoDbOptions, (err, res) => {
   } else {
       console.log(`MongoDB Connected`);
   }
+  return;
 });
 
 fs
@@ -61,8 +62,6 @@ fs
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
-    console.log('associating');
-    console.log(db[modelName]);
     db[modelName].associate(db);
   }
 });

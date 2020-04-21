@@ -6,7 +6,7 @@ const userService = require('./services/user');
 // const jobService = require('./services/job');
 // const applicationService = require('./services/application');
 // const eventService = require('./services/event');
-const dbConfig = require('../database/db');
+require('./../models/index');
 
 
 //MongoDB connection
