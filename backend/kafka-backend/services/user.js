@@ -1,12 +1,12 @@
 
 
-const mongoose = require('mongoose');
+let mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
 const { secret } = require('../../database/db');
-// const Student = require('../../models/Student');
+let User = require('./../../models/User');
 
 // const studentSchema = mongoose.model('Student', Student);
 
@@ -20,30 +20,6 @@ const BCRYPT_SALT_ROUNDS = 12;
 // function createStudent(msg, callback){
 function handle_request(msg, callback) {
   if (msg.path === 'new-user') {
-    bcrypt.hash(msg.password, BCRYPT_SALT_ROUNDS)
-      .then((hashedPass) => {
-        msg.password = hashedPass;
-
-        //Mongoose query
-        // studentSchema.create(msg, (err, data) => {
-        //   console.log(msg);
-        //   console.log('hello insdie mongoose');
-        //   if (err) {
-        //     console.log('hello form err');
-        //     callback(null, err);
-        //   } else {
-        //     console.log('hello');
-        //     console.log(data);
-        //     callback(null, data);
-        //   }
-        // });
-        callback(null, 'ok');
-      })
-      .catch((error) => {
-        console.log('Error saving user: ');
-        console.log(error);
-        // next();
-      });
   }
 //    else if (msg.path === 'login') {
 //     studentSchema.findOne({ email: msg.email }, (error, user) => {

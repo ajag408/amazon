@@ -1,12 +1,11 @@
-const mongoose = require('mongoose');
 const connection = require('./kafka/Connection');
 // topics files
+require('./../models/index');
 const userService = require('./services/user');
 // const companyService = require('./services/company');
 // const jobService = require('./services/job');
 // const applicationService = require('./services/application');
 // const eventService = require('./services/event');
-require('./../models/index');
 
 
 //MongoDB connection

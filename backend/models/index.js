@@ -59,7 +59,6 @@ fs
       db[model.modelName] = model;
     }
   });
-
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
