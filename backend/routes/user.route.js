@@ -19,6 +19,9 @@ router.route('/new-user').post((req, res) => {
       });
     } else {
       console.log('Inside else');
+      if(results.errors){
+        results.name = "MongoError";
+      }
       res.json(results);
     }
   });

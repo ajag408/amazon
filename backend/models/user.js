@@ -2,8 +2,10 @@
 const crypto = require('crypto')
 var mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator')
-let Customer = mongoose.model('Customer');
-let Seller = mongoose.model('Seller');
+// let Customer = mongoose.model('Customer');
+// let Seller = mongoose.model('Seller');
+let Customer = require('./customer');
+let Seller = require('./seller');
 
 const UserSchema = new mongoose.Schema({
   emailId: {
@@ -63,4 +65,5 @@ UserSchema.pre('save',function(next){
   }
   next();
 });
-module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
+
+module.exports = UserSchema

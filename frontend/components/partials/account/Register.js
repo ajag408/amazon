@@ -20,7 +20,7 @@ class Register extends Component {
             name: '',
             email: '',
             password: '',
-            type: '',
+            role: '',
 
         };
     }
@@ -38,7 +38,7 @@ class Register extends Component {
     
       onChangeType(e) {
  
-        this.setState({ type: e })
+        this.setState({ role: e })
         
       }
     
@@ -48,37 +48,44 @@ class Register extends Component {
             if (!err) {
    
                 const {
-                    name, email, password, type
+                    name, email, password, role
                   } = this.state;
                   const userObject = {
                     name,
                     email,
                     password,
-                    type,
+                    role,
                   };
                   console.log(userObject);
                   axios.post('http://localhost:4000/users/new-user', userObject)
                     .then((res) => {
                       console.log(res);
                       if (res.data.name === "MongoError") {
-   
-                        var status = document.getElementById('statusMessage');
-                        status.innerHTML = 'Unsuccessful signup; make sure email is unique';
-                        status.style.display = "block";
+                        this.props.form.setFieldsValue({
+                            name: '', email: '', password: '', type: undefined}
+                          , () => {
+                            var status = document.getElementById('statusMessage');
+                            status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                            status.style.display = "block";
+                          });
+
+
                       } else {
 
-                        var status = document.getElementById('statusMessage');
-                        console.log(status);
-                        status.innerHTML = 'Successful signup';
-                        status.style.color = "green";
-                        status.style.display = "block";
+
+                        Router.push('/account/login')
+                        .then(() => {
+                            var status = document.getElementById('statusMessage');
+                            console.log(status);
+                            status.innerHTML = 'Successful signup';
+                            status.style.color = "green";
+                            status.style.display = "block";
+                        })
                       }
                     });
-                  this.setState({
-                    name: '', email: '', password: '', type: '',
-                  });
-                
-                Router.push('/account/login');
+
+               
+               
             } else {
             }
         });
@@ -129,6 +136,7 @@ class Register extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="Name"
+                                                
                                                 onChange={this.onChangeName}
                                                 placeholder="Name"
                                             />
@@ -142,13 +150,14 @@ class Register extends Component {
                                                 {
                                                     required: true,
                                                     message:
-                                                        'Please input your username!',
+                                                        'Please input your email!',
                                                 },
                                             ],
                                         })(
                                             <Input
                                                 className="form-control"
                                                 type="email"
+                                                
                                                 onChange={this.onChangeEmail}
                                                 placeholder="Email address"
                                             />
@@ -169,6 +178,7 @@ class Register extends Component {
                                             <Input
                                                 className="form-control"
                                                 type="password"
+                                               
                                                 onChange={this.onChangePassword}
                                                 placeholder="Password..."
                                             />
