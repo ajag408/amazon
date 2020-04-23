@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import axios from 'axios';
+import {backendurl} from '../../../backendurl';
 
 import { Form, Input, Select} from 'antd';
 
@@ -56,8 +57,8 @@ class Register extends Component {
                     password,
                     role,
                   };
-                  console.log(userObject);
-                  axios.post('http://localhost:4000/users/new-user', userObject)
+                  console.log(backendurl);
+                  axios.post(backendurl+'/users/new-user', userObject)
                     .then((res) => {
                       console.log(res);
                       if (res.data.name === "MongoError") {

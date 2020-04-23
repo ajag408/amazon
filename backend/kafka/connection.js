@@ -6,7 +6,7 @@ function ConnectionProvider() {
 
   
     this.client = new kafka.KafkaClient(
-      {kafkaHost:'localhost:9092'}
+      {kafkaHost:process.env.KAFKA_URL}
       // {kafkaHost:'54.196.13.220:9092'}
    
       );
@@ -21,7 +21,7 @@ function ConnectionProvider() {
   this.getProducer = function () {
     if (!this.kafkaProducerConnection) {
       this.client = new kafka.KafkaClient(
-        // {kafkaHost:'localhost:9092'}
+         {kafkaHost: process.env.KAFKA_URL}
         // {kafkaHost:'54.196.13.220:9092'}
         );
     

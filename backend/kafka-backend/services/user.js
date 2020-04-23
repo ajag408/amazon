@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 
 const { secret } = require('../../database/db');
 const User = require('../../models/user');
-const UserSchema = mongoose.model('User', User);
 // let User = require('./../../models/user');
 
 // const CustomerSchema = require('../../models/customer');
@@ -22,12 +21,12 @@ const UserSchema = mongoose.model('User', User);
 function handle_request(msg, callback) {
   if (msg.path === 'new-user') {
     console.log("in service");
-    console.log(UserSchema);
+    console.log(User);
     msg.emailId = msg.email;
-    UserSchema.create(msg, (err, data) => {
+   
+    User.create(msg, (err, data) => {
         console.log("in mongoose callback")
-        if (err) {
-          
+        if (err) {     
           callback(null, err);
         } else {
           // if(msg.role === "Customer"){

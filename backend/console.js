@@ -29,8 +29,7 @@ let repl = require('repl');
 const mongoose = require('mongoose');
 let models = require('./models');
 
-let UserSchema = require('./models/user');
-User = mongoose.model('User', UserSchema);
+User = require('../backend/models/user');
 global['User'] = User;
 Object.keys(models).forEach((modelName) => {
   // console.log(models);
