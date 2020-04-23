@@ -1,0 +1,5 @@
+node_modules
+.DS_Store
+.env
+kafka-backend/.env
+kafka-backend/.DS_Store
