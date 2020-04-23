@@ -20,7 +20,7 @@
 	
 	(add more topics here)
 
- 4) To Connect to Database, add .env variable in backend folder and popluate the below variables
+ 4) To Connect to Database, add .env variable in backend folder and kafka-backend and popluate the below variables
 	MYSQL_DB_USERNAME
 	MYSQL_DB_PASSWORD
 	MYSQL_DB_NAME
