@@ -3,6 +3,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 // topics files
 
 // let models = require('../models');
