@@ -32,3 +32,6 @@
 	- FRONTEND_URL
 
 Note: For kafka_2.12-2.*.* Go in to config/zookeeper.properties and change the log dir to your local pwd. then config/server.properties and do the same thing. also create separate log folders for both
+
+If you are getting HTTP_INVALID_HEADER_ERROR, run the below command in terminal and use this chrome
+open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
