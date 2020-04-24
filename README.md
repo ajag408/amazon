@@ -30,3 +30,5 @@
 	- MONGO_DB_URL
 	- KAFKA_URL
 	- FRONTEND_URL
+
+Note: For kafka_2.12-2.*.* Go in to config/zookeeper.properties and change the log dir to your local pwd. then config/server.properties and do the same thing. also create separate log folders for both
