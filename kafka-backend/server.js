@@ -14,6 +14,7 @@ const userService = require('./services/user');
 // const applicationService = require('./services/application');
 // const eventService = require('./services/event');
 // require('./../models/index');
+console.log('Environment Variables: ', process.env)
 
 const basename = path.basename(__filename);
 const db = {};
@@ -88,10 +89,10 @@ function handleTopicRequest(topic_name, fname) {
 
   consumer.on('message', (message) => {
     console.log(`message received for ${topic_name} `, fname);
-    console.log(JSON.stringify(message.value));
+    //console.log(JSON.stringify(message.value));
     const data = JSON.parse(message.value);
     console.log(fname);
-    console.log(data);
+    console.log("Data is: ",data);
     fname.handle_request(data.data, (err, res) => {
       console.log(`after handle${res}`);
       const payloads = [

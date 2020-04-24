@@ -5,9 +5,11 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 const { secret } = require('../../database/db');
-const User = require('../../models/user');
+const User = require('../models/user');
 // let User = require('./../../models/user');
+//const UserSchema = require('../../models/user');
 
+//const User = mongoose.model('User', UserSchema)
 // const CustomerSchema = require('../../models/customer');
 
 
@@ -20,20 +22,29 @@ const User = require('../../models/user');
 // function createStudent(msg, callback){
 function handle_request(msg, callback) {
   if (msg.path === 'new-user') {
-    console.log("in service");
-    console.log(User);
+    console.log("in service", msg);
+    console.log(" Model " ,User);
     msg.emailId = msg.email;
    
+
+    User.find().exec((err, data) =>{
+      console.log("FInd ", data);
+      if(err){
+        console.log("Error ", err);
+      }
+    })
+
     User.create(msg, (err, data) => {
         console.log("in mongoose callback")
-        if (err) {     
+        if (err) { 
+          console.log("Error Occurred");    
           callback(null, err);
         } else {
           // if(msg.role === "Customer"){
           //   CustomerSchema
           // }
           console.log('hello');
-          console.log(data);
+          console.log("KafkaBackend  => create User ", data);
           callback(null, data);
         }
       });

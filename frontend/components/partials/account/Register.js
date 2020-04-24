@@ -57,7 +57,7 @@ class Register extends Component {
                     password,
                     role,
                   };
-                  console.log(backendurl);
+                  console.log(backendurl +  " "+ userObject);
                   axios.post(backendurl+'/users/new-user', userObject)
                     .then((res) => {
                       console.log(res);
