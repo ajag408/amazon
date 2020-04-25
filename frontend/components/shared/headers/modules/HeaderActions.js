@@ -8,8 +8,10 @@ import AccountQuickLinks from './AccountQuickLinks';
 class HeaderActions extends Component {
     constructor(props) {
         super(props);
-    }
 
+    }
+      
+      
     render() {
         const { compare, wishlist, auth } = this.props;
         return (
@@ -35,11 +37,7 @@ class HeaderActions extends Component {
                     </a>
                 </Link>
                 <MiniCart />
-                {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
-                    <AccountQuickLinks isLoggedIn={true} />
-                ) : (
-                    <AccountQuickLinks isLoggedIn={false} />
-                )}
+
             </div>
         );
     }

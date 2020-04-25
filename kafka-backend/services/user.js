@@ -64,36 +64,34 @@ function handle_request(msg, callback) {
         }
       });
   }
-//    else if (msg.path === 'login') {
-//     studentSchema.findOne({ email: msg.email }, (error, user) => {
-//       if (error) {
-//         console.log(error);
-//         callback(null, error);
-//       } else if (user == null) {
-//         callback(null, 'No user with that email');
-//       } else {
-//         bcrypt.compare(msg.password, user.password)
-//           .then((samePassword) => {
-//             if (!samePassword) {
-//               callback(null, 'Password invalid');
-//             } else {
-//               const payload = { _id: user._id };
-//               const token = jwt.sign(payload, secret, {
-//                 expiresIn: 1008000,
-//               });
+   else if (msg.path === 'login') {
 
-//               const data = {
-//                 // user: user,
-//                 // isCompany: session.isCompany,
-//                 token: `JWT ${token}`,
-//               };
-//               callback(null, data);
-//             }
-//           });
-//         // callback(null,user);
-//       }
-//     });
-//   } 
+    User.findOne({ emailId: msg.email }, (error, user) => {
+      console.log(user);
+      if (error) {
+        console.log(error);
+        callback(null, error);
+      } else if (user == null) {
+        callback(null, 'No user with that email');
+      } else {
+            console.log(user.is_password_valid(msg.password))
+            if (!user.is_password_valid(msg.password)) {
+              callback(null, 'Password invalid');
+            } else {
+              const payload = { _id: user._id, role:user.role };
+              const token = jwt.sign(payload, secret, {
+                expiresIn: 1008000,
+              });
+
+              const data = {
+
+                token: `JWT ${token}`,
+              };
+              callback(null, data);
+            }
+      }
+    });
+  } 
 }
 // }
 
