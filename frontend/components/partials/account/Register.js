@@ -61,17 +61,21 @@ class Register extends Component {
                   axios.post(backendurl+'/users/new-user', userObject)
                     .then((res) => {
                       console.log(res);
-                      if (res.data.name === "MongoError") {
+                      if (res.data.error) {
                         this.props.form.setFieldsValue({
                             name: '', email: '', password: '', type: undefined}
                           , () => {
                             var status = document.getElementById('statusMessage');
-                            status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                            if(res.data.type === "User"){
+                                status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                            } else if(res.data.type === "Seller"){
+                                status.innerHTML = 'Unsuccessful signup; Seller name must be unique';
+                            }
                             status.style.display = "block";
                           });
 
 
-                      } else {
+                     }  else {
 
 
                         Router.push('/account/login')

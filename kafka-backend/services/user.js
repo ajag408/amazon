@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 
 const { secret } = require('../../backend/database/db');
 const User = require('../models/user');
-// let User = require('./../../models/user');
+const Customer = require('../models/customer');
+const Seller = require('../models/seller');
 //const UserSchema = require('../../models/user');
 
 //const User = mongoose.model('User', UserSchema)
@@ -22,38 +23,46 @@ const User = require('../models/user');
 // function createStudent(msg, callback){
 function handle_request(msg, callback) {
   if (msg.path === 'new-user') {
-    console.log("in service", msg);
-    console.log(" Model " ,User);
+    // console.log("in service", msg);
+    // console.log(" Model " ,User);
     msg.emailId = msg.email;
   
 
     User.create(msg, (err, data) => {
         console.log("in mongoose callback")
         if (err) { 
-          console.log("Error Occurred");    
+          err.type = "User";    
           callback(null, err);
         } else {
-          // if(msg.role === "Customer"){
-          //   CustomerSchema
-          // }
-          console.log('hello');
-          console.log("KafkaBackend  => create User ", data);
-          callback(null, data);
+          msg.user = data._id;
+          console.log("message: ", msg);
+          if(msg.role === "Customer"){
+            Customer.create(msg, (err,data) => {
+              if (err) { 
+                err.type = "Customer"   
+                console.log(err); 
+                callback(null, err);
+              } else {
+                console.log("KafkaBackend  => create Customer ", data);
+                callback(null, data);
+              }
+            });
+          } else if (msg.role === "Seller"){
+            Seller.create(msg, (err,data) => {
+              if (err) { 
+                err.type = "Seller";    
+                callback(null, err);
+              } else {
+                console.log("KafkaBackend  => create Seller ", data);
+                callback(null, data);
+              }
+            });
+          } else {
+            console.log("User is Admin");    
+            callback(null, data);
+          }
         }
       });
-    // bcrypt.hash(msg.password, BCRYPT_SALT_ROUNDS)
-    //   .then((hashedPass) => {
-    //     msg.password = hashedPass;
-
-    //     Mongoose query
-
-    //     // callback(null, 'ok');
-    //   })
-    //   .catch((error) => {
-    //     console.log('Error saving user: ');
-    //     console.log(error);
-    //     // next();
-    //   });
   }
 //    else if (msg.path === 'login') {
 //     studentSchema.findOne({ email: msg.email }, (error, user) => {

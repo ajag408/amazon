@@ -10,6 +10,7 @@ const SellerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: [true,'Seller name has to be unique'],
   },
   profilePicture: {
     type: String

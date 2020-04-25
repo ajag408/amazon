@@ -19,8 +19,9 @@ router.route('/new-user').post((req, res) => {
       });
     } else {
       console.log('Inside else');
-      if(results.errors){
-        results.name = "MongoError";
+
+      if(results.type == 'User' || results.type == 'Customer' || results.type == 'Seller'){
+        results.error = true;
       }
       res.json(results);
     }
