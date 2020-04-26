@@ -17,6 +17,7 @@
  
  	- response-topic
 	- user
+	- admin
 	
 	(add more topics here)
 
