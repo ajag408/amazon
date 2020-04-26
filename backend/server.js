@@ -10,6 +10,7 @@ const mysql = require('mysql');
 
 // Routes - replace with your route file in route folder
 const userRoute = require('./routes/user.route');
+const admin = require('./routes/admin');
 // const companyRoute = require('./routes/company.route');
 // const jobRoute = require('./routes/jobs.route');
 // const applicationRoute = require('./routes/application.route');
@@ -42,6 +43,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', cred
 
 //replace with your routes
 app.use('/users', userRoute);
+app.use('/admin', admin);
 // app.use('/companies', companyRoute);
 // app.use('/jobs', jobRoute);
 // app.use('/applications', applicationRoute);
