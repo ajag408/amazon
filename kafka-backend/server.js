@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 // let models = require('../models');
 
 const userService = require('./services/user');
+const admin = require('./services/admin');
 // const companyService = require('./services/company');
 // const jobService = require('./services/job');
 // const applicationService = require('./services/application');
@@ -115,6 +116,7 @@ function handleTopicRequest(topic_name, fname) {
 // first argument is topic name
 // second argument is a function that will handle this topic request
 handleTopicRequest('user', userService);
+handleTopicRequest('admin', admin);
 // handleTopicRequest('company', companyService);
 // handleTopicRequest('job', jobService);
 // handleTopicRequest('application', applicationService);
