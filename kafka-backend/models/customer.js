@@ -71,33 +71,60 @@ const ShoppingCartItemSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  totalPrice: {
-    type: Number,
-    required: true
-  },
+  // totalPrice: {
+  //   type: Number,
+  //   required: true
+  // },
   isGift: {
     type: Number,
     required: true,
     default: false
   },
   giftMessage: {
-    type: Number,
+    type: String,
+    default: ''
   },
   isSavedForLater: {
     type: Boolean,
     required: true,
     default: false
   },
+},{
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
+});
+ShoppingCartItemSchema.virtual('totalPrice').get(function(){
+  return (this.individualPrice * this.quantity) + (this.isGift ? 2 : 0 );
 });
 
 const ShoppingCartSchema = new mongoose.Schema({
   cartItems: {
-    type: [ShoppingCartItemSchema]
+    type: [ShoppingCartItemSchema],
+    default: [],
   },
-  cartTotal: {
-    type: Number,
-    required: true
+  // cartTotal: {
+  //   type: Number,
+  //   required: true,
+  //   default: 0
+  // }
+},{
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
   }
+});
+
+ShoppingCartSchema.virtual('cartTotal').get(function(){
+  const cartTotal = this.cartItems.reduce((sum,cartItem) =>{
+    return cartItem.isSavedForLater ? sum : sum + cartItem.totalPrice
+  },0)
+  return cartTotal.toFixed(2);
 });
 
 const CustomerSchema = new mongoose.Schema({
@@ -120,11 +147,15 @@ const CustomerSchema = new mongoose.Schema({
     type: [SavedPaymentOptionSchema]
   },
   shoppingCart: {
-    type: ShoppingCartSchema
+    type: ShoppingCartSchema,
+    default: {
+      cartItems: [],
+      cartTotal: 0
+    }
   },
 },
 {
-  timestamps: true
+  timestamps: true,
 });
 
-module.exports = mongoose.model.Customer || mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.models.Customer || mongoose.model('Customer', CustomerSchema);

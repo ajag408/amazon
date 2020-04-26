@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "debug": "nodemon --inspect server.js",
     "test": "mocha",
     "console": "node -r esm --experimental-repl-await console"
   },

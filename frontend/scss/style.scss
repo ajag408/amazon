@@ -78,3 +78,15 @@
 
 /*5. HELPERS */
 @import 'elements/helpers';
+
+.cart-total-final td{
+  background-color: #f2f2f2;
+  text-transform: uppercase;
+  color: $color-heading;
+  text-align: center;
+  font-weight: 600;
+
+  &:nth-child(2) {
+      text-align: left;
+  }
+}

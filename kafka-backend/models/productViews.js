@@ -17,4 +17,4 @@ const ProductViewsSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model.ProductViews || mongoose.model('ProductViews', ProductViewsSchema);
+module.exports = mongoose.models.ProductViews || mongoose.model('ProductViews', ProductViewsSchema);

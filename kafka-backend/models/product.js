@@ -35,7 +35,8 @@ const ProductSchema = new mongoose.Schema({
     required: true
   },
   images: {
-    type: [ImageSchema]
+    type: [ImageSchema],
+    default: []
   },
   ratingAndReview: {
     type: mongoose.SchemaTypes.ObjectId,
@@ -51,4 +52,4 @@ const ProductSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model.Product || mongoose.model('Product', ProductSchema);
+module.exports = mongoose.models.Product || mongoose.model('Product', ProductSchema);
