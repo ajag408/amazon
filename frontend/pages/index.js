@@ -7,15 +7,10 @@ import HomeAdsColumns from '../components/partials/homepage/home-default/HomeAds
 import ConumerElectronics from '../components/partials/homepage/home-default/ConumerElectronics';
 import Clothings from '../components/partials/homepage/home-default/Clothings';
 import GardenAndKitchen from '../components/partials/homepage/home-default/GardenAndKitchen';
-import HomeAds from '../components/partials/homepage/home-default/HomeAds';
-import DownLoadApp from '../components/partials/commons/DownLoadApp';
 import NewArrivals from '../components/partials/homepage/home-default/NewArrivals';
-import Newletters from '../components/partials/commons/Newletters';
 import HeaderMobile from '../components/shared/headers/HeaderMobile';
 import NavigationList from '../components/shared/navigation/NavigationList';
-import HomeDefaultDealOfDay from '../components/partials/homepage/home-default/HomeDefaultDealOfDay';
 import HomeDefaultTopCategories from '../components/partials/homepage/home-default/HomeDefaultTopCategories';
-import SubscribePopup from '../components/shared/SubscribePopup';
 import '../scss/home-default.scss';
 
 const Index = () => {
@@ -30,22 +25,13 @@ const Index = () => {
             <HeaderDefault />
             <HeaderMobile />
             <NavigationList />
-            <SubscribePopup active={subscribe} />
             <main id="homepage-1">
-                <HomeBanner />
-                <SiteFeatures />
-                <HomeDefaultDealOfDay />
-                <HomeAdsColumns />
                 <HomeDefaultTopCategories />
                 <ConumerElectronics />
                 <Clothings />
                 <GardenAndKitchen />
-                <HomeAds />
-                <DownLoadApp />
                 <NewArrivals />
-                <Newletters />
             </main>
-            <FooterFullwidth />
         </div>
     );
 };

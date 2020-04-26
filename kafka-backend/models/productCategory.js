@@ -11,4 +11,4 @@ const ProductCategorySchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model.ProductCategory || mongoose.model('ProductCategory', ProductCategorySchema);
+module.exports = mongoose.models.ProductCategory || mongoose.model('ProductCategory', ProductCategorySchema);

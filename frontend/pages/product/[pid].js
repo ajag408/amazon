@@ -55,21 +55,12 @@ class ProductDefaultPage extends React.Component {
                 <div className="ps-page--product">
                     <div className="ps-container">
                         <div className="ps-page__container">
-                            <div className="ps-page__left">
-                                <ProductDetailFullwidth
-                                    product={singleProduct}
-                                />
-                            </div>
-                            <div className="ps-page__right">
-                                <ProductWidgets />
-                            </div>
+                            <ProductDetailFullwidth
+                                product={singleProduct}
+                            />
                         </div>
-                        <CustomerBought layout="fullwidth" />
-                        <RelatedProductFullwidth />
                     </div>
                 </div>
-                <Newletters />
-                <FooterDefault />
             </div>
         );
     }

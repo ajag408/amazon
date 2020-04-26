@@ -22,4 +22,4 @@ const SellerSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model.Seller || mongoose.model('Seller', SellerSchema);
+module.exports = mongoose.models.Seller || mongoose.model('Seller', SellerSchema);

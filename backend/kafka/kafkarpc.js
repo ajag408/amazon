@@ -36,8 +36,6 @@ KafkaRPC.prototype.makeRequest = function (topic_name, content, callback) {
 
   // put the entry in the hash so we can match the response later
   self.requests[correlationId] = entry;
-  console.log('requests');
-  console.log(this.requests);
   // make sure we have a response topic
   self.setupResponseQueue(self.producer, topic_name, () => {
     console.log('in response');

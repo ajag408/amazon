@@ -30,6 +30,7 @@ try{
 }
 
 const mongoDbOptions = {
+  useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
   poolSize: 500,
@@ -67,5 +68,6 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.mongoose = mongoose;
 
 module.exports = db;
