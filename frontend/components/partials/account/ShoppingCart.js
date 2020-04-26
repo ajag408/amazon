@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Axios from 'axios';
-import {
-    getShoppingCart,
-    addItem,
-    removeItem,
-    // moveItemToWishList
-} from '../../../store/cart/action';
 import {backendurl} from './../../../backendurl';
 
 import Link from 'next/link';
@@ -230,8 +223,5 @@ class ShoppingCart extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return state.cart;
-};
 
-export default connect(mapStateToProps,{getShoppingCart, addItem, removeItem})(ShoppingCart);
+export default ShoppingCart;
