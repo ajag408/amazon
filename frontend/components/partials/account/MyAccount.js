@@ -1,11 +1,31 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 
 class MyAccount extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            storage: ''
+        };
     }
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.token){
+             //   || storage.role != "Customer"
+                Router.push('/account/login')
+            }
+        });
+    }
+    handleLogout = e => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+        Router.push('/account/login')
+    };
 
     render() {
         return (
@@ -46,7 +66,7 @@ class MyAccount extends Component {
                                             </li>
                                             <li>
                                                 <Link href="/account/my-account">
-                                                    <a>Logout</a>
+                                                    <a onClick={this.handleLogout.bind(this)}>Logout</a>
                                                 </Link>
                                             </li>
                                         </ul>

@@ -5,6 +5,7 @@ const path = require('path');
 require('./models');
 
 const userService = require('./services/user');
+const admin = require('./services/admin');
 const cartService = require('./services/cart');
 // const companyService = require('./services/company');
 // const jobService = require('./services/job');
@@ -46,7 +47,11 @@ function handleTopicRequest(topic_name, fname) {
 // first argument is topic name
 // second argument is a function that will handle this topic request
 handleTopicRequest('user', userService);
+<<<<<<< HEAD
 handleTopicRequest('cart', cartService);
+=======
+handleTopicRequest('admin', admin);
+>>>>>>> 90b9a3c972d3a25ab6dd3407b2b954b2fe387197
 // handleTopicRequest('company', companyService);
 // handleTopicRequest('job', jobService);
 // handleTopicRequest('application', applicationService);

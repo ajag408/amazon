@@ -8,8 +8,10 @@ import AccountQuickLinks from './AccountQuickLinks';
 class HeaderActions extends Component {
     constructor(props) {
         super(props);
-    }
 
+    }
+      
+      
     render() {
         const { compare, wishlist, auth } = this.props;
         return (

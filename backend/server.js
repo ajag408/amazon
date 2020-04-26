@@ -10,6 +10,7 @@ const mysql = require('mysql');
 
 // Routes - replace with your route file in route folder
 const userRoute = require('./routes/user.route');
+const admin = require('./routes/admin');
 const cartRoute = require('./routes/cart.route');
 // const companyRoute = require('./routes/company.route');
 // const jobRoute = require('./routes/jobs.route');
@@ -20,7 +21,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
@@ -39,10 +40,11 @@ app.use(session({
 
 // app.use(multer({ dest: "./uploads/"}).single('photo'));
 
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
 
 //replace with your routes
 app.use('/users', userRoute);
+app.use('/admin', admin);
 app.use('/cart', cartRoute);
 // app.use('/companies', companyRoute);
 // app.use('/jobs', jobRoute);
@@ -52,6 +54,7 @@ app.use('/cart', cartRoute);
 // PORT
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
+  console.log(process.env.FRONTEND_URL)
   console.log(`Connected to port ${port}`);
 });
 
