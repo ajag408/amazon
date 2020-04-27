@@ -6,6 +6,7 @@ const  multerS3 = require('multer-s3');
 // const kafka = require('../kafka/client');
 
 const Product = require('../models/product');
+const Seller = require('../models/seller');
 // The name of the bucket that you have created
 const BUCKET_NAME = 'test-demo-amazon2';
 const s3 = new AWS.S3({

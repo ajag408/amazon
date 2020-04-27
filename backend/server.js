@@ -25,8 +25,10 @@ const mongoDbOptions = {
 mongoose.connect(process.env.MONGO_DB_URL, mongoDbOptions, (err, res) => {
   if (err) {
       console.log(err);
+      
       console.log(`MongoDB Connection Failed`);
   } else {
+    console.log(mongoDbOptions.poolSize);
       console.log(`MongoDB Connected`);
   }
   return;
