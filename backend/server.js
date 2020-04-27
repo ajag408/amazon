@@ -4,15 +4,33 @@ const createError = require('createerror');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+require('dotenv').config();
 const dbConfig = require('./database/db');
 
 const mysql = require('mysql');
 
 // Routes - replace with your route file in route folder
-const userRoute = require('./routes/user.route');
-const admin = require('./routes/admin');
-const cartRoute = require('./routes/cart.route');
+// const userRoute = require('./routes/user.route');
+// const admin = require('./routes/admin');
+// const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
+
+const mongoDbOptions = {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  poolSize: 500,
+  bufferMaxEntries: 0,
+};
+mongoose.connect(process.env.MONGO_DB_URL, mongoDbOptions, (err, res) => {
+  if (err) {
+      console.log(err);
+      console.log(`MongoDB Connection Failed`);
+  } else {
+      console.log(`MongoDB Connected`);
+  }
+  return;
+});
 
 const app = express();
 app.use(bodyParser.json());
@@ -40,9 +58,9 @@ app.use(session({
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
 
 //replace with your routes
-app.use('/users', userRoute);
-app.use('/admin', admin);
-app.use('/cart', cartRoute);
+// app.use('/users', userRoute);
+// app.use('/admin', admin);
+// app.use('/cart', cartRoute);
 app.use('/product', productRoute);
 
 // PORT
