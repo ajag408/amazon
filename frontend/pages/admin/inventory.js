@@ -308,7 +308,7 @@ if(this.state.productCategories)
                     <tbody>
                     {this.state.categoryDetails.map(category =>
                         <tr key={category._id}>
-                        <td>{category.title} </td>
+                        <td>{category.name} </td>
                         <td>{category.description} </td>
                         <td>{category.price} </td>
                         <td>{category.seller.name} </td>
