@@ -12,10 +12,7 @@ const mysql = require('mysql');
 const userRoute = require('./routes/user.route');
 const admin = require('./routes/admin');
 const cartRoute = require('./routes/cart.route');
-// const companyRoute = require('./routes/company.route');
-// const jobRoute = require('./routes/jobs.route');
-// const applicationRoute = require('./routes/application.route');
-// const eventRoute = require('./routes/event.route');
+const productRoute = require('./routes/product.route');
 
 const app = express();
 app.use(bodyParser.json());
@@ -46,10 +43,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', cred
 app.use('/users', userRoute);
 app.use('/admin', admin);
 app.use('/cart', cartRoute);
-// app.use('/companies', companyRoute);
-// app.use('/jobs', jobRoute);
-// app.use('/applications', applicationRoute);
-// app.use('/events', eventRoute);
+app.use('/product', productRoute);
 
 // PORT
 const port = process.env.PORT || 4000;

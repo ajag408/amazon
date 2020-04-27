@@ -2,20 +2,32 @@ import React, { Component } from 'react';
 import { Select } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
-
+import { backendurl } from './../../../../backendurl';
+import Axios from 'axios';
 import ProductResult from '../../../elements/products/ProductSearchResult';
 import { products } from '../../../../public/static/data/product';
+import Search from 'antd/lib/input/Search';
 
 const { Option } = Select;
 
 class SearchHeader extends Component {
     constructor(props) {
         super(props);
+        console.log("Search header");
         this.state = {
             searchPanel: false,
             searchProducts: products,
             keyword: '',
         };
+    }
+
+    componentDidMount(){
+        console.log("Component Did Mount Searchheader");
+        // Axios.get(`${backendurl}/product/getAllProducts`).then(resp => {
+        //     if (resp.status === 200 && resp.data) {
+        //         this.setState(resp.data);
+        //     }
+        // })
     }
 
     searchByProductName = (keyword, object) => {
