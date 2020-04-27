@@ -164,7 +164,13 @@ console.log(data);
 
 render()
 {
-let productCategoryList;
+let productCategoryList;let message;
+
+if(this.state.categoryDetails.length==0)
+{
+  message=( <div><h3>No products available for this category</h3></div> )
+
+}
 
 if(this.state.productCategories)
 {
@@ -288,21 +294,24 @@ if(this.state.productCategories)
                            <div>             
                             <div className="container">
                             <div className="panel panel-default">
-                            <div className="panel-heading">Category Details:{this.state.categoryName} </div>
+                            <div className="panel-heading"><h3>{this.state.categoryName}</h3> </div>
+                            {message}
                             <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Seller Name</th>
                         </tr>
                     </thead>
                     <tbody>
                     {this.state.categoryDetails.map(category =>
                         <tr key={category._id}>
-                        <td>{category.name} </td>
+                        <td>{category.title} </td>
                         <td>{category.description} </td>
                         <td>{category.price} </td>
+                        <td>{category.seller.name} </td>
                         </tr>
                     )}
                      </tbody>

@@ -7,10 +7,8 @@ require('./models');
 const userService = require('./services/user');
 const admin = require('./services/admin');
 const cartService = require('./services/cart');
-// const companyService = require('./services/company');
-// const jobService = require('./services/job');
-// const applicationService = require('./services/application');
-// const eventService = require('./services/event');
+const productService = require('./services/product');
+
 
 function handleTopicRequest(topic_name, fname) {
 
@@ -38,7 +36,7 @@ function handleTopicRequest(topic_name, fname) {
         },
       ];
       producer.send(payloads, (dataBack) => {
-        console.log(dataBack);
+        console.log("Data sending back: " ,dataBack);
       });
     });
   });
@@ -49,7 +47,4 @@ function handleTopicRequest(topic_name, fname) {
 handleTopicRequest('user', userService);
 handleTopicRequest('cart', cartService);
 handleTopicRequest('admin', admin);
-// handleTopicRequest('company', companyService);
-// handleTopicRequest('job', jobService);
-// handleTopicRequest('application', applicationService);
-// handleTopicRequest('event', eventService);
+handleTopicRequest('product', productService);

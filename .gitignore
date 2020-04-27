@@ -1,0 +1,4 @@
+maltfury
+node_modules
+*.properties
+*.env

@@ -2,20 +2,35 @@ import React, { Component } from 'react';
 import { Select } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
-
+import { backendurl } from './../../../../backendurl';
+import Axios from 'axios';
 import ProductResult from '../../../elements/products/ProductSearchResult';
-import { products } from '../../../../public/static/data/product';
+//import { products } from '../../../../public/static/data/product';
+import Search from 'antd/lib/input/Search';
 
 const { Option } = Select;
 
 class SearchHeader extends Component {
     constructor(props) {
         super(props);
+        //console.log("Search header");
         this.state = {
             searchPanel: false,
-            searchProducts: products,
+            searchProducts: [],
             keyword: '',
         };
+    }
+
+    componentDidMount(){
+        //console.log("Component Did Mount Searchheader");
+        Axios.get(`${backendurl}/product/getAllProducts`).then(resp => {
+            if (resp.status === 200 && resp.data) {
+
+                //console.log("Response in front end is: ", resp.data.message);
+                this.setState({
+                    searchProducts: resp.data.message});
+            }
+        })
     }
 
     searchByProductName = (keyword, object) => {
@@ -28,7 +43,7 @@ class SearchHeader extends Component {
         });
 
         return matches;
-    };
+    }
 
     handleSearch(e) {
         if (e.target.value !== '') {
@@ -37,7 +52,7 @@ class SearchHeader extends Component {
                 keyword: e.target.value,
                 searchProducts: this.searchByProductName(
                     e.target.value,
-                    products
+                    this.state.searchProducts
                 ),
             });
         } else {
@@ -219,7 +234,7 @@ class SearchHeader extends Component {
                             searchProducts.map(product => (
                                 <ProductResult
                                     product={product}
-                                    key={product.id}
+                                    key={product._id}
                                 />
                             ))
                         ) : (
