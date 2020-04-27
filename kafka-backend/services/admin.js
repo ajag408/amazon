@@ -8,7 +8,7 @@ const { secret } = require('../../backend/database/db');
 const ProductCategory = require('../models/productCategory');
 const Product=require('../models/product');
 
-function handle_request(msg, callback) {
+async function handle_request(msg, callback) {
     var res = {};
   if(msg.path==("add_category"))
   {
@@ -106,25 +106,23 @@ function handle_request(msg, callback) {
 
   if(msg.path==("category_details"))
   {
-                Product.find({"productCategory":msg.categoryDetailsId}, (err, products) =>{
-                if (err) {
-                  res.status = 500;
-                  res.message = "Database Error";
-                  callback(null, res);
-                }
-                else if(products.length<0){
-                    res.status = 204;
-                  res.message = "No Products Exists in this category";
-                  callback(null, res);
-                }
-                else{
-                    let payload=JSON.stringify(products);
+
+    let productCategoryDetails = await Product.find({"productCategory":msg.categoryDetailsId}).populate('seller','name');
+    console.log(productCategoryDetails);
+    if(productCategoryDetails)
+    {
+    let payload=JSON.stringify(productCategoryDetails);
                     console.log(payload)
                     res.status = 200;
                     res.message = payload;
                     callback(null, res);
-                }
-        })
+    }
+    else{
+      res.status = 500;
+      res.message = "Database Error";
+      callback(null, res);
+    }
+               
   }
 }
 
