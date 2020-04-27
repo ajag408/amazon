@@ -11,9 +11,9 @@ class HeaderDefault extends Component {
     }
 
     componentDidMount() {
-        if (process.browser) {
-            window.addEventListener('scroll', this.handleScroll);
-        }
+        // if (process.browser) {
+        //     window.addEventListener('scroll', this.handleScroll);
+        // }
     }
 
     handleScroll = () => {
@@ -43,15 +43,23 @@ class HeaderDefault extends Component {
                 <div className="header__top">
                     <div className="ps-container">
                         <div className="header__left">
-                            {/* <Link href="/">
+                            <div className="menu--product-categories">
+                                <div className="menu__toggle">
+                                    <i className="icon-menu"></i>
+                                </div>
+                                <div className="menu__content">
+                                    <MenuCategories />
+                                </div>
+                            </div>
+                            <Link href="/">
                                 <a className="ps-logo">
                                     <img
-                                        src="/static/img/logo_light.png"
+                                        src="/static/img/amazon_logo.png"
                                         alt="martfury"
                                     />
                                 </a>
-                            </Link> */}
-                            <div className="menu--product-categories">
+                            </Link>
+                            {/* <div className="menu--product-categories">
                                 <div className="menu__toggle">
                                     <i className="icon-menu"></i>
                                     <span> Shop by Department</span>
@@ -59,7 +67,7 @@ class HeaderDefault extends Component {
                                 <div className="menu__content">
                                     <MenuCategories />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="header__center">
                             <SearchHeader />

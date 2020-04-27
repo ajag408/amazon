@@ -206,10 +206,10 @@ class SearchHeader extends Component {
                 <input
                     className="form-control"
                     type="text"
-                    placeholder="I'm shopping for..."
+                    placeholder=""
                     onChange={this.handleSearch.bind(this)}
                 />
-                <button onClick={this.handleSubmit.bind(this)}>Search</button>
+                <button className="buttonSearchHeader" onClick={this.handleSubmit.bind(this)}></button>
                 <div
                     className={`ps-panel--search-result${
                         searchPanel && searchPanel === true ? ' active ' : ''
