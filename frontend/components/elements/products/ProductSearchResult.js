@@ -7,7 +7,7 @@ import Rating from '../Rating';
 class ProductResult extends Component {
     constructor(props) {
         super(props);
-        console.log(" ProductResult => props are: ", props);
+        //console.log(" ProductResult => props are: ", props);
     }
     render() {
         const { product, currency } = this.props;

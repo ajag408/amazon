@@ -16,7 +16,7 @@ const makeKafkaRequestCart = async (req, res) => {
                 msg: 'System Error, Try Again.',
             });
         } else {
-            //console.log("results are: ", results);
+            console.log("results are: ", results);
             res.json(results);
         }
     });
@@ -28,5 +28,11 @@ router.route('/getAllProducts').get((req, res) => {
     req.params.path = 'get-all-products';
     makeKafkaRequestCart(req, res);
 });
+
+router.route('/:productId/').get((req,res)=>{
+    console.log("Product route: ", req.body);
+    req.param.path = 'get-product';
+    makeKafkaRequestCart(req, res);
+})
 
 module.exports = router;

@@ -22,11 +22,11 @@ class SearchHeader extends Component {
     }
 
     componentDidMount(){
-        console.log("Component Did Mount Searchheader");
+        //console.log("Component Did Mount Searchheader");
         Axios.get(`${backendurl}/product/getAllProducts`).then(resp => {
             if (resp.status === 200 && resp.data) {
 
-                console.log("Response in front end is: ", resp.data.message);
+                //console.log("Response in front end is: ", resp.data.message);
                 this.setState({
                     searchProducts: resp.data.message});
             }
@@ -230,7 +230,6 @@ class SearchHeader extends Component {
                         searchPanel && searchPanel === true ? ' active ' : ''
                     }`}>
                     <div className="ps-panel__content">
-                        {console.log("Search Products: ",this.state.searchProducts)}
                         {searchProducts.length > 0 ? (
                             searchProducts.map(product => (
                                 <ProductResult
