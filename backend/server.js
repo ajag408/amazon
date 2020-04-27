@@ -19,7 +19,7 @@ const mongoDbOptions = {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  poolSize: 500,
+  poolSize: 0,
   bufferMaxEntries: 0,
 };
 mongoose.connect(process.env.MONGO_DB_URL, mongoDbOptions, (err, res) => {
