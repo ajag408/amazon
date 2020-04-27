@@ -5,6 +5,7 @@ const Product = mongoose.models.Product;
 async function handle_request(msg, callback) {
     var res = {};
     if (msg.params.path === 'get-all-products') {
+        
         console.log("Product => Kafka Backend: ", msg);
 
         Product.find().populate('seller').exec((err, categories) => {

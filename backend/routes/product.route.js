@@ -16,8 +16,9 @@ const makeKafkaRequestCart = async (req, res) => {
                 msg: 'System Error, Try Again.',
             });
         } else {
-            console.log("results are: ", results);
-            res.json(results);
+            console.log(results.length)
+            // console.log("results are: ", results);
+            // res.json(results);
         }
     });
 }
