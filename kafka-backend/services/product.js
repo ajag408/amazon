@@ -7,7 +7,7 @@ async function handle_request(msg, callback) {
     if (msg.params.path === 'get-all-products') {
         console.log("Product => Kafka Backend: ", msg);
 
-        Product.find().populate('seller').exec((err, categories) => {
+        Product.find().populate('seller').limit(10).exec((err, categories) => {
             if(err){
                 console.log("Error is: ", err);
             }
@@ -31,6 +31,18 @@ async function handle_request(msg, callback) {
         //         callback(null, res);
         //     }
         // })
+    } else if(msg.params.path === 'add-products'){
+        Product.create(msg.body.productObj ,(err, savedStudent )=>{
+            if(err) {
+                res.message = err.message;
+                res.status = 400;
+                callback(null,res);
+            } else {
+                res.message = savedStudent._id;
+                res.status = 200;
+                callback(null,res);
+            }   
+        })
     }
 }
 
