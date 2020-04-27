@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 var multer = require('multer')
 const  multerS3 = require('multer-s3');
 const kafka = require('../kafka/client');
-
+const Product = require('../models/testProduct');
 // The name of the bucket that you have created
 const BUCKET_NAME = 'test-demo-amazon2';
 const s3 = new AWS.S3({
@@ -49,9 +49,9 @@ const makeKafkaRequestCart = async (req, res) => {
                 msg: 'System Error, Try Again.',
             });
         } else {
-            console.log(results.length)
-            // console.log("results are: ", results);
-            // res.json(results);
+            // console.log(results.length)
+            console.log("results are: ", results);
+            res.json(results);
         }
     });
 }
@@ -59,8 +59,21 @@ const makeKafkaRequestCart = async (req, res) => {
 // get All Products
 router.route('/getAllProducts').get((req, res) => {
     //console.log("req.body in getALl Products: ", req.body);
-    req.params.path = 'get-all-products';
-    makeKafkaRequestCart(req, res);
+    //performance
+    Product.find().populate('seller').limit(10).exec((err, categories) => {
+        if(err){
+            console.log("Error is: ", err);
+        }
+        if(categories){
+            console.log("categories are: ", categories);
+            res.json(categories);
+            
+        }
+    });
+
+
+    // req.params.path = 'get-all-products';
+    // makeKafkaRequestCart(req, res);
 });
 
 router.route('/:productId/').get((req,res)=>{
