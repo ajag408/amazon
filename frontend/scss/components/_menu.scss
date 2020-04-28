@@ -189,24 +189,26 @@
 
         > a {
             display: inline-block;
-            padding: 15px 25px;
+            // padding: 15px 25px;
+            padding: 10px 15px;
             font-size: 16px;
             font-weight: 400;
             line-height: 20px;
-            color: $color-heading;
+            color: $color-heading-grey;
+            border-radius : 3px;
 
             &:hover {
-                color: $color-heading;
+                border : .5px solid $color-heading-white;
             }
         }
 
-        &:first-child {
-            padding-left: 0;
+        // &:first-child {
+        //     padding-left: 0;
 
-            > a {
-                padding-left: 0;
-            }
-        }
+        //     > a {
+        //         padding-left: 0;
+        //     }
+        // }
 
         &:last-child {
             margin-right: 0;
@@ -235,12 +237,12 @@
             position: relative;
 
             > a {
-                &:after {
-                    content: '\e93a';
-                    font: normal normal normal 12px/1 linearicons;
-                    @include vertical-align();
-                    right: 0;
-                }
+                // &:after {
+                //     content: '\e93a';
+                //     font: normal normal normal 12px/1 linearicons;
+                //     @include vertical-align();
+                //     right: 0;
+                // }
 
                 &:before {
                     content: '';
@@ -313,15 +315,20 @@
         flex-flow: row nowrap;
         align-items: center;
         cursor: pointer;
+        border : solid .5px #666;
+        border-radius: 3px;
 
         i {
-            font-size: 20px;
-            margin-right: 10px;
+            font-size: 28px;
+            //margin-right: 5px;
+            color : $color-heading-white;
+            padding : 5px;
+            font-weight: 700;
         }
 
         span {
             font-size: 20px;
-            color: $color-heading;
+            color: $color-heading-white;
             font-size: 16px;
             font-weight: 600;
         }
@@ -341,10 +348,12 @@
 
         &:hover,
         &.active {
-            &:before {
-                @include transform-origin(0 50%);
-                @include transform(scale3d(1, 1, 1));
-            }
+            border : solid .5px $color-heading-white;
+            border-radius: 3px;
+            // &:before {
+            //     @include transform-origin(0 50%);
+            //     @include transform(scale3d(1, 1, 1));
+            // }
         }
     }
 
