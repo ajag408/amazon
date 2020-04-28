@@ -30,9 +30,12 @@
 
     .ps-form__categories {
         position: relative;
-        background-color: #fff;
-        max-width: 180px;
+        //background-color: #fff;
+        background-color: #f3f3f3;
+        // max-width: 180px;
+        max-width: 80px;
         vertical-align: top;
+        border-radius: 4px 0 0 4px;
         &:after {
             content: '\e93a';
             @include vertical-align();
@@ -41,6 +44,7 @@
             font-size: 12px;
         }
         select.form-control {
+            cursor: pointer;
             padding-right: 30px;
             height: 40px;
             border-radius: 4px 0 0 4px;
@@ -92,12 +96,18 @@
     }
 
     button {
-        background-color: $color-heading;
+        background-color: $color-heading-button;
         color: #ffffff;
         border: none;
         font-weight: 700;
         padding: 0 24px;
         border-radius: 0 4px 4px 0;
+    }
+
+    .buttonSearchHeader{
+        background-image: url("/static/img/hearderSearchButton.png");
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .ps-panel--search-result {

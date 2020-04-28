@@ -1,9 +1,11 @@
-$font-1st: 'Work Sans', sans-serif;
+//$font-1st: 'Work Sans', sans-serif;
+$font-1st: 'Arial', sans-serif;
 $font-2nd: 'Libre Baskerville', serif;
 $font-3rd: 'Playfair Display', serif;
 $home: true !default;
 
-$color-1st: #fcb800;
+//$color-1st: #fcb800;
+$color-1st: #232f3e;
 $color-layout-2-1st: #dd2400;
 $color-autopart: #dd2400;
 $color-technology: #0071df;
@@ -15,6 +17,10 @@ $color-photo: #c81919;
 $color-2nd: #222222;
 $color-3rd: #5e6b9d;
 $color-heading: #000;
+$color-heading-white: #fff;
+$color-heading-grey: #ccc;
+//$color-heading: #684c4c;
+$color-heading-button: #febd69;
 $color-text: #666;
 $color-text-2: #555;
 $color-dark: #161824;
