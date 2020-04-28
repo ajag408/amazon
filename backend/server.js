@@ -14,7 +14,7 @@ const mysql = require('mysql');
 // const admin = require('./routes/admin');
 // const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
-
+// mongoose.set('debug', true);
 const mongoDbOptions = {
   useCreateIndex: true,
   useNewUrlParser: true,
