@@ -1,8 +1,6 @@
-
-
 const mongoose = require('mongoose');
-
 const jwt = require('jsonwebtoken');
+const redisClient = require("../utils/redisConfig");
 
 const { secret } = require('../../backend/database/db');
 const ProductCategory = require('../models/productCategory');
@@ -38,6 +36,8 @@ async function handle_request(msg, callback) {
                     else {
                       res.status = 200;
                       res.message = "Product category successfully added";
+                      console.log(JSON.stringify(data))
+                      redisClient.set(`ProductCategory:${data._id}`,JSON.stringify(data));
                       callback(null, res);
                     }
                 })
@@ -47,6 +47,29 @@ async function handle_request(msg, callback) {
 
   if(msg.path==("get_category"))
   {
+    let ts=new Date().toISOString();
+    console.log(ts);
+   redisClient.keys('*ProductCategory*', async (err,categoriesKeys) => {
+      
+      if(categoriesKeys.length)
+      { let categoriesRedis=[];let i;
+        redisClient.mget(categoriesKeys,async (err,categories) => {
+          if(categories)
+          {
+            for(i=0;i<categories.length;i++)
+            {
+              let data=JSON.parse(categories[i])
+              console.log(data)
+              categoriesRedis.push(data)
+            }
+        res.status = 200;
+        res.message = JSON.stringify(categoriesRedis);
+        callback(null, res);
+          }
+        })
+      }
+else
+{
             ProductCategory.find({}, (err, categories) => {
                 if (err) {
                   res.status = 500;
@@ -66,8 +89,9 @@ async function handle_request(msg, callback) {
                     callback(null, res);
                 }
         })
+}
+})  
   }
-
   if(msg.path==("remove_category"))
   {
             Product.find({"productCategory":msg.categoryId}, (err, products) => {
@@ -96,6 +120,7 @@ async function handle_request(msg, callback) {
                     else{
                     res.status = 200;
                     res.message = "Deleted Product Category";
+                    redisClient.del(`ProductCategory:${msg.categoryId}`);
                     callback(null, res);
                     }
                 
@@ -107,7 +132,7 @@ async function handle_request(msg, callback) {
   if(msg.path==("category_details"))
   {
 
-    let productCategoryDetails = await Product.find({"productCategory":msg.categoryDetailsId}).populate('seller','name');
+    let productCategoryDetails = await Product.find({"productCategory":msg.categoryDetailsId}).populate('seller','name').limit(50).skip(50*(msg.pageIndex-1));
     console.log(productCategoryDetails);
     if(productCategoryDetails)
     {
