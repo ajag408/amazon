@@ -13,6 +13,7 @@ const userRoute = require('./routes/user.route');
 const admin = require('./routes/admin');
 const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
+const sellerRoute = require('./routes/seller.route');
 
 const app = express();
 app.use(bodyParser.json());
@@ -44,6 +45,7 @@ app.use('/users', userRoute);
 app.use('/admin', admin);
 app.use('/cart', cartRoute);
 app.use('/product', productRoute);
+app.use('/seller', sellerRoute);
 
 // PORT
 const port = process.env.PORT || 4000;
