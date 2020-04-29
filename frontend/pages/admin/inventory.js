@@ -15,7 +15,9 @@ class AdminInventory extends Component {
         productCategories:[],
         statusMessage:'',
         errorMessage:'',
-        categoryDetails:[]
+        categoryDetails:[],
+        seller:[],
+        pageIndex:1
     };
     this.closeModal = this.closeModal.bind(this);
 }
@@ -32,7 +34,8 @@ addCategoryModal=()=>
 closeModal() {
     this.setState({
         addCategoryIsOpen: false ,
-        viewCategoryModal:false
+        viewCategoryModal:false,
+        pageIndex:1
     });
 }
 productCategoryChange=(e)=>
@@ -133,11 +136,14 @@ viewCategoryDetails=async(e)=>{
    await this.setState({ 
        viewCategoryModal:true,
         categoryDetailsId:e._id,
-        categoryName:e.name
-
+        categoryName:e.name,
  });
+ this.viewDetails();
+}
+viewDetails=()=>{
  const data={
-    categoryDetailsId:this.state.categoryDetailsId
+    categoryDetailsId:this.state.categoryDetailsId,
+    pageIndex:this.state.pageIndex
 }
 console.log(data);
   //set the with credentials to true
@@ -160,6 +166,28 @@ console.log(data);
                           status.style.display = "block";
 })
 
+}
+
+pageCountInc=async()=>{
+    console.log(this.state.categoryDetails);
+    if((this.state.categoryDetails.length)==50)
+    {
+   await this.setState({
+    
+        pageIndex:this.state.pageIndex+1 
+        
+    })
+}
+this.viewDetails();
+}
+pageCountDec=async()=>{
+    if(this.state.pageIndex>1)
+    {
+    await this.setState({
+        pageIndex:this.state.pageIndex-1 
+    }) 
+}
+this.viewDetails();
 }
 
 render()
@@ -311,11 +339,26 @@ if(this.state.productCategories)
                         <td>{category.name} </td>
                         <td>{category.description} </td>
                         <td>{category.price} </td>
+                        {category.seller&&
                         <td>{category.seller.name} </td>
+                        }   
                         </tr>
                     )}
                      </tbody>
                 </table>
+                <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
+            <nav aria-label="Page navigation example">
+  <ul className="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" onClick={() => this.pageCountDec()} tabIndex="-1">Previous</a>
+    </li>
+                <li class="page-item"><a class="page-link" href="#">{this.state.pageIndex}</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" onClick={() => this.pageCountInc()}>Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
                             <center> 
                                 <Button variant="primary" onClick={this.closeModal}>
                                     <b>Close</b>

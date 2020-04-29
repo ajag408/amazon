@@ -74,8 +74,51 @@ router.route('/addProduct').post( (req, res) => {
     
     let productImages = [];
 
-    console.log("req.body in getALl Products: ", req.body);
-    console.log("req.files in getALl Products: ", req.files , req.file);
+    multipleUpload(req,res,function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.json({"status" :400,"error" :err.message})
+        } else if (err) {
+            return res.json({"status" :400,"error" :err.message})
+        } else {
+            console.log(req.files);
+            for(var i=0;i< req.files.length ; i++) {
+                productImages.push({ "imageUrl" :  req.files[i].location  });
+        }
+         const productObj = {
+            "name" : req.body.name,
+            "seller" : req.body.seller,
+            "productCategory" : req.body.productCategory,
+            "price" : req.body.price,
+            "description" : req.body.desc,
+            "images" : productImages
+        }
+        
+         req.body.productObj = productObj;
+         req.params.path = 'add-product';
+         makeKafkaRequestCart(req, res);
+        }
+    });
+});
+
+
+//Remove Product
+router.route('/removeProduct').post( (req, res) => {
+        req.params.path = 'remove-product';
+        makeKafkaRequestCart(req, res);
+});
+
+//Delete Product Images
+router.route('/removeProductImages').post( (req, res) => {
+    req.params.path = 'remove-product-Image';
+    makeKafkaRequestCart(req, res);
+});
+
+
+//Edit Product
+router.route('/editProduct').post( (req, res) => {
+
+    
+    let productImages = [];
 
     multipleUpload(req,res,function (err) {
         if (err instanceof multer.MulterError) {
@@ -87,21 +130,20 @@ router.route('/addProduct').post( (req, res) => {
             for(var i=0;i< req.files.length ; i++) {
                 productImages.push({ "imageUrl" :  req.files[i].location  });
         }
-         console.log(productImages);
-         const productObj = {
+         const editedObj = {
             "name" : req.body.name,
-            "seller" : req.body.seller,
             "productCategory" : req.body.productCategory,
             "price" : req.body.price,
             "description" : req.body.desc,
-            "images" : productImages
         }
         
-         req.body.productObj = productObj;
-         req.params.path = 'add-products';
+         req.body.editedProduct = editedObj;
+         req.body.productImages = productImages;
+         req.params.path = 'edit-product';
          makeKafkaRequestCart(req, res);
         }
-    });
+    }); 
 });
+
 
 module.exports = router;

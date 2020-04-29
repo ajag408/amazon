@@ -36,7 +36,8 @@ const ProductSchema = new mongoose.Schema({
   },
   images: {
     type: [ImageSchema],
-    default: []
+    default: [],
+    validate: [arrayLimit, '{PATH} exceeds the limit of 5']
   },
   ratingAndReview: {
     type: mongoose.SchemaTypes.ObjectId,
@@ -51,5 +52,9 @@ const ProductSchema = new mongoose.Schema({
 {
   timestamps: true
 });
+
+function arrayLimit(val) {
+  return val.length <= 5;
+}
 
 module.exports = mongoose.models.Product || mongoose.model('Product', ProductSchema);

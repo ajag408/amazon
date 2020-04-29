@@ -28,18 +28,27 @@ class AddProduct extends Component {
         const value =  target.value;
         const name = target.name;
         this.setState({
-          [name]: value
+          [name]: value,
+          errorMsg :""
         });
         console.log(name+" "+value);
     }
 
 
     onChangeFileHandler = (event) => {
-        this.setState({
-            productImage : event.target.files
-        });
+        if(event.target.files.length > 5) {
+            this.setState({
+                errorMsg:"Only 5 files accepted."
+            })
+        } else{
+            this.setState({
+                productImage : event.target.files,
+                errorMsg :""
+            });
+        }
+       
     }
-    
+
     componentDidMount(){
        axios.get(backendurl+'/admin/getAllProductCategories')
        .then((res)=> {
