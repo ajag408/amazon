@@ -1,6 +1,8 @@
-// const express = require('express');
+const express = require('express');
 
-// const router = express.Router();
+const router = express.Router();
+
+const ProductCategory = require('../models/productCategory');
 // const User = require('../../kafka-backend/models/user');
 // const kafka = require('../kafka/client');
 
@@ -28,30 +30,48 @@
 //       }
 //     });
 //   })
-// //List of all Product Categories
-//   router.get("/getAllProductCategories", async (req, res) => {
+//List of all Product Categories
+  router.get("/getAllProductCategories", async (req, res) => {
+    ProductCategory.find({}, (err, categories) => {
+      if (err) {
+        res.status = 500;
+        res.message = "Database Error";
+        console.log(res);
+      }
+      else if(!categories){
+          res.status = 204;
+        res.message = "No Product Category exists";
+        console.log(res);
+      }
+      else{
+          let payload=JSON.stringify(categories);
+          console.log(payload)
 
-//     let msg = req.body;
-//     msg.route = "Adding new Product Category";
-//     req.body.path="get_category";
+          res.json(categories);
+      }
+})
+  //   let msg = req.body;
+  //   msg.route = "Adding new Product Category";
+  //   req.body.path="get_category";
     
-//     console.log('request reached get all product category'+JSON.stringify(req.body));
+  //   console.log('request reached get all product category'+JSON.stringify(req.body));
     
       
-//     kafka.make_request('admin', req.body, (err, results) => {
-//       if (err) {
-//         res.status(500).end("System Error");
-//       }
-//       else if (results.status === 200) {
-//         let payload = results.message;
-//         console.log(payload)
-//         res.status(results.status).end(payload);
-//       }
-//       else {
-//         res.status(results.status).end(results.message);
-//       }
-//     });
-//   })
+  //   kafka.make_request('admin', req.body, (err, results) => {
+  //     if (err) {
+  //       res.status(500).end("System Error");
+  //     }
+  //     else if (results.status === 200) {
+  //       let payload = results.message;
+  //       console.log(payload)
+  //       res.status(results.status).end(payload);
+  //     }
+  //     else {
+  //       res.status(results.status).end(results.message);
+  //     }
+  //   });
+  // })
+  })
 // //Remove Product Category
 //   router.post("/removeProductCategory", async (req, res) => {
 
@@ -100,4 +120,4 @@
 //     });
 //   })
 
-// module.exports = router;
+module.exports = router;

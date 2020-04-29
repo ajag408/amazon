@@ -11,7 +11,7 @@ const mysql = require('mysql');
 
 // Routes - replace with your route file in route folder
 // const userRoute = require('./routes/user.route');
-// const admin = require('./routes/admin');
+const admin = require('./routes/admin');
 // const cartRoute = require('./routes/cart.route');
 const productRoute = require('./routes/product.route');
 
@@ -59,7 +59,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', cred
 
 //replace with your routes
 // app.use('/users', userRoute);
-// app.use('/admin', admin);
+app.use('/admin', admin);
 // app.use('/cart', cartRoute);
 app.use('/product', productRoute);
 
