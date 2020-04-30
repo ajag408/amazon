@@ -99,5 +99,28 @@ router.post("/addProductCategory", async (req, res) => {
       }
     });
   })
+//Seller search by Admin
+  router.post("/sellerSearch", async (req, res) => {
+
+    let msg = req.body;
+    msg.route = "Seller Search";
+    req.body.path="seller_search";
+    
+    console.log('request reached seller search'+JSON.stringify(req.body));
+    
+    kafka.make_request('admin', req.body, (err, results) => {
+      if (err) {
+        res.status(500).end("System Error");
+      }
+      else if (results.status === 200) {
+        let payload = results.message;
+        console.log(payload)
+        res.status(results.status).end(payload);
+      }
+      else {
+        res.status(results.status).end(results.message);
+      }
+    });
+  })
 
 module.exports = router;
