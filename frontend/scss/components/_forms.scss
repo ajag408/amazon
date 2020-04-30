@@ -229,6 +229,17 @@
     }
 }
 
+.customFormClass{
+    max-width: inherit !important;
+    padding-top: 130px;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.customSubmitButton{
+    width : 20%;
+}
+
 .ps-form--account {
     max-width: 430px;
     margin: 0 auto !important;
