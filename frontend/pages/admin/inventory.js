@@ -248,7 +248,7 @@ if(this.state.productCategories)
                 
                 <ul className="navigation__extra">
                     <li>
-                        <Link href="/vendor/become-a-vendor">
+                        <Link href="/admin/seller-search">
                             <a>Seller Search</a>
                         </Link>
                     </li>
