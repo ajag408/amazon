@@ -60,7 +60,7 @@ var multipleUpload  = multer({
 // get All Products
 router.route('/getAllProducts').get((req, res) => {
     //performance
-    var stats = Product.find().populate('seller').limit(10).setOptions({explain: 'executionStats'}).exec((err, categories)=>
+    var stats = Product.find().populate('seller').limit(10).exec((err, categories)=>
     // .explain("executionStats")
  
     
@@ -77,7 +77,7 @@ router.route('/getAllProducts').get((req, res) => {
             res.json(categories);
         }
     });
-    console.log(stats);
+    // console.log(stats);
     //console.log("req.body in getALl Products: ", req.body);
     // req.params.path = 'get-all-products';
     // makeKafkaRequestCart(req, res);
