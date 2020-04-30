@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import NextArrow from '../../../carousel/NextArrow';
+import DownArrow from '../../../carousel/DownArrow';
 import PrevArrow from '../../../carousel/PrevArrow';
+import UpArrow from '../../../carousel/UpArrow';
 import Lightbox from 'react-image-lightbox';
 
 class ThumbnailDefault extends Component {
@@ -43,9 +45,10 @@ class ThumbnailDefault extends Component {
                 {
                     breakpoint: 1024,
                     settings: {
-                        slidesToShow: 4,
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
                         dots: false,
-                        arrows: false,
+                        arrows: true,
                         vertical: false,
                         infinite: false,
                     },
@@ -75,8 +78,8 @@ class ThumbnailDefault extends Component {
         const { product } = this.props;
         const { photoIndex, isOpen } = this.state;
         const productImages = [];
-        product.variants.map(variant => {
-            productImages.push(variant.thumbnail);
+        product.images.map(image => {
+            productImages.push(image.imageUrl);
         });
 
         return (
@@ -88,16 +91,17 @@ class ThumbnailDefault extends Component {
                             ref={slider => (this.slider1 = slider)}
                             asNavFor={this.state.variantCarousel}
                             className="ps-product__gallery ps-carousel inside">
-                            {product.variants.map((variant, index) => (
-                                <div className="item" key={variant.thumbnail}>
+                            {product.images.map((image, index) => (
+                                <div className="item" key={image.imageUrl}>
                                     <a
                                         href="#"
                                         onClick={e =>
                                             this.handleOpenLightbox(e, index)
                                         }>
                                         <img
-                                            src={variant.thumbnail}
-                                            alt="martfury"
+                                            style={{'margin-left':'auto','margin-right':'auto'}}
+                                            src={image.imageUrl}
+                                            alt="amazon"
                                         />
                                     </a>
                                 </div>
@@ -109,15 +113,19 @@ class ThumbnailDefault extends Component {
                     asNavFor={this.state.galleryCarousel}
                     ref={slider => (this.slider2 = slider)}
                     swipeToSlide={true}
-                    arrows={false}
                     slidesToShow={3}
                     vertical={true}
                     focusOnSelect={true}
-                    {...variantSetting}
+                    dots= {false}
+                    infinite={false}
+                    slidesToShow= {1}
+                    slidesToScroll= {1}
+                    nextArrow= {<DownArrow />}
+                    prevArrow= {<UpArrow />}
                     className="ps-product__variants">
-                    {product.variants.map(variant => (
-                        <div className="item" key={variant.thumbnail}>
-                            <img src={variant.thumbnail} alt="martfury" />
+                    {product.images.map(image => (
+                        <div className="item" key={image.imageUrl}>
+                            <img src={image.imageUrl} alt="amazon" />
                         </div>
                     ))}
                 </Slider>

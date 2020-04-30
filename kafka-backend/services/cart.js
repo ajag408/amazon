@@ -4,7 +4,10 @@ const Product = mongoose.models.Product;
 
 async function handle_request(msg, callback) {
   if(msg.params.path === 'show-cart'){
-    let customer = await Customer.findById(msg.params.customerId).populate('shoppingCart.cartItems.product').populate('shoppingCart.cartItems.product');
+    let customer = await Customer.findById(msg.params.customerId).populate('shoppingCart.cartItems.product').populate('shoppingCart.cartItems.product').catch(err =>{
+      console.log(err);
+      callback(null,{error: err});
+    });
     callback(null,customer.shoppingCart);
   }
   
