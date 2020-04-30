@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const dbConfig = require('./database/db');
+require('dotenv').config();
 
 const mysql = require('mysql');
 

@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 const kafka = require('../kafka/client');
-const {mongoose} = require('../../kafka-backend/models');
-const Customer = mongoose.model('Customer');
-const Product = mongoose.model('Product');
+// const {mongoose} = require('../../kafka-backend/models');
+// const Customer = mongoose.model('Customer');
+// const Product = mongoose.model('Product');
 
 const makeKafkaRequestCart = async (req, res) => {
   kafka.make_request('cart', {body: req.body, params: req.params}, (err, results) => {

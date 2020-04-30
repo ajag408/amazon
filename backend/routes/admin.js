@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const User = require('../../kafka-backend/models/user');
+// const User = require('../../kafka-backend/models/user');
 const kafka = require('../kafka/client');
 
 // CREATE PRODUCT CATEGORY
