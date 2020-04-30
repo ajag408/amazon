@@ -16,6 +16,8 @@ class MyAccount extends Component {
             ,isValueUpdated : false
             ,error : ""
             ,isImageUploadEnabled : false
+            ,profilePic : null
+            ,isImageUploaded : false
         };
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -23,6 +25,8 @@ class MyAccount extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadButton = this.uploadButton.bind(this);
         this.onCancelClick = this.onCancelClick.bind(this);
+        this.onUploadClick = this.onUploadClick.bind(this);
+        this.onProfilePicUpload = this.onProfilePicUpload.bind(this);
     }
 
     onChangeName(e){
@@ -45,10 +49,61 @@ class MyAccount extends Component {
     }
 
     onCancelClick(e){
-        e.preventDefault();
+        //e.preventDefault();
         this.setState({
             isImageUploadEnabled : false
         })
+    }
+
+    onProfilePicUpload(e) {
+        this.setState({
+            profilePic: e.target.files[0]
+        });
+    }
+
+    onUploadClick(e) {
+        //e.preventDefault();
+        debugger;
+        e.preventDefault();
+
+        let formData = new FormData();
+
+        formData.set("sellerId", this.state.storage.user_id);
+        formData.append("file", this.state.profilePic);
+
+        axios({
+            method: 'post',
+            url: backendurl + '/seller/uploadProfilePic',
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(response => {
+                console.log("Status Code : ", response.status);
+                if (parseInt(response.data.status) === 200) {
+                    console.log("Profile pic uploaded");
+                    var profileData1 = this.state.profileData;
+
+                    profileData1.profilePicture = response.data.profileImagePath
+                    this.setState({
+                        isImageUploaded :true
+                        ,profileData : profileData1
+                        ,isImageUploadEnabled:false
+                    })
+                    // Router.push('/account/login')
+                } else if (parseInt(response.data.status) === 400) {
+                    console.log(response.data);
+                    this.setState({
+                        error: response.data.message
+                        ,isImageUploaded : false
+                        ,isImageUploadEnabled : false
+                    })
+                }
+            }).catch(error => {
+                this.setState({
+                    error: error.message
+                    ,isImageUploaded : false
+                })
+            })
     }
 
     handleSubmit(e){
@@ -128,16 +183,16 @@ class MyAccount extends Component {
             profilePicUploadSection = (<div> <div className="row">
                 <div className="col-md-12">
                     <div className="form-group">
-                        <input type="file" accept="image/*" onChange={this.onChangeFileHandler} name="fileName" id="filename" />
+                        <input type="file" accept="image/*" onChange={this.onProfilePicUpload} name="fileName" id="filename" />
                     </div>
                 </div>
             </div>
                 <div className="row">
                     <div className="col-md-6"> 
-                        <div className="form-group"><button>Upload</button></div>
+                        <div className="form-group"><button name="uploadButton" onClick={this.onUploadClick}>Upload</button></div>
                     </div>
                     <div className="col-md-6">
-                        <div className="form-group"><button onClick={this.onCancelClick}>Cancel</button></div>
+                        <div className="form-group"><button name="cancelButton" onClick={this.onCancelClick}>Cancel</button></div>
                     </div>
                 </div>
             </div>);

@@ -62,9 +62,9 @@ router.route('/getAllProducts').get((req, res) => {
     makeKafkaRequestCart(req, res);
 });
 
-router.route('/:productId/').get((req,res)=>{
+router.route('/:productId').get((req,res)=>{
     console.log("Product route: ", req.body);
-    req.param.path = 'get-product';
+    req.params.path = 'get-product';
     makeKafkaRequestCart(req, res);
 })
 
@@ -144,5 +144,10 @@ router.route('/editProduct').post( (req, res) => {
     }); 
 });
 
+router.route('/:productId/add-review').post((req,res)=>{
+    console.log("Product route: ", req.body);
+    req.params.path = 'add-review';
+    makeKafkaRequestCart(req, res);
+})
 
 module.exports = router;
