@@ -48,15 +48,6 @@ class ShopWidget extends Component {
             });
     }
 
-    // parentCallbackHandler() {
-    //     console.log("Inside Parent call back handler");
-    //     if (typeof this.props.onChange === 'function') {
-    //         this.props.onChange();
-    //     }
-    //     else {
-    //         console.log("this.props.onChange is not a function!");
-    //     }
-    // }
 
     handleChangeRange(value) {
         this.setState({
@@ -97,7 +88,6 @@ class ShopWidget extends Component {
             sellerId: this.state.selectedSellerIds,
             lowerPrice: this.state.priceMin, upperPrice: this.state.priceMax
         };
-        this.props.onChange(data);
 
         axios.post(`${backendurl}/product/search-product`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
