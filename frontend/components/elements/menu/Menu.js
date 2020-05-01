@@ -6,7 +6,6 @@ import MegaMenu from './MegaMenu';
 import MenuDropdown from './MenuDropdown';
 import { connect } from "react-redux";
 import { setProductCategoryId } from "../../../store/product/action";
-import { Redirect } from 'react-router';
 
 class Menu extends Component{
     constructor (props){
