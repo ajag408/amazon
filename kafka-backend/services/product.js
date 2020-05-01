@@ -14,7 +14,7 @@ async function handle_request(msg, callback) {
                     console.log("Error is: ", err);
                 }
                 if(categories){
-                    console.log("categories are: ", categories);
+                   // console.log("categories are: ", categories);
                     res.status = 200;
                     res.message = categories;
                     callback(null, res);
@@ -173,7 +173,7 @@ async function handle_request(msg, callback) {
 
 
            
-            Product.find(filter).limit(12).exec((err, results) => {
+            Product.find(filter).populate('seller').limit(12).exec((err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
                 }

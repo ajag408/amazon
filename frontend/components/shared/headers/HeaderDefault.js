@@ -63,15 +63,23 @@ class HeaderDefault extends Component {
                 <div className="header__top">
                     <div className="ps-container">
                         <div className="header__left">
-                            {/* <Link href="/">
-                                <a className="ps-logo">
-                                    <img
-                                        src="/static/img/logo_light.png"
-                                        alt="martfury"
-                                    />
-                                </a>
-                            </Link> */}
-                            <div className="menu--product-categories">
+                        <div className="menu--product-categories">	
+                                <div className="menu__toggle">	
+                                    <i className="icon-menu"></i>	
+                                </div>	
+                                <div className="menu__content">	
+                                    <MenuCategories data={this.state && this.state.menuData ? this.state.menuData: ""}/>	
+                                </div>	
+                            </div>	
+                            <Link href="/">	
+                                <a className="ps-logo">	
+                                    <img	
+                                        src="/static/img/amazon_logo.png"	
+                                        alt="amazon"	
+                                    />	
+                                </a>	
+                            </Link>
+                            {/* <div className="menu--product-categories">
                                 <div className="menu__toggle">
                                     <i className="icon-menu"></i>
                                     <span> Shop by Department</span>
@@ -81,7 +89,7 @@ class HeaderDefault extends Component {
                                      data={this.state && this.state.menuData ? this.state.menuData: ""}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="header__center">
                             <SearchHeader />

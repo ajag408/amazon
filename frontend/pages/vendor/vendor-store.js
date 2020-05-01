@@ -27,8 +27,8 @@ const VendorStorePage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <VendorStore />
             </div>
-            <Newletters layout="container" />
-            <FooterDefault />
+            {/* <Newletters layout="container" />
+            <FooterDefault /> */}
         </div>
     );
 };
