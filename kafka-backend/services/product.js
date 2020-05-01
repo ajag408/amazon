@@ -21,18 +21,6 @@ async function handle_request(msg, callback) {
                 }
             });
             
-            // Product.find({}, (err, categories) => {
-
-            //     if(err){
-            //         console.log("Error is: ", err);
-            //     }
-            //     if(categories){
-                    
-                //         res.status = 200;
-            //         res.message = categories;
-            //         callback(null, res);
-            //     }
-            // })
         } else if(msg.params.path === 'add-product'){
             Product.create(msg.body.productObj ,(err, savedStudent )=>{
                 if(err) {
@@ -163,39 +151,41 @@ async function handle_request(msg, callback) {
         }
         else if (msg.params.path === 'search-products') {
             console.log("kafka Backend Search msg is: ", msg);
+
+            let pName="";
+            if(msg.body.productName){
+                pName = msg.body.productName
+            }
+
             var filter = {
                 $and: [
-                    { name: { $regex: ".*" + "" + ".*", $options: 'i' } }
+                    { name: { $regex: ".*" + pName + ".*", $options: 'i' } }
                 ]
             }
 
-           if (msg.body.sellerId){
+           if (msg.body.sellerId && msg.body.sellerId.length >0){
                filter.$and.push({"seller" : {$in : msg.body.sellerId}});
            }
 
-            //console.log(typeof msg.body.lowerPrice , "   Converting    ", typeof Number(msg.body.lowerPrice));
            if (msg.body.lowerPrice >=0 && msg.body.upperPrice >=0){
-               //console.log("Inside price filter")
                filter.$and.push({ "price": { $gt: Number(msg.body.lowerPrice), $lt: Number(msg.body.upperPrice) }});
-               //filter.$and.push({ "price": { $lt: msg.body.upperPrice } });
            }
 
 
            
-            //console.log("Filter for Search is: ",filter + "     " ,filter.$and[2]);
-            Product.find(filter).limit(2).exec((err, results) => {
+            Product.find(filter).limit(12).exec((err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
                 }
                 if (results) {
                     if (msg.body.rating){
-                        output = results.filter((product) =>{
+                     results.filter((product) =>{
                             if(product.ratings < msg.body.rating){
-                                return
+                                results.splice(results.indexOf(product), 1);
                             }
                         })
                     }
-                    //console.log("Output:  ", results);
+                    console.log("Output:  ", results);
                     res.status = 200;
                     res.message = results;
                     callback(null, res);

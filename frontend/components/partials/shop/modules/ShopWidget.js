@@ -22,8 +22,11 @@ class ShopWidget extends Component {
         };
     }
 
-
     componentDidMount(){
+        this.searchApiCall();
+    }
+
+    componentWillMount(){
         let data = {
             searchCriteria: ""
         }
