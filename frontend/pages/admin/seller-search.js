@@ -11,13 +11,16 @@ class SellerSearch extends Component {
     this.state = {
         
         sellers:[],
-        searchCriteria:''
+        searchCriteria:'',
+        products:[],
+        pageIndex:1
     };
     this.closeModal = this.closeModal.bind(this);
 }
 componentDidMount(){
     this.viewSellers();   
 }
+
 searchCriteriaChange=(e)=>
 {
     this.setState({
@@ -29,6 +32,7 @@ closeModal() {
     this.setState({
         addCategoryIsOpen: false ,
         viewCategoryModal:false,
+        viewProductsModalFlag:false,
         pageIndex:1
     });
 }
@@ -54,15 +58,68 @@ viewSellers=()=>
     });
 }
 
+viewProductsModal=async(seller)=>{
+    await this.setState({ 
+        viewProductsModalFlag:true,
+        sellerId:seller._id,
+        sellerName:seller.name
+  });
+  this.viewProducts();
+ }
+viewProducts=()=>
+{
+   
+    let data = {
+        sellerId:this.state.sellerId,
+        pageIndex:this.state.pageIndex
+    }
+    axios.post(backendurl +'/admin/getProductsOfSeller',data)
+    .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
+            let products=response.data;
+            this.setState({
+                products
+            });
+            console.log(products)   
+        }
+    })
+    .catch(err => { 
+        this.setState({errorMessage:"Products could not be viewed"});
+    });
+}
+pageCountInc=async()=>{
+    
+    if((this.state.products.length)==50)
+    {
+   await this.setState({
+    
+        pageIndex:this.state.pageIndex+1 
+        
+    })
+}
+this.viewProducts();
+}
+pageCountDec=async()=>{
+    if(this.state.pageIndex>1)
+    {
+    await this.setState({
+        pageIndex:this.state.pageIndex-1 
+    }) 
+}
+this.viewProducts();
+}
+
 render()
 {
 let message;let sellerList;
 
-if(this.state.sellers.length==0)
+if(this.state.products.length==0)
 {
-  message=( <div><h3>No Sellers Available</h3></div> )
+  message=( <div><h3>No Products Available</h3></div> )
 
 }
+
 
 if(this.state.sellers)
 {
@@ -79,14 +136,12 @@ if(this.state.sellers)
                     {this.state.sellers.map(seller =>
                         <tr key={seller._id}>
                         <td>{seller.name}</td>
-                        <td><Button onClick={() => this.viewProducts(seller)}>View Products</Button></td>
+                        <td><Button onClick={() => this.viewProductsModal(seller)}>View Products</Button></td>
                         <td><Button onClick={() => this.viewSales(seller)}>View Sales</Button></td>
                         </tr>
                     )}
                      </tbody>
-                </table>
-                
-        
+                </table>   
     )
 }
     return (
@@ -112,7 +167,7 @@ if(this.state.sellers)
                         </Link>
                     </li>
                     <li>
-                        <Link href="/account/order-tracking">
+                        <Link href="/admin/order-search">
                             <a>Order Search</a>
                         </Link>
                     </li>
@@ -158,6 +213,57 @@ if(this.state.sellers)
 {sellerList}
 </div>
 </div>
+<Modal
+                            isOpen={this.state.viewProductsModalFlag}
+                            onRequestClose={this.closeModal}
+                             contentLabel="Example Modal" >
+                           <div>             
+                            <div className="container">
+                            <div className="panel panel-default">
+                            <div className="panel-heading"><h3>{this.state.sellerName}</h3> </div>
+                            {message}
+                            <table className="table table-hover">
+                    <thead>
+                        <tr>
+                        <th>Product Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.products.map(product =>
+                        <tr key={product._id}>
+                        <td>{product.name} </td>
+                        <td>{product.description} </td>
+                        <td>{product.price} </td>
+                          
+                        </tr>
+                    )}
+                     </tbody>
+                </table>
+                <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
+            <nav aria-label="Page navigation example">
+  <ul className="pagination justify-content-center">
+    <li className="page-item">
+      <a className="page-link" href="#" onClick={() => this.pageCountDec()} tabIndex="-1">Previous</a>
+    </li>
+                <li className="page-item"><a className="page-link" href="#">{this.state.pageIndex}</a></li>
+    <li className="page-item">
+      <a className="page-link" href="#" onClick={() => this.pageCountInc()}>Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
+     <center> 
+                                <Button variant="primary" onClick={this.closeModal}>
+                                    <b>Close</b>
+                                </Button>
+                            </center>
+                            </div>
+                            </div>
+                        </div>
+                        </Modal>
     
                       
 
