@@ -16,10 +16,14 @@ class ShopWidget extends Component {
         super(props);
         this.state = {
             sellers: [],
+            shopCategories: [],
             priceMin: 0,
             priceMax: 2000,
             selectedSellerIds : []
+        
         };
+
+       this.handleClick =  this.handleClick.bind(this);
     }
 
     componentDidMount(){
@@ -46,6 +50,18 @@ class ShopWidget extends Component {
             .catch(err => {
                 this.setState({ errorMessage: "Sellers could not be viewed" });
             });
+
+        axios.get(`${backendurl}/admin/getAllProductCategories`).then(resp => {
+            if (resp.status === 200 && resp.data) {
+                console.log("Sho widget Categories are: ", resp.data)
+                this.setState({
+                    shopCategories: resp.data
+                });
+            }
+        })
+            .catch(err => {
+                this.setState({ errorMessage: "Sellers could not be viewed" });
+            });
     }
 
 
@@ -55,8 +71,6 @@ class ShopWidget extends Component {
             priceMax: value[1],
         }, () => { this.searchApiCall() })
         
-        //this.props.dispatch(getProductsByPrice(value));
-
     }
 
     handleFilterByBrand= (e) => {
@@ -80,14 +94,19 @@ class ShopWidget extends Component {
            
         }, () => { this.searchApiCall() })
 
-        console.log("handleFilterBy seller" , event.target.id)
+        //console.log("handleFilterBy seller" , event.target.id)
     }
 
     searchApiCall(){
         var data = {
             sellerId: this.state.selectedSellerIds,
-            lowerPrice: this.state.priceMin, upperPrice: this.state.priceMax
+            lowerPrice: this.state.priceMin, 
+            upperPrice: this.state.priceMax, 
+            productCategory: this.state.category, 
+            rating: this.state.rating
+
         };
+        //console.log("Before sending data to database, " , data);
 
         axios.post(`${backendurl}/product/search-product`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
@@ -97,60 +116,39 @@ class ShopWidget extends Component {
         })
     }
 
+    handleClick = item => event => {
+       
+        console.log("Inside handle Click  id is: ", event.target.id  , "  value:  ", item._id)
+        this.setState({
+           [event.target.id]: item._id
+        }, () => { this.searchApiCall() })
+       
+    }
+
     render() {
-        /* You can get categories from your API using redux */
-        const shopCategories = [
+
+        const ratings = [
             {
-                text: 'All Products',
-                url: '/shop',
+                text: '1 star',
+                _id: 1,
             },
             {
-                text: 'Clothing & Apparel',
-                url: '/shop?category=clothing',
+                text: '2 star',
+                _id: 2,
             },
             {
-                text: 'Garden & Kitchen',
-                url: '/shop?category=garden',
+                text: '3 star',
+                _id: 3,
             },
             {
-                text: 'Consumer Electrics',
-                url: '/shop?category=electronic',
+                text: '4 star',
+                _id: 4,
             },
             {
-                text: 'Health & Beauty',
-                url: '/shop?category=beauty',
-            },
-            {
-                text: 'Computers & Technologies',
-                url: '/shop?category=technologies',
-            },
-            {
-                text: 'Jewelry & Watches',
-                url: '/shop?category=jewelry',
-            },
-            {
-                text: 'Phones & Accessories',
-                url: '/shop?category=phone',
-            },
-            {
-                text: 'Sport & Outdoor',
-                url: '/shop?category=sport',
-            },
-            {
-                text: 'Babies & Moms',
-                url: '/shop?category=baby',
-            },
-            {
-                text: 'Books & Office',
-                url: '/shop?category=book',
-            },
-            {
-                text: 'Cars & Motocycles',
-                url: '/shop?category=cars',
-            },
-        ];
-        
-    
+                text: '5 star',
+                _id: 5,
+            }]
+        {console.log("Inside render, shop categories are: ", this.state.shopCategories)}
         let allSellers = this.state.sellers.map(seller => {
             return (
                 <div>
@@ -162,16 +160,41 @@ class ShopWidget extends Component {
                 </div>
             )
         })
+        let allCategories= "";
+        if(this.state.shopCategories && this.state.shopCategories.length >0){
+            //console.log("ShopCategories are there",this.state.shopCategories );
+            allCategories = 
+                this.state.shopCategories.map(category => (
+                    <li key={category.name} id ="category" onClick={this.handleClick(category)}>
+                        {category.name}
+                    </li>
+                ))
+            
+        }
         return (
             <div className="ps-layout__left">
                 <aside className="widget widget_shop">
                     <h4 className="widget-title">Categories</h4>
                     <ul className="ps-list--categories">
-                        {shopCategories.map(category => (
+                        {/* {this.state. shopCategories.map(category => (
                             <li key={category.text}>
                                 <Link href={category.url}>
                                     <a>{category.text}</a>
                                 </Link>
+                            </li>
+                        ))} */}
+                        {allCategories}
+                    </ul>
+                </aside>
+                <aside className="widget widget_shop">
+                    <h4 className="widget-title">Categories</h4>
+                    <ul className="ps-list--categories">
+                        {ratings.map(rating => (
+                            <li key={rating._id} id="rating" onClick={this.handleClick(rating)}>
+                                {rating.text}
+                                {/* <Link href={category.url}>
+                                    <a>{category.text}</a>
+                                </Link> */}
                             </li>
                         ))}
                     </ul>
@@ -181,6 +204,8 @@ class ShopWidget extends Component {
                     <figure>
                         {allSellers}
                     </figure>
+
+                   
                     <figure>
                         <h4 className="widget-title">By Price</h4>
                         <Slider

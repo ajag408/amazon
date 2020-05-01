@@ -150,7 +150,7 @@ async function handle_request(msg, callback) {
             });
         }
         else if (msg.params.path === 'search-products') {
-            console.log("kafka Backend Search msg is: ", msg);
+            //console.log("kafka Backend Search msg is: ", msg);
 
             let pName="";
             if(msg.body.productName){
@@ -171,6 +171,18 @@ async function handle_request(msg, callback) {
                filter.$and.push({ "price": { $gt: Number(msg.body.lowerPrice), $lt: Number(msg.body.upperPrice) }});
            }
 
+            if (msg.body.productCategory) {
+
+                //console.log("Inside product Category", msg.body.productCategory);
+                filter.$and.push({ "productCategory": msg.body.productCategory });
+            }
+
+            // if (msg.body.rating) {
+
+            //     console.log("Inside product Category", msg.body.rating);
+            //    // filter.$and.push({ "productCategory": msg.body.productCategory });
+            // }
+
 
            
             Product.find(filter).populate('seller').limit(12).exec((err, results) => {
@@ -180,12 +192,12 @@ async function handle_request(msg, callback) {
                 if (results) {
                     if (msg.body.rating){
                      results.filter((product) =>{
-                            if(product.ratings < msg.body.rating){
+                            if(product.ratings = msg.body.rating){
                                 results.splice(results.indexOf(product), 1);
                             }
                         })
                     }
-                    console.log("Output:  ", results);
+                    //console.log("Output:  ", results);
                     res.status = 200;
                     res.message = results;
                     callback(null, res);
