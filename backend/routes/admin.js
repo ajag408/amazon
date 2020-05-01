@@ -122,5 +122,28 @@ router.post("/addProductCategory", async (req, res) => {
       }
     });
   })
+//Products of a particular seller
+  router.post("/getProductsOfSeller", async (req, res) => {
+
+    let msg = req.body;
+    msg.route = "Seller product details";
+    req.body.path="seller_products";
+    
+    console.log('request reached seller product details'+JSON.stringify(req.body));
+    
+    kafka.make_request('admin', req.body, (err, results) => {
+      if (err) {
+        res.status(500).end("System Error");
+      }
+      else if (results.status === 200) {
+        let payload = results.message;
+        console.log(payload)
+        res.status(results.status).end(payload);
+      }
+      else {
+        res.status(results.status).end(results.message);
+      }
+    });
+  })
 
 module.exports = router;
