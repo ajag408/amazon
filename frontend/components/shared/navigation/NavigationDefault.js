@@ -26,7 +26,7 @@ class NavigationDefault extends Component {
             <nav className="navigation">
                 <div className="ps-container">
                     <div className="navigation__left">
-                    <Menu
+                        <Menu
                             data={menuData.menuPrimary.menu_1}
                             className="menu"
                         />
@@ -45,6 +45,11 @@ class NavigationDefault extends Component {
                     </div>
                     <div className="navigation__right">
                         <ul className="navigation__extra">
+                            <li>
+                                <Link href="/search/">
+                                    <a>Search By Seller</a>
+                                </Link>
+                            </li>
                             <li>
                                 <Link href="/vendor/become-a-vendor">
                                     <a>Sell on Amazon</a>

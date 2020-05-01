@@ -16,6 +16,10 @@ class Product extends Component {
         };
     }
 
+    componentWillReceiveProps(){
+        //console.log("Product received props: ", this.props.product)
+    }
+
     handleAddItemToCart = e => {
         e.preventDefault();
         const { product } = this.props;
@@ -68,12 +72,19 @@ class Product extends Component {
                 }
             });
         }
+        let hasImages;
+        if(product.images && product.images.length >0)
+        {
+            hasImages = <img src={product.images[0].imageUrl} alt="martfury" />
+        }
+        
         return (
+            
             <div className="ps-product">
                 <div className="ps-product__thumbnail">
-                    <Link href="/product/[pid]" as={`/product/${product.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${product._id}`}>
                         <a>
-                            <img src={product.thumbnail} alt="martfury" />
+                           {hasImages}
                         </a>
                     </Link>
                     {product.badge ? productBadge : ''}
@@ -131,13 +142,13 @@ class Product extends Component {
                     <div className="ps-product__content">
                         <Link
                             href="/product/[pid]"
-                            as={`/product/${product.id}`}>
-                            <a className="ps-product__title">{product.title}</a>
+                            as={`/product/${product._id}`}>
+                            <a className="ps-product__title">{product.name}</a>
                         </Link>
                         <div className="ps-product__rating">
                             <Rating />
 
-                            <span>{product.ratingCount}</span>
+                            <span>{product.ratings}</span>
                         </div>
                         {product.sale === true ? (
                             <p className="ps-product__price sale">
@@ -158,8 +169,8 @@ class Product extends Component {
                     <div className="ps-product__content hover">
                         <Link
                             href="/product/[pid]"
-                            as={`/product/${product.id}`}>
-                            <a className="ps-product__title">{product.title}</a>
+                            as={`/product/${product._id}`}>
+                            <a className="ps-product__title">{product.name}</a>
                         </Link>
                         {product.sale === true ? (
                             <p className="ps-product__price sale">
@@ -179,7 +190,7 @@ class Product extends Component {
                     </div>
                 </div>
                 <Modal
-                    title={product.title}
+                    title={product.name}
                     centered
                     footer={null}
                     width={1024}

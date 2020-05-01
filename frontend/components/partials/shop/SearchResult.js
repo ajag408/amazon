@@ -9,18 +9,27 @@ import {
 import Product from '../../elements/products/Product';
 import ProductWide from '../../elements/products/ProductWide';
 import ShopWidget from './modules/ShopWidget';
+import { backendurl } from './../../../backendurl';
+import Axios from 'axios';
 class SearchResult extends Component {
     state = {
         listView: true,
         pageNumber: 0,
-        results: [],
+        results: {},
     };
+
+    constructor (props){
+        super(props);
+        // this.loadData = this.loadData.bind(this);
+        this.childCallback = this.childCallback.bind(this);
+    }
 
     componentDidMount() {
         const { query } = this.props.router;
         if (query) {
             this.props.dispatch(getProductsByKeyword(query.keyword));
         }
+        
     }
 
     handleChangeViewMode = event => {
@@ -28,13 +37,33 @@ class SearchResult extends Component {
         this.setState({ listView: !this.state.listView });
     };
 
+
+    childCallback(data) {
+        //console.log("childCallback => called, refreshing data!", data);
+       this.setState({
+           results : {allProducts : data.message}
+       })
+    }
+
+    // async loadData(data){
+    //     let car ;
+    //     Axios.post(`${backendurl}/product/search-product`, data).then((this, resp) => {
+    //         if (resp.status === 200 && resp.data) {
+    //             console.log("  ProductResult => response data is: ", resp.data)
+    //             this.setstate({
+    //                 results : resp.data
+    //             })
+    //         }
+    //     })
+    // }
+
     render() {
-        const { allProducts } = this.props;
+        const { allProducts } = this.state.results;
         let currentProducts = this.state.products;
         const viewMode = this.state.listView;
         return (
             <div className="ps-layout--shop">
-                <ShopWidget />
+                <ShopWidget onChange = {this.childCallback} />
                 <div className="ps-layout__right">
                     <div className="ps-shopping">
                         <div className="ps-shopping__header">
@@ -142,6 +171,7 @@ class SearchResult extends Component {
 }
 
 const mapStateToProps = state => {
+    //console.log("map state to props: ", state.product);
     return state.product;
 };
 export default withRouter(connect(mapStateToProps)(SearchResult));

@@ -3,6 +3,7 @@ import { actionTypes } from './action';
 export const initialState = {
     allProducts: null,
     singleProduct: null,
+    category: null,
     error: false,
 };
 
@@ -17,6 +18,11 @@ function reducer(state = initialState, action) {
             return {
                 ...state,
                 ...{ singleProduct: action.data },
+            };
+        case actionTypes.SET_PRODUCT_CATEGORY_ID:
+            return {
+                ...state,
+                category: action.payload
             };
 
         case actionTypes.GET_PRODUCTS_ERROR:

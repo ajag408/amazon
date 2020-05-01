@@ -7,7 +7,7 @@ async function handle_request(msg, callback) {
     try{
         var res = {};
         if (msg.params.path === 'get-all-products') {
-            console.log("Product => Kafka Backend: ", msg);
+            //console.log("Product => Kafka Backend: ", msg);
             
             Product.find().populate('seller').limit(10).exec((err, categories) => {
                 if(err){
@@ -160,6 +160,49 @@ async function handle_request(msg, callback) {
                     callback(null, product);
                 }
             });
+        }
+        else if (msg.params.path === 'search-products') {
+            console.log("kafka Backend Search msg is: ", msg);
+            var filter = {
+                $and: [
+                    { name: { $regex: ".*" + "" + ".*", $options: 'i' } }
+                ]
+            }
+
+           if (msg.body.sellerId){
+               filter.$and.push({"seller" : {$in : msg.body.sellerId}});
+           }
+
+            //console.log(typeof msg.body.lowerPrice , "   Converting    ", typeof Number(msg.body.lowerPrice));
+           if (msg.body.lowerPrice >=0 && msg.body.upperPrice >=0){
+               //console.log("Inside price filter")
+               filter.$and.push({ "price": { $gt: Number(msg.body.lowerPrice), $lt: Number(msg.body.upperPrice) }});
+               //filter.$and.push({ "price": { $lt: msg.body.upperPrice } });
+           }
+
+
+           
+            //console.log("Filter for Search is: ",filter + "     " ,filter.$and[2]);
+            Product.find(filter).limit(2).exec((err, results) => {
+                if (err) {
+                    console.log("Error is: ", err);
+                }
+                if (results) {
+                    if (msg.body.rating){
+                        output = results.filter((product) =>{
+                            if(product.ratings < msg.body.rating){
+                                return
+                            }
+                        })
+                    }
+                    //console.log("Output:  ", results);
+                    res.status = 200;
+                    res.message = results;
+                    callback(null, res);
+                }
+            });
+            
+
         }
     } catch(error){
         console.log("error occured in product ", error);

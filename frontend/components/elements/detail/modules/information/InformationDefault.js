@@ -62,7 +62,7 @@ class InformationDefault extends Component {
                         Sold By:
                         <Link href="/shop">
                             <a>
-                                <strong> {product.seller.name}</strong>
+                                {/* <strong> {product.seller.name}</strong> */}
                             </a>
                         </Link>
                     </p>
@@ -105,8 +105,8 @@ class InformationDefault extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return state.setting;
-};
+// const mapStateToProps = state => {
+//     return state.setting;
+// };
 
-export default connect(mapStateToProps)(InformationDefault);
+export default connect(null)(InformationDefault);

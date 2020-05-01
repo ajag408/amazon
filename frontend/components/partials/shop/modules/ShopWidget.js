@@ -7,26 +7,101 @@ import {
 } from '../../../../store/product/action';
 import { Slider, Checkbox } from 'antd';
 import Link from 'next/link';
+import axios from 'axios';
+import { backendurl } from './../../../../backendurl';
+
 
 class ShopWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            sellers: [],
             priceMin: 0,
             priceMax: 2000,
+            selectedSellerIds : []
         };
     }
+
+
+    componentDidMount(){
+        let data = {
+            searchCriteria: ""
+        }
+        axios.post(backendurl + '/admin/sellerSearch', data)
+            .then(response => {
+                //console.log(" Status Code : ", response.status,  "  response: " , response);
+                if (response.status === 200) {
+                    //let seller = response.data;
+                    let allSeller = response.data.map(seller => {
+                        return { name: seller.name, Id : seller._id, checked: false }
+                    });
+                    this.setState({
+                        sellers: allSeller
+                    });
+                }
+            })
+            .catch(err => {
+                this.setState({ errorMessage: "Sellers could not be viewed" });
+            });
+    }
+
+    // parentCallbackHandler() {
+    //     console.log("Inside Parent call back handler");
+    //     if (typeof this.props.onChange === 'function') {
+    //         this.props.onChange();
+    //     }
+    //     else {
+    //         console.log("this.props.onChange is not a function!");
+    //     }
+    // }
 
     handleChangeRange(value) {
         this.setState({
             priceMin: value[0],
             priceMax: value[1],
-        });
-        this.props.dispatch(getProductsByPrice(value));
+        }, () => { this.searchApiCall() })
+        
+        //this.props.dispatch(getProductsByPrice(value));
+
     }
 
-    handleFilterByBrand(value) {
-        Router.push({ pathname: '/shop', query: { brand: value } });
+    handleFilterByBrand= (e) => {
+        
+        var allSellers = this.state.sellers;
+        allSellers.filter(seller => {
+            if (seller.name === e.target.name)
+                seller.checked = e.target.checked
+        })
+        var sellerSelectedArray = this.state.selectedSellerIds
+        if (e.target.checked)
+            sellerSelectedArray.push(e.target.id) 
+        else {
+            sellerSelectedArray.splice(sellerSelectedArray.indexOf(e.target.id));
+        }
+
+        this.setState({
+            selectedSellerIds: sellerSelectedArray,
+            sellers:  allSellers,
+             searchData: []
+           
+        }, () => { this.searchApiCall() })
+
+        console.log("handleFilterBy seller" , event.target.id)
+    }
+
+    searchApiCall(){
+        var data = {
+            sellerId: this.state.selectedSellerIds,
+            lowerPrice: this.state.priceMin, upperPrice: this.state.priceMax
+        };
+        this.props.onChange(data);
+
+        axios.post(`${backendurl}/product/search-product`, data).then(resp => {
+            if (resp.status === 200 && resp.data) {
+                console.log("  ShopWidget => response data is: ", resp.data)
+                this.props.onChange(resp.data);
+            }
+        })
     }
 
     render() {
@@ -81,78 +156,19 @@ class ShopWidget extends Component {
                 url: '/shop?category=cars',
             },
         ];
-        const brands = [
-            {
-                id: '1',
-                value: 'apple',
-                label: 'Apple',
-            },
-            {
-                id: '2',
-                value: 'marshall',
-                label: 'Marshall',
-            },
-            {
-                id: '3',
-                value: 'herschel',
-                label: 'Herschel',
-            },
-            {
-                id: '4',
-                value: 'microsoft',
-                label: 'Microsoft',
-            },
-            {
-                id: '5',
-                value: 'megasystem',
-                label: 'Mega System',
-            },
-            {
-                id: '6',
-                value: 'sony',
-                label: 'Sony',
-            },
-            {
-                id: '7',
-                value: 'flatfuniture',
-                label: 'Flat Funiture',
-            },
-            {
-                id: '8',
-                value: 'gucci',
-                label: 'Gucci',
-            },
-            {
-                id: '8',
-                value: 'asus',
-                label: 'asus',
-            },
-            {
-                id: '9',
-                value: 'samsung',
-                label: 'Samsung',
-            },
-            {
-                id: '10',
-                value: 'lg',
-                label: 'LG Electronics',
-            },
-            {
-                id: '11',
-                value: 'yamaha',
-                label: 'Yamaha',
-            },
-            {
-                id: '12',
-                value: 'gopro',
-                label: 'Gopro',
-            },
-            {
-                id: '13',
-                value: 'unilever',
-                label: 'Unilever',
-            },
-        ];
+        
+    
+        let allSellers = this.state.sellers.map(seller => {
+            return (
+                <div>
+                    <label>
+                    <Checkbox 
+                            checked={!!seller.checked} id={seller.Id} name ={seller.name}  onChange={this.handleFilterByBrand.bind(this)} />
+                        {seller.name}
+                    </label>
+                </div>
+            )
+        })
         return (
             <div className="ps-layout__left">
                 <aside className="widget widget_shop">
@@ -168,12 +184,9 @@ class ShopWidget extends Component {
                     </ul>
                 </aside>
                 <aside className="widget widget_shop">
-                    <h4 className="widget-title">By Brands</h4>
+                    <h4 className="widget-title">By Sellers</h4>
                     <figure>
-                        <Checkbox.Group
-                            options={brands}
-                            onChange={this.handleFilterByBrand.bind(this)}
-                        />
+                        {allSellers}
                     </figure>
                     <figure>
                         <h4 className="widget-title">By Price</h4>
