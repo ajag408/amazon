@@ -56,7 +56,7 @@ class HeaderProduct extends Component {
                     id="headerSticky">
                     <div className="header__top">
                         <div className="ps-container">
-                            <div className="header__left">
+                            {/* <div className="header__left">
                                 <Link href="/">
                                     <a className="ps-logo">
                                         <img
@@ -74,7 +74,25 @@ class HeaderProduct extends Component {
                                         <MenuCategories />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
+                            <div className="header__left">
+                        <div className="menu--product-categories">	
+                                <div className="menu__toggle">	
+                                    <i className="icon-menu"></i>	
+                                </div>	
+                                <div className="menu__content">	
+                                    <MenuCategories data={this.state && this.state.menuData ? this.state.menuData: ""}/>	
+                                </div>	
+                            </div>	
+                            <Link href="/">	
+                                <a className="ps-logo">	
+                                    <img	
+                                        src="/static/img/amazon_logo.png"	
+                                        alt="amazon"	
+                                    />	
+                                </a>	
+                            </Link>
+                        </div>
                             <div className="header__center">
                                 <SearchHeader />
                             </div>

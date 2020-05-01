@@ -97,7 +97,6 @@ class ShopWidget extends Component {
             sellerId: this.state.selectedSellerIds,
             lowerPrice: this.state.priceMin, upperPrice: this.state.priceMax
         };
-        this.props.onChange(data);
 
         axios.post(`${backendurl}/product/search-product`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
