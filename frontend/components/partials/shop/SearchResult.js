@@ -45,17 +45,6 @@ class SearchResult extends Component {
        })
     }
 
-    // async loadData(data){
-    //     let car ;
-    //     Axios.post(`${backendurl}/product/search-product`, data).then((this, resp) => {
-    //         if (resp.status === 200 && resp.data) {
-    //             console.log("  ProductResult => response data is: ", resp.data)
-    //             this.setstate({
-    //                 results : resp.data
-    //             })
-    //         }
-    //     })
-    // }
 
     render() {
         const { allProducts } = this.state.results;
