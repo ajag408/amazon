@@ -16,17 +16,32 @@ class Login extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.state = {
+            storage: '',
             email: '',
             password: ''
         };
     }
 
-    // static getDerivedStateFromProps(props) {
-    //     if (props.isLoggedIn === true) {
-    //         Router.push('/');
-    //     }
-    //     return false;
-    // }
+    componentDidMount(){
+
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(storage.token){
+                console.log(storage);
+                if(storage.role == 'Admin'){
+                    Router.push('/admin/inventory')
+                } else {
+                    Router.push('/account/my-account')
+                }
+
+               
+            } 
+        });
+        
+    }
+    
 
     // handleFeatureWillUpdate(e) {
     //     e.preventDefault();
@@ -37,6 +52,7 @@ class Login extends Component {
     //     });
     // }
     onChangeEmail(e) {
+       
         this.setState({ email: e.target.value });
       }
     
@@ -45,6 +61,7 @@ class Login extends Component {
       }
     handleLoginSubmit = e => {
         e.preventDefault();
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const { email, password } = this.state;
@@ -76,8 +93,13 @@ class Login extends Component {
                         console.log(decoded);
                         localStorage.setItem("user_id", decoded._id);
                         localStorage.setItem("role", decoded.role);
-                        //depending on role push to landing
-                        Router.push('/account/my-account')
+                        if(decoded.role === 'Admin'){
+                       
+                            Router.push('/admin/inventory')
+                        } else {
+                            Router.push('/account/my-account')
+                        }
+                        
                         
 
                         
@@ -91,7 +113,9 @@ class Login extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
+            
             <div className="ps-my-account">
+        
                 <div className="container">
                     <Form
                         className="ps-form--account"

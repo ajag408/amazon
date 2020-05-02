@@ -27,7 +27,7 @@ function handle_request(msg, callback) {
     // console.log(" Model " ,User);
     msg.emailId = msg.email;
   
-
+    console.log("hello?")
     User.create(msg, (err, data) => {
         console.log("in mongoose callback")
         if (err) { 
@@ -78,16 +78,43 @@ function handle_request(msg, callback) {
             if (!user.is_password_valid(msg.password)) {
               callback(null, 'Password invalid');
             } else {
-              const payload = { _id: user._id, role:user.role };
-              const token = jwt.sign(payload, secret, {
-                expiresIn: 1008000,
-              });
-
-              const data = {
-
-                token: `JWT ${token}`,
-              };
-              callback(null, data);
+              if(user.role === 'Seller'){
+                Seller.findOne({user : user._id}, (error, seller) =>{
+                  const payload = { _id: seller._id, role:user.role };
+                  const token = jwt.sign(payload, secret, {
+                    expiresIn: 1008000,
+                  });
+                  console.log("in seller mongo");
+                  const data = {
+                    token: `JWT ${token}`,
+                  };
+                  callback(null, data);
+                })
+              } else if (user.role === "Customer"){
+                Customer.findOne({user : user._id}, (error, customer) => {
+                  const payload = { _id: customer._id, role:user.role };
+                  const token = jwt.sign(payload, secret, {
+                    expiresIn: 1008000,
+                  });
+                  console.log("in customer mongo");
+  
+                  const data = {
+                    token: `JWT ${token}`,
+                  };
+                  callback(null, data);
+                })
+              } else {
+                const payload = { _id: user._id, role:user.role };
+                const token = jwt.sign(payload, secret, {
+                  expiresIn: 1008000,
+                });
+  
+                const data = {
+  
+                  token: `JWT ${token}`,
+                };
+                callback(null, data);
+              }
             }
       }
     });

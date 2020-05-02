@@ -18,12 +18,32 @@ class Register extends Component {
         this.onChangeType = this.onChangeType.bind(this);
 
         this.state = {
+            storage: '',
             name: '',
             email: '',
             password: '',
             role: '',
 
         };
+    }
+    componentDidMount(){
+
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(storage.token){
+                console.log(storage);
+                if(storage.role == 'Admin'){
+                    Router.push('/admin/inventory')
+                } else {
+                    Router.push('/account/my-account')
+                }
+
+               
+            } 
+        });
+        
     }
     onChangeName(e) {
         this.setState({ name: e.target.value });

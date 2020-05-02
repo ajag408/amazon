@@ -4,11 +4,13 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import {backendurl} from '../../backendurl';
 import axios from 'axios';
+import Router from 'next/router';
 
 class AdminInventory extends Component {
     constructor(props) {
         super(props);
     this.state = {
+        storage: '',
         productCategory:'',
         addCategoryIsOpen:false,
         viewCategoryModal:false,
@@ -22,7 +24,18 @@ class AdminInventory extends Component {
     this.closeModal = this.closeModal.bind(this);
 }
 componentDidMount(){
-    this.viewProductCategories();   
+    this.setState({ 
+        storage : localStorage
+    }, () => {
+        const {storage} = this.state;
+        if(!storage.token || storage.role != "Admin"){
+         //   || storage.role != "Customer"
+            Router.push('/account/login')
+        } else {
+            this.viewProductCategories();   
+        }
+    });
+    
 }
 
 addCategoryModal=()=>
@@ -131,6 +144,14 @@ handleCategoryDeletion=async(e)=>{
                             status.style.display = "block";
 })
 }
+
+handleLogout(e){
+    e.preventDefault();
+    console.log("hello")
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    Router.push('/account/login')
+};
 
 viewCategoryDetails=async(e)=>{
    await this.setState({ 
@@ -262,7 +283,11 @@ if(this.state.productCategories)
                             <a>Analytics Dashboard</a>
                         </Link>
                     </li>
-                   
+                    <li>
+                    <Link href='/admin/inventory' >
+                            <a onClick={this.handleLogout}>Logout</a>
+                        </Link>
+                    </li>
                 </ul>
             </div>
             
