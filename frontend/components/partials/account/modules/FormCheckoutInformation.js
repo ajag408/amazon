@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-
+import axios from 'axios';
 import { Form, Input } from 'antd';
+import {backendurl} from './../../../../backendurl';
 
 class FormCheckoutInformation extends Component {
     constructor(props) {
         super(props);
+       
+            
+
+
     }
+
+
 
     handleLoginSubmit = e => {
         e.preventDefault();
@@ -31,42 +38,11 @@ class FormCheckoutInformation extends Component {
                         <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                             <div className="ps-form__billing-info">
                                 <h3 className="ps-form__heading">
-                                    Contact information
+                                    Select Saved Address
                                 </h3>
-                                <div className="form-group">
-                                    <Form.Item>
-                                        {getFieldDecorator('text', {
-                                            rules: [
-                                                {
-                                                    required: true,
-                                                    message:
-                                                        'Enter an email or mobile phone number!',
-                                                },
-                                            ],
-                                        })(
-                                            <Input
-                                                className="form-control"
-                                                type="text"
-                                                placeholder="Email or phone number"
-                                            />,
-                                        )}
-                                    </Form.Item>
-                                </div>
-                                <div className="form-group">
-                                    <div className="ps-checkbox">
-                                        <input
-                                            className="form-control"
-                                            type="checkbox"
-                                            id="keep-update"
-                                        />
-                                        <label htmlFor="keep-update">
-                                            Keep me up to date on news and
-                                            exclusive offers?
-                                        </label>
-                                    </div>
-                                </div>
+
                                 <h3 className="ps-form__heading">
-                                    Shipping address
+                                   Enter New Shipping Address
                                 </h3>
                                 <div className="row">
                                     <div className="col-sm-6">
@@ -213,7 +189,7 @@ class FormCheckoutInformation extends Component {
                                     </div>
                                 </div>
                                 <div className="ps-form__submit">
-                                    <Link href="/account/cart">
+                                    <Link href="/account/shopping-cart">
                                         <a>
                                             <i className="icon-arrow-left mr-2"></i>
                                             Return to shopping cart
@@ -221,7 +197,7 @@ class FormCheckoutInformation extends Component {
                                     </Link>
                                     <div className="ps-block__footer">
                                         <button className="ps-btn">
-                                            Continue to shipping
+                                            Continue to Shipping
                                         </button>
                                     </div>
                                 </div>
