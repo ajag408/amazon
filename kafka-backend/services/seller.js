@@ -70,6 +70,30 @@ function handle_request(msg, callback) {
             }  
         })   
   } 
+  else if (msg.path === 'uploadProfilePic') {
+    console.log(msg)
+    var res = {};
+    Seller.updateOne({user : msg.sellerId} , 
+       {
+           $set : {profilePicture : msg.profileImagePath.imageUrl}
+    } ,
+        (error, success)=> {
+            if(error) {
+                res.message = error.message;
+                res.status = 400;
+                callback(null,res);
+            } else if(success.n > 0){
+                console.log("Seller Profile updated")
+                res.message = "Seller Profile updated";
+                res.status = 200;
+                callback(null,res);
+            } else {
+                res.message = "User Not Found";
+                res.status = 400;
+                callback(null,res);
+            }  
+        })   
+  }
 }
 // }
 

@@ -9,7 +9,7 @@ const admin = require('./services/admin');
 const cartService = require('./services/cart');
 const productService = require('./services/product');
 const sellerService = require('./services/seller');
-
+const orderService = require('./services/order');
 
 function handleTopicRequest(topic_name, fname) {
 
@@ -50,3 +50,4 @@ handleTopicRequest('cart', cartService);
 handleTopicRequest('admin', admin);
 handleTopicRequest('product', productService);
 handleTopicRequest('seller', sellerService);
+handleTopicRequest('order', orderService);

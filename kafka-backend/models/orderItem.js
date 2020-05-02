@@ -41,20 +41,23 @@ module.exports = (sequelize, DataTypes) => {
             'Packing', 
             'Out for Shipping', 
             'Package Arrived', 
-            'Delivered'
+            'Delivered',
+            'Cancelled'
           ]],
           msg: 'Not a valid State'
         }
       }
 
     }
-  }, {});
+  }, {  timestamps: true });
 
   // class methods
   OrderItem.associate = function(models) {
     OrderItem.belongsTo(models.Order, {
+      as: 'order',
     });
     OrderItem.hasMany(models.OrderItemUpdate, {
+      as: 'orderItemUpdate',
     });
   };
   return OrderItem;

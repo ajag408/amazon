@@ -34,22 +34,15 @@ var multipleUpload  = multer({
   }).array("file")
 
 
-//const { mongoose } = require('../../kafka-backend/models');
-//const Customer = mongoose.model('Customer');
-//const Product = mongoose.model('Product');
-
 const makeKafkaRequestCart = async (req, res) => {
-    //console.log("Make request Product route");
     kafka.make_request('product', { body: req.body, params: req.params }, (err, results) => {
         if (err) {
-            console.log('Error:', err);
             res.json({
                 status: 'error',
                 msg: 'System Error, Try Again.',
             });
         } else {
-            // console.log(results.length)
-            console.log("results are: ", results);
+            console.log("Result from product details are: ", results)
             res.json(results);
         }
     });
@@ -57,15 +50,14 @@ const makeKafkaRequestCart = async (req, res) => {
 
 // get All Products
 router.route('/getAllProducts').get((req, res) => {
-    //console.log("req.body in getALl Products: ", req.body);
-
+    console.log("req.body in getALl Products: ", req.body);
     req.params.path = 'get-all-products';
     makeKafkaRequestCart(req, res);
 });
 
-router.route('/:productId/').get((req,res)=>{
+router.route('/:productId').get((req,res)=>{
     console.log("Product route: ", req.body);
-    req.param.path = 'get-product';
+    req.params.path = 'get-product';
     makeKafkaRequestCart(req, res);
 })
 
@@ -144,6 +136,19 @@ router.route('/editProduct').post( (req, res) => {
         }
     }); 
 });
+
+router.route('/:productId/add-review').post((req,res)=>{
+    console.log("Product route: ", req.body);
+    req.params.path = 'add-review';
+    makeKafkaRequestCart(req, res);
+});
+
+router.route('/search-product').post((req, res) => {
+    //console.log("Backend searching products : ", req.body);
+    req.params.path = 'search-products';
+    makeKafkaRequestCart(req, res);
+});
+
 
 
 module.exports = router;

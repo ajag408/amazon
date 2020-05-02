@@ -8,6 +8,25 @@ const ImageSchema = new mongoose.Schema({
   }
 })
 
+const RatingAndReviewSchema = new mongoose.Schema({
+  customer: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
+  rating:{
+    type: Number,
+    required: true,
+  },
+  review:{
+    type: String,
+    required: true,
+  }
+},
+{
+  timestamps: true
+});
+
 const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -23,9 +42,6 @@ const ProductSchema = new mongoose.Schema({
     ref: 'ProductCategory',
     required: true
   },
-  ratings: {
-    type: Number,
-  },
   price: {
     type: Number,
     required: true
@@ -39,9 +55,9 @@ const ProductSchema = new mongoose.Schema({
     default: [],
     validate: [arrayLimit, '{PATH} exceeds the limit of 5']
   },
-  ratingAndReview: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'RatingAndReview',
+  ratingAndReviews: {
+    type: [RatingAndReviewSchema],
+    default: [],
   },
   active: {
     type: Boolean,
@@ -50,8 +66,24 @@ const ProductSchema = new mongoose.Schema({
   },
 },
 {
-  timestamps: true
+  timestamps: true,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 });
+
+ProductSchema.virtual('ratings').get(function(){
+  if(!this.ratingAndReviews || this.ratingAndReviews.length < 1){
+    return 0;
+  }
+  let totalRating = (this.ratingAndReviews || []).reduce((totalRating,ratingAndReview)=>{
+    return totalRating + ratingAndReview.rating;
+  },0)
+  return roundHalf(totalRating/this.ratingAndReviews.length);
+});
+
+function roundHalf(num) {
+  return Math.round(num*2)/2;
+}
 
 function arrayLimit(val) {
   return val.length <= 5;

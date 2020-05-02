@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import ProductWide from '../../../elements/products/ProductWide';
 import Product from '../../../elements/products/Product';
-import { relatedProduct } from '../../../../public/static/data/product';
+import { relativeTimeThreshold } from 'moment';
+// import { relatedProduct } from '../../../../public/static/data/product';
 
 class VendorProducts extends Component {
     state = {
@@ -15,6 +16,10 @@ class VendorProducts extends Component {
     };
 
     render() {
+        var relatedProduct;
+        if(this.props.sellerProducts && this.props.sellerProducts.length > 0){
+            relatedProduct = this.props.sellerProducts;
+        }
         const viewMode = this.state.listView;
         return (
             <div className="ps-shopping vendor-shop">
@@ -71,7 +76,7 @@ class VendorProducts extends Component {
                                     ? relatedProduct.map(product => (
                                           <div
                                               className="col-lg-3 col-md-4 col-sm-6 col-6 "
-                                              key={product.id}>
+                                              key={product._id}>
                                               <Product product={product} />
                                           </div>
                                       ))
@@ -84,7 +89,7 @@ class VendorProducts extends Component {
                                 ? relatedProduct.map(product => (
                                       <ProductWide
                                           product={product}
-                                          key={product.id}
+                                          key={product._id}
                                       />
                                   ))
                                 : ''}

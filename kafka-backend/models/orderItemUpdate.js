@@ -9,11 +9,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull:false,
     }
-  }, {});
+  }, {  timestamps: true });
 
   // class methods
   OrderItemUpdate.associate = function(models) {
     OrderItemUpdate.belongsTo(models.OrderItem, {
+      as: 'orderItem'
     });
   };
   return OrderItemUpdate;

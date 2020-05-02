@@ -5,6 +5,7 @@ const redisClient = require("../utils/redisConfig");
 const { secret } = require('../../backend/database/db');
 const ProductCategory = require('../models/productCategory');
 const Product=require('../models/product');
+const Sellers=require('../models/seller');
 
 async function handle_request(msg, callback) {
     var res = {};
@@ -149,6 +150,67 @@ else
     }
                
   }
+
+if(msg.path==("seller_search"))
+  {
+if(msg.searchCriteria==""){
+    let sellers = await Sellers.find({})
+    console.log(sellers);
+    if(sellers)
+    {
+    let payload=JSON.stringify(sellers);
+    console.log(payload)
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+    }
+    else{
+      res.status = 500;
+      res.message = "Database Error";
+      callback(null, res);
+    }          
+  }
+  else{
+    let sellers = await Sellers.find({name:{$regex:`${msg.searchCriteria}` ,$options : 'i'}})
+    console.log(sellers);
+    if(sellers)
+    {
+    let payload=JSON.stringify(sellers);
+    console.log(payload)
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+    }
+    else{
+      res.status = 500;
+      res.message = "Database Error";
+      callback(null, res);
+    }          
+
+  }
+}
+
+if(msg.path==("seller_products"))
+{
+
+  let products = await Product.find({"seller":msg.sellerId}).limit(50).skip(50*(msg.pageIndex-1));
+  console.log(products);
+  if(products)
+  {
+  let payload=JSON.stringify(products);
+                  console.log(payload)
+                  res.status = 200;
+                  res.message = payload;
+                  callback(null, res);
+  }
+  else{
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  }
+             
+}
+
 }
 
 

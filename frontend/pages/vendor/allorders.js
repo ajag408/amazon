@@ -1,20 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import FooterDefault from '../../components/shared/footers/FooterDefault';
-import BreadCrumb from '../../components/elements/BreadCrumb';
-import Newletters from '../../components/partials/commons/Newletters';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
-import VendorStore from '../../components/partials/vendor/VendorStore';
+import BreadCrumb from '../../components/elements/BreadCrumb';
+// import VendorDashboard from '../../components/partials/vendor/VendorDashboard';
+import VendorProducts from '../../components/partials/vendor/modules/VendorProducts';
+import Newletters from '../../components/partials/commons/Newletters';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
 import NavigationList from '../../components/shared/navigation/NavigationList';
 
-const VendorStorePage = () => {
+const AllOrders = () => {
     const breadCrumb = [
         {
             text: 'Home',
             url: '/',
         },
         {
-            text: 'Vendor store',
+            text: 'Become a Vendor',
         },
     ];
 
@@ -23,14 +25,13 @@ const VendorStorePage = () => {
             <HeaderDefault />
             <HeaderMobile />
             <NavigationList />
-            <div className="ps-page--single ps-page--vendor">
-                <BreadCrumb breacrumb={breadCrumb} />
-                <VendorStore />
+            <BreadCrumb breacrumb={breadCrumb} />
+            <div className="ps-page--single">
+                <VendorDashboard />
             </div>
-            {/* <Newletters layout="container" />
-            <FooterDefault /> */}
+          
         </div>
     );
 };
 
-export default VendorStorePage;
+export default AllOrders;

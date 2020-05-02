@@ -1,3 +1,4 @@
+
 import React, { Component, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import NavigationDefault from '../navigation/NavigationDefault';
@@ -5,15 +6,34 @@ import HeaderActions from './modules/HeaderActions';
 import MenuCategories from './modules/MenuCategories';
 import SearchHeader from './modules/SearchHeader';
 
+import { backendurl } from './../../../backendurl';
+import Axios from 'axios';
 class HeaderDefault extends Component {
     constructor({ props }) {
         super(props);
+        this.state= {
+            menuData:[]
+        }
     }
 
     componentDidMount() {
-        // if (process.browser) {
-        //     window.addEventListener('scroll', this.handleScroll);
-        // }
+        if (process.browser) {
+            window.addEventListener('scroll', this.handleScroll);
+        }
+
+      
+            //console.log("Header Default => component Did Mount");
+            Axios.get(`${backendurl}/admin/getAllProductCategories`).then(resp => {
+                if (resp.status === 200 && resp.data) {
+                    //console.log("menu data", resp.data)
+                    this.setState({
+                        menuData: resp.data
+                    });
+                }
+            })
+            //console.log("Product Categories: ", this.state.menuData)
+
+
     }
 
     handleScroll = () => {
@@ -43,21 +63,21 @@ class HeaderDefault extends Component {
                 <div className="header__top">
                     <div className="ps-container">
                         <div className="header__left">
-                            <div className="menu--product-categories">
-                                <div className="menu__toggle">
-                                    <i className="icon-menu"></i>
-                                </div>
-                                <div className="menu__content">
-                                    <MenuCategories />
-                                </div>
-                            </div>
-                            <Link href="/">
-                                <a className="ps-logo">
-                                    <img
-                                        src="/static/img/amazon_logo.png"
-                                        alt="martfury"
-                                    />
-                                </a>
+                        <div className="menu--product-categories">	
+                                <div className="menu__toggle">	
+                                    <i className="icon-menu"></i>	
+                                </div>	
+                                <div className="menu__content">	
+                                    <MenuCategories data={this.state && this.state.menuData ? this.state.menuData: ""}/>	
+                                </div>	
+                            </div>	
+                            <Link href="/">	
+                                <a className="ps-logo">	
+                                    <img	
+                                        src="/static/img/amazon_logo.png"	
+                                        alt="amazon"	
+                                    />	
+                                </a>	
                             </Link>
                             {/* <div className="menu--product-categories">
                                 <div className="menu__toggle">
@@ -65,7 +85,9 @@ class HeaderDefault extends Component {
                                     <span> Shop by Department</span>
                                 </div>
                                 <div className="menu__content">
-                                    <MenuCategories />
+                                    <MenuCategories 
+                                     data={this.state && this.state.menuData ? this.state.menuData: ""}
+                                    />
                                 </div>
                             </div> */}
                         </div>
