@@ -10,7 +10,7 @@ const basename = path.basename(__filename);
 const db = {};
 
 const mysqlOptions = {
-  host: process.env.MYSQL_DB_HOSTNAME,
+  host: 'amazon.cmnzxnadxz9j.us-west-1.rds.amazonaws.com',
   dialect: 'mysql',
   pool: {
     maxConnections: process.env.DB_POOL_MAX || 5,
@@ -22,7 +22,7 @@ const mysqlOptions = {
 
 let sequelize;
 try{
-  sequelize = new Sequelize(process.env.MYSQL_DB_NAME, process.env.MYSQL_DB_USERNAME, process.env.MYSQL_DB_PASSWORD, mysqlOptions);
+  sequelize = new Sequelize('amazon', 'admin', 'Z2SL6Dy9KcbyEBXQQjHX', mysqlOptions);
   console.log(`Mysql Connected`);
 }catch(err){
   console.log(err);
