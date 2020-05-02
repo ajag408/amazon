@@ -145,7 +145,7 @@ class MyAccount extends Component {
             storage : localStorage
         }, () => {
             const {storage} = this.state;
-            if(!storage.token){
+            if(!storage.token || storage.token === "Admin"){
              //   || storage.role != "Customer"
                 Router.push('/account/login')
             } else {

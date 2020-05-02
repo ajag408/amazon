@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import {backendurl} from './../../../backendurl';
-
+import Router from 'next/router';
 import Link from 'next/link';
 import GiftMessage from './GiftMessage';
 
@@ -9,10 +9,21 @@ class ShoppingCart extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            storage: '',
             setParentState: props.setState
         }
     }
-
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.token || storage.token === "Admin"){
+             //   || storage.role != "Customer"
+                Router.push('/account/login')
+            }
+        });
+    }
     handleIncreaseItemQty(product, handler){
         let data = {
             quantity: 1
