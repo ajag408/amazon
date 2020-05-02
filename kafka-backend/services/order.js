@@ -2,7 +2,7 @@ let models = require('../models')
 let Order = models.Order;
 let OrderItem = models.OrderItem;
 let OrderItemUpdate = models.OrderItemUpdate;
-const Op = require('Sequelize').Op
+const Op = require('sequelize').Op
 
 async function handle_request(msg, callback) {
   let res = {};

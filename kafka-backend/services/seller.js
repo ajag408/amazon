@@ -8,48 +8,70 @@ const { secret } = require('../../backend/database/db');
 const User = require('../models/user');
 const Customer = require('../models/customer');
 const Seller = require('../models/seller');
+const Product = require('../models/product');
 
 
 function handle_request(msg, callback) {
-  if (msg.path === 'getProfileData') {
-    //msg.emailId = msg.email;
+//   if (msg.path === 'getProfileData') {
+//     //msg.emailId = msg.email;
   
-  //Seller.find().populate('user').exec((err, categories) => {
+//   //Seller.find().populate('user').exec((err, categories) => {
 
-  User.findOne({_id: msg.userId}, (err, user) => {
+//   User.findOne({_id: msg.userId}, (err, user) => {
+//     var res = {};
+//     if (err) {
+//       res.status = 500;
+//       res.message = "Database Error";
+//       callback(null, res);
+//     }
+//     else if(user){
+//       //res.status = 409;
+
+//       Seller.findOne({_id: msg.userId}).populate('user').exec((err, seller) =>{
+//         if(err){
+//           res.status = 500;
+//           res.message = "Database Error";
+//           callback(null, res);
+//         } else if(seller){
+//           res.status = 200;
+//           seller.user.password = undefined;
+//           seller.user.salt = undefined;
+//           res.message = seller;
+//           callback(null,res);
+//         } else {
+//           res.status = 204;
+//           res.message = "User not found";
+//           callback(null,res);
+//         }
+//       })
+//     }
+// })  
+// }
+
+  if (msg.path === 'getProfileData') {
     var res = {};
-    if (err) {
-      res.status = 500;
-      res.message = "Database Error";
-      callback(null, res);
-    }
-    else if(user){
-      //res.status = 409;
-
-      Seller.findOne({user: user._id}).populate('user').exec((err, seller) =>{
-        if(err){
-          res.status = 500;
-          res.message = "Database Error";
-          callback(null, res);
-        } else if(seller){
-          res.status = 200;
-          seller.user.password = undefined;
-          seller.user.salt = undefined;
-          res.message = seller;
-          callback(null,res);
-        } else {
-          res.status = 204;
-          res.message = "User not found";
-          callback(null,res);
-        }
-      })
-    }
-})  
-}
+    Seller.findOne({ _id: msg.userId }).populate('user').exec((err, seller) => {
+      if (err) {
+        res.status = 500;
+        res.message = "Database Error";
+        callback(null, res);
+      } else if (seller) {
+        res.status = 200;
+        seller.user.password = undefined;
+        seller.user.salt = undefined;
+        res.message = seller;
+        callback(null, res);
+      } else {
+        res.status = 204;
+        res.message = "User not found";
+        callback(null, res);
+      }
+    })
+  }
    else if (msg.path === 'updateBasicDetails') {
     console.log(msg)
     var res = {};
-    Seller.updateOne({user : msg.userId} , 
+    Seller.updateOne({_id : msg.userId} , 
        {
            $set : {name : msg.updatedName, addresses : msg.updatedAddress}
     } ,
@@ -69,11 +91,34 @@ function handle_request(msg, callback) {
                 callback(null,res);
             }  
         })   
-  } 
+  }  else if (msg.path === 'deleteSellerProduct') {
+    console.log(msg)
+    var res = {};
+    Product.updateOne({_id : msg.productId} , 
+       {
+           $set : {active : false}
+    } ,
+        (error, success)=> {
+            if(error) {
+                res.message = error.message;
+                res.status = 400;
+                callback(null,res);
+            } else if(success.n > 0){
+                console.log("Product Deleted")
+                res.message = "Product Deleted";
+                res.status = 200;
+                callback(null,res);
+            } else {
+                res.message = "Product Not Found";
+                res.status = 400;
+                callback(null,res);
+            }  
+        })   
+  }
   else if (msg.path === 'uploadProfilePic') {
     console.log(msg)
     var res = {};
-    Seller.updateOne({user : msg.sellerId} , 
+    Seller.updateOne({_id : msg.sellerId} , 
        {
            $set : {profilePicture : msg.profileImagePath.imageUrl}
     } ,

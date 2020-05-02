@@ -221,7 +221,7 @@ class MyAccount extends Component {
                                             </div>
                                         <figure>
                                             <figcaption>Hello</figcaption>
-                                            <p>{profileData && profileData.user ?profileData.user.emailId:""}</p>
+                                            <p>{profileData && profileData.user ? profileData.user.emailId:""}</p>
                                         </figure>
                                     </div>
                                     <div className="ps-widget__content">
@@ -236,14 +236,15 @@ class MyAccount extends Component {
                                                     <a>Orders</a>
                                                 </Link>
                                             </li> */}
-                                            {/* <li>
-                                                <Link href="/account/my-account">
-                                                    <a>Addresses</a>
-                                                </Link>
-                                            </li> */}
                                             <li className="active">
                                                 <Link href="/account/my-account">
                                                     <a> Edit Account Details</a>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link href="/vendor/vendor-store/" 
+                                                    as ={`/vendor/${this.state.storage ? this.state.storage.user_id : ""}`}>
+                                                    <a>View Profile And Inventory</a>
                                                 </Link>
                                             </li>
                                             <li>

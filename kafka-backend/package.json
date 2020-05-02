@@ -32,7 +32,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "redis": "^3.0.2",
-    "sequelize": "^5.21.6",
+    "sequelize": "^5.21.7",
     "uuidv4": "^1.0.0"
   }
 }

@@ -65,7 +65,7 @@ function handle_request(msg, callback) {
       });
   }
    else if (msg.path === 'login') {
-
+     console.log("Inside Login----------------------------------");
     User.findOne({ emailId: msg.email }, (error, user) => {
       console.log(user);
       if (error) {

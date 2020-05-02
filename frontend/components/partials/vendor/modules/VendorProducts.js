@@ -32,7 +32,7 @@ class VendorProducts extends Component {
                         Products found
                     </p>
                     <div className="ps-shopping__actions">
-                        <select
+                        {/* <select
                             className="ps-select"
                             data-placeholder="Sort Items">
                             <option>Sort by latest</option>
@@ -40,7 +40,7 @@ class VendorProducts extends Component {
                             <option>Sort by average rating</option>
                             <option>Sort by price: low to high</option>
                             <option>Sort by price: high to low</option>
-                        </select>
+                        </select> */}
                         <div className="ps-shopping__view">
                             <p>View</p>
                             <ul className="ps-tab-list">

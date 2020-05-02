@@ -52,6 +52,28 @@ router.route('/updateBasicDetails').post((req, res) => {
   });
 });
 
+router.route('/deleteSellerProduct').post((req, res) => {
+  req.body.path = 'deleteSellerProduct';
+  kafka.make_request('seller', req.body, (err, results) => {
+    console.log('in result');
+    console.log(results);
+    if (err) {
+      console.log('Inside err');
+      res.status(500);
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+      res.end();
+    } else {
+      console.log('inside else of request');
+      res.status(results.status);
+      res.json(results);
+      res.end();
+    }
+  });
+});
+
 const BUCKET_NAME = 'sellerpicsamazon';
 const s3 = new AWS.S3({
   accessKeyId: process.env.ID,

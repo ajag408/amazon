@@ -37,15 +37,10 @@ class VendorStore extends Component {
         }, () => {
             const {storage} = this.state;
             if(!storage.token){
-             //   || storage.role != "Customer"
                 Router.push('/account/login')
             } else {
-                debugger;
-                // var data = {
-                //     userId : storage.user_id
-                // };
-                //console.log(backendurl+'/seller/getProfileData/'+storage.user_id);
-                axios.get(backendurl+'/seller/getProfileData/'+storage.user_id)
+                var sellerId = this.props.sellerId;
+                axios.get(backendurl+'/seller/getProfileData/'+sellerId)
                 .then((res) => {
                     console.log(res);
                    if(res.status == 500 || res.status == 204 ){
@@ -54,23 +49,24 @@ class VendorStore extends Component {
                         this.setState({
                             profileData: res.data.message
                         });
-                        var data = {
-                            sellerId: [res.data.message._id]
-                        };
-                        debugger;
-                        axios.post(backendurl + '/product/search-product/', data)
-                            .then((res) => {
-                                console.log(res);
-                                if (res.status === 200 && res.data) {
-                                    this.setState({
-                                        sellerProducts: res.data.message
-                                    })
-                                } else {
-                                    console.log(res.data.message);
-                                }
-                            });
                     }
                 });
+
+                var data = {
+                    sellerId: [sellerId]
+                };
+                debugger;
+                axios.post(backendurl + '/product/search-product/', data)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.status === 200 && res.data) {
+                            this.setState({
+                                sellerProducts: res.data.message
+                            })
+                        } else {
+                            console.log(res.data.message);
+                        }
+                    });
             }
         });
     }
@@ -131,6 +127,18 @@ class VendorStore extends Component {
 
         var profileData = this.state.profileData;
 
+        debugger;
+        var SellerRating = 0;
+        var totalNumberOfRatings = 0;
+        if(this.state.sellerProducts && this.state.sellerProducts.length > 0){
+            var totalRating = 0;
+            for (let i = 0 ; i< this.state.sellerProducts.length; i++){
+                totalRating += this.state.sellerProducts[i].ratings;
+                totalNumberOfRatings += this.state.sellerProducts[i].ratingAndReviews.length;
+            }
+            SellerRating = totalRating/this.state.sellerProducts.length;
+        }
+
         return (
             <div className="ps-vendor-store">
                 <div className="container">
@@ -146,10 +154,9 @@ class VendorStore extends Component {
                                 <div className="ps-block__container">
                                     <div className="ps-block__header">
                                         <h4>{profileData?profileData.name:""}</h4>
-                                        <Rating />
+                                        <Rating ratings = {SellerRating}/>
                                         <p>
-                                            <strong>85% Positive</strong> (562
-                                            rating)
+                                            ({totalNumberOfRatings} rating)
                                         </p>
                                     </div>
                                     <div className="ps-block__divider"></div>
@@ -203,7 +210,7 @@ class VendorStore extends Component {
                                             </ul>
                                         </figure> */}
                                     </div>
-                                    <div className="ps-block__footer">
+                                    {/* <div className="ps-block__footer">
                                         <p>
                                             Call us directly
                                             <strong>(+053) 77-637-3300</strong>
@@ -213,8 +220,8 @@ class VendorStore extends Component {
                                             className="ps-btn ps-btn--fullwidth"
                                             href="">
                                             Contact Seller
-                                        </a> */}
-                                    </div>
+                                        </a>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
