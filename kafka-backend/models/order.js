@@ -45,11 +45,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     }
-  }, {});
+  }, { timestamps: true});
 
   // class methods
   Order.associate = function(models) {
-    Order.hasMany(models.OrderItem);
+    Order.hasMany(models.OrderItem,{
+      as: 'orderItem',
+    });
   };
   return Order;
 };

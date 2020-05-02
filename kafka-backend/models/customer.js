@@ -106,11 +106,6 @@ const ShoppingCartSchema = new mongoose.Schema({
     type: [ShoppingCartItemSchema],
     default: [],
   },
-  // cartTotal: {
-  //   type: Number,
-  //   required: true,
-  //   default: 0
-  // }
 },{
   toObject: {
     virtuals: true

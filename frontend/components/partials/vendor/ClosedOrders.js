@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {backendurl} from '../../../backendurl';
 import Router from 'next/router';
-import DisplayOrderSeller from './DisplayOrderSeller';
-class VendorDashboard extends Component {
+
+class OpenOrders extends Component {
    
     
     constructor(props) {
         super(props);
         this.state = {
-          //  role : localStorage.getItem("role"),
-          //  storage : localStorage,
            allOrders : []
         }
      
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
+        this.displayOrderDetail = this.displayOrderDetail.bind(this);
     }
 
     inputChangeHandler = (event) => {
@@ -30,34 +29,59 @@ class VendorDashboard extends Component {
 
     componentDidMount() {
 
+        debugger;
         const id = '5e8187df8bea9e66dcedbf99';
        // console.log("User Id" , this.state.storage.user_id);
-        axios.get(backendurl+'/order/seller/getAllOrder/'+id+'/0')
+        axios.get(backendurl+'/order/seller/getAllOrder/'+id+'/2')
         .then((res)=> {
             console.log("re")
              this.setState({
-                allOrders : res.data ,
+                allOrders : res.data,
              })
         })
         .catch((error)=> {
- 
+
         }) 
     }
+
+    displayOrderDetail = (e) => {
+        
+        let id = e.target.id;
+
+        var order = this.state.allOrders.filter((order) =>{
+            console.log(id === order.id);
+            if(parseInt(id) === parseInt(order.id)){
+                return order;
+            }
+        })
+ 
+        let orderDetails =JSON.stringify(order[0]);
+         Router.push({
+                 pathname: '/order/displayOrder',
+                 query: { order: orderDetails }
+         }); 
+     }
 
     render() {
                
      let  msg, displayAllOrders , editFields ;
        
+     debugger;
         if(this.state.allOrders.length > 0) {
             displayAllOrders =   
             this.state.allOrders.map( (order,index) => {
-                return <DisplayOrderSeller order={order} index={index}></DisplayOrderSeller>;
-            }) 
-           
+                return  <tr>
+                <td> {index +1} </td>
+                <td> <button class="btn btn-outline-primary"  id={order.id}  name="displayOrderDetails" onClick={this.displayOrderDetail}>
+                   {order.orderId}
+                   </button>
+                </td>
+                <td> {order.status} </td>
+                </tr>;
+            })        
         }   else {
             displayAllOrders = <div> No Orders placed. </div>
         } 
-
 
         if (this.state.errorMsg) {
             msg = <div class="alert alert-danger" role="alert">{this.state.errorMsg}</div>;
@@ -66,35 +90,29 @@ class VendorDashboard extends Component {
         return (
           <div className="ps-vendor-dashboard">
         <div className="container">
-            <div className="ps-section__header" style={{padding : '10px'}}>
-                <h3> Order Details </h3>
+            <div >
+                <h3>Delieverd Or Cancelled Order</h3>
             </div>
             <div className="ps-section__content">
                 <ul className="ps-section__links">
-                    <li className="active">
-                        <a href="#">All Orders</a>
+                    <li>
+                        <a href="/vendor/allorders">All Orders</a>
                     </li>
                     <li>
                         <a href="/vendor/openorders">Open Orders </a>
                     </li>
-                    <li>
-                        <a href="/vendor/deliverdorders">Delieverd Or Cancelled Order</a>
+                    <li className="active">
+                        <a href="#">Delieverd Or Cancelled Order</a>
                     </li>
                 </ul>
                 <div className="ps-block--vendor-dashboard">
-                    <div className="ps-block__header">
-                        <h3>Sale Report</h3>
-                    </div>
                     <div className="ps-block__content">
                         <div className="table-responsive">
                             <table className="table ps-table ps-table--vendor">
                                 <thead>
                                     <tr>
-                                    <th>Index</th>
+                                        <th>Index</th>
                                         <th>OrderId</th>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
                                         <th> Status</th>
                                     </tr>
                                 </thead>
@@ -112,4 +130,4 @@ class VendorDashboard extends Component {
 }
 }
 
-export default VendorDashboard;
+export default OpenOrders;
