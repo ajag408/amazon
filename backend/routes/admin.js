@@ -145,5 +145,29 @@ router.post("/addProductCategory", async (req, res) => {
       }
     });
   })
+// Get Monthly Sales of seller
+router.post("/getSalesOfSeller", async (req, res) => {
+
+  let msg = req.body;
+  msg.route = "Seller sales details";
+  req.body.path="seller_sales";
+  
+  console.log('request reached seller sales details'+JSON.stringify(req.body));
+  
+  kafka.make_request('admin', req.body, (err, results) => {
+    if (err) {
+      res.status(500).end("System Error");
+    }
+    else if (results.status === 200) {
+      let payload = results.message;
+      console.log(payload)
+      res.status(results.status).end(payload);
+    }
+    else {
+      res.status(results.status).end(results.message);
+    }
+  });
+})
+
 
 module.exports = router;

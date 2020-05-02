@@ -210,6 +210,26 @@ if(msg.path==("seller_products"))
   }
              
 }
+if(msg.path==("seller_sales"))
+{
+
+  let products = await Product.find({"seller":msg.sellerId}).limit(50).skip(50*(msg.pageIndex-1));
+  console.log(products);
+  if(products)
+  {
+  let payload=JSON.stringify(products);
+                  console.log(payload)
+                  res.status = 200;
+                  res.message = payload;
+                  callback(null, res);
+  }
+  else{
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  }
+             
+}
 
 }
 

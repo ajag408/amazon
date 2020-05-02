@@ -13,7 +13,8 @@ class SellerSearch extends Component {
         sellers:[],
         searchCriteria:'',
         products:[],
-        pageIndex:1
+        pageIndex:1,
+        sales:[]
     };
     this.closeModal = this.closeModal.bind(this);
 }
@@ -68,7 +69,6 @@ viewProductsModal=async(seller)=>{
  }
 viewProducts=()=>
 {
-   
     let data = {
         sellerId:this.state.sellerId,
         pageIndex:this.state.pageIndex
@@ -109,7 +109,34 @@ pageCountDec=async()=>{
 }
 this.viewProducts();
 }
-
+viewsSalesModal=async(seller)=>{
+    await this.setState({ 
+        viewSalesModalFlag:true,
+        sellerId:seller._id,
+        sellerName:seller.name
+  });
+  this.viewSales();
+ }
+ viewSales=()=>
+ {
+        let data = {
+            sellerId:this.state.sellerId
+        }
+        axios.post(backendurl +'/admin/getSalesOfSeller',data)
+        .then(response => {
+            console.log("Status Code : ",response.status);
+            if(response.status === 200){
+                let sales=response.data;
+                this.setState({
+                    sales
+                });
+                console.log(sales)   
+            }
+        })
+        .catch(err => { 
+            this.setState({errorMessage:"Products could not be viewed"});
+        });
+ }
 render()
 {
 let message;let sellerList;
@@ -137,7 +164,7 @@ if(this.state.sellers)
                         <tr key={seller._id}>
                         <td>{seller.name}</td>
                         <td><Button onClick={() => this.viewProductsModal(seller)}>View Products</Button></td>
-                        <td><Button onClick={() => this.viewSales(seller)}>View Sales</Button></td>
+                        <td><Button onClick={() => this.viewSalesModal(seller)}>View Sales</Button></td>
                         </tr>
                     )}
                      </tbody>
