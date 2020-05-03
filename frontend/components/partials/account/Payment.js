@@ -1,29 +1,80 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Link from 'next/link';
-import { Radio, Select } from 'antd';
-import { getCart } from '../../../store/cart/action';
+import { Form, Input, Select, Collapse,Popconfirm, message } from 'antd';
+import axios from 'axios';
+
+import { Router } from 'next/router';
+import {backendurl} from './../../../backendurl';
 
 const { Option } = Select;
-
+const { Panel } = Collapse;
 class Payment extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            method: 1,
+            storage: '',
+            shippingAddress: '',
+            cartTotal: '',
+            cartItems: [],
+            savedPayments: [],
+            orderPayment: ''
         };
     }
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.shippingAddress){
 
-    handleChangePaymentMethod = e => {
-        this.setState({ method: e.target.value });
-    };
+                Router.push('/account/checkout')
+            } else {
 
-    componentDidMount() {
-        this.props.dispatch(getCart());
+                axios.get(`${backendurl}/customer/getCustomer/5ea32fb4716ebc4f57fd8ae9`)
+                .then((res) => {
+                    // console.log("customer address",res.data[0].savedAddresses);
+                    this.setState({
+                        savedPayments: res.data[0].savedPaymentOptions
+                    })
+    
+                });
+
+                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                .then((res) => {
+                    console.log(res);
+                    this.setState({
+                        shippingAddress: JSON.parse(storage.shippingAddress),
+                        cartTotal: res.data.cartTotal,
+                        cartItems: res.data.cartItems,
+
+                    }, ()=>{console.log(this.state)})
+        
+    
+                });
+        
+            }
+        });
     }
 
+    handlePlaceOrder = e => {
+        e.preventDefault();
+        if(this.state.orderPayment){
+            console.log("got payment")
+        } else {
+            this.props.form.validateFields((err, values) => {
+                if (!err) {
+                    console.log('got payment from form')
+                } else {
+                }
+            });
+        }
+
+    };
+
     render() {
-        const { amount, cartItems } = this.props;
+        const { getFieldDecorator } = this.props.form;
+        const { cartTotal, cartItems, shippingAddress, savedPayments } = this.state;
         let month = [],
             year = [];
         for (let i = 1; i <= 12; i++) {
@@ -44,8 +95,8 @@ class Payment extends Component {
                                 <div className="ps-block--shipping">
                                     <div className="ps-block__panel">
                                         <figure>
-                                            <small>Contact</small>
-                                            <p>test@gmail.com</p>
+                                            <small>Name</small>
+                                            <p>{shippingAddress.fullName}</p>
                                             <Link href="/account/checkout">
                                                 <a>Change</a>
                                             </Link>
@@ -53,9 +104,7 @@ class Payment extends Component {
                                         <figure>
                                             <small>Ship to</small>
                                             <p>
-                                                2015 South Street, Midland,
-                                                Texas
-                                            </p>
+                                                {shippingAddress.streetAddressLine_1} {shippingAddress.zipCode}</p> 
                                             <Link href="/account/checkout">
                                                 <a>Change</a>
                                             </Link>
@@ -65,132 +114,148 @@ class Payment extends Component {
                                     <div className="ps-block__panel">
                                         <figure>
                                             <small>
-                                                International Shipping
+                                                Standard Shipping
                                             </small>
                                             <strong>$20.00</strong>
                                         </figure>
                                     </div>
-                                    <h4>Payment Methods</h4>
+                                    <h3>Payment Methods</h3><br></br>
+                                    <h4 className="ps-form__heading">
+                                    Select Saved Payment (Click to Select)
+                                </h4>
+                                            <Collapse accordion>
+                                            {this.state.savedPayments.map((payment, i) =>(
+                                            
+                                                
+                                                    <Panel header = {payment.NameOnCard}>
+                                                        <p>CVV: {payment.cvv}</p>
+                                                        
+                                                        <Popconfirm
+                                                        title="Use this payment?"
+                                                        onConfirm={() =>{
+                                                            this.setState({ orderPayment: payment });
+                                                            message.success('Payment method saved');
+                                                        }}
+                                                            
+                                                        onCancel={() =>{
+                                                            this.setState({ orderPayment: undefined });
+                                                            message.error('Payment Method Discarded');
+                                                        }}
+                                                        okText="Yes"
+                                                        cancelText="No"
+                                                        >
+                                                        <a href = '#'><b>Select</b></a>
+                                                        </Popconfirm>
+                                                    </Panel> 
+                                                    
+                                            ))}
+                                                </Collapse><br></br><br></br>
+                                
 
-                                    <div className="ps-block--payment-method">
-                                        <div className="ps-block__header">
-                                            <Radio.Group
-                                                onChange={e =>
-                                                    this.handleChangePaymentMethod(
-                                                        e
-                                                    )
-                                                }
-                                                value={this.state.method}>
-                                                <Radio value={1}>
-                                                    Visa / Master Card
-                                                </Radio>
-                                                <Radio value={2}>Paypal</Radio>
-                                            </Radio.Group>
+                                <h4 className="ps-form__heading">
+                                   Or
+                                </h4><br></br>
+                                <h4 className="ps-form__heading">
+                                    Enter and Save New Payment Info
+                                </h4>
+                                <Form onSubmit = {this.handlePlaceOrder}>
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <Form.Item>
+                                                {getFieldDecorator(
+                                                    'NameOnCard',
+                                                    {
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message:
+                                                                    'Enter your name!',
+                                                            },
+                                                        ],
+                                                    },
+                                                )(
+                                                    <Input
+                                                        className="form-control"
+                                                        type="text"
+                                                        placeholder="Name On Card"
+                                                    />,
+                                                )}
+                                            </Form.Item>
                                         </div>
-                                        <div className="ps-block__content">
-                                            {this.state.method === 1 ? (
-                                                <div className="ps-block__tab">
-                                                    <div className="form-group">
-                                                        <label>
-                                                            Card Number
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                        />
-                                                    </div>
-                                                    <div className="form-group">
-                                                        <label>
-                                                            Card Holders
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                        />
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-8">
-                                                            <div className="form-group">
-                                                                <label>
-                                                                    Expiration
-                                                                    Date
-                                                                </label>
-                                                                <div className="row">
-                                                                    <div className="col-6">
-                                                                        <Select
-                                                                            defaultValue={
-                                                                                1
-                                                                            }>
-                                                                            {month.map(
-                                                                                item => (
-                                                                                    <Option
-                                                                                        value={
-                                                                                            item
-                                                                                        }
-                                                                                        key={
-                                                                                            item
-                                                                                        }>
-                                                                                        {
-                                                                                            item
-                                                                                        }
-                                                                                    </Option>
-                                                                                )
-                                                                            )}
-                                                                        </Select>
-                                                                    </div>
-                                                                    <div className="col-6">
-                                                                        <Select
-                                                                            defaultValue={
-                                                                                2020
-                                                                            }>
-                                                                            {year.map(
-                                                                                item => (
-                                                                                    <Option
-                                                                                        value={
-                                                                                            item
-                                                                                        }
-                                                                                        key={
-                                                                                            item
-                                                                                        }>
-                                                                                        {
-                                                                                            item
-                                                                                        }
-                                                                                    </Option>
-                                                                                )
-                                                                            )}
-                                                                        </Select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-4">
-                                                            <div className="form-group">
-                                                                <label>
-                                                                    CVV
-                                                                </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    </div><br></br>
+
+                                    
+                                </div>
+                                                             
+                                <div className="form-group">
+                                            <Form.Item>
+                                                {getFieldDecorator('cardNumber', {
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message:
+                                                                'Enter your card number!',
+                                                        },
+                                                    ],
+                                                })(
+                                                    <Input
+                                                        className="form-control"
+                                                        type="text"
+                                                        placeholder="Card Number"
+                                                    />,
+                                                )}
+                                            </Form.Item>
+                                        </div>
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {getFieldDecorator('expirationDate', {
+                                                   rules: [
+                                                    {
+                                                        required: true,
+                                                        message:
+                                                            'Expiration date required!',
+                                                    },
+                                                ],
+                                        })(
+                                            <Input
+                                                className="form-control"
+                                                type="date"
+                                                placeholder="Expiration Date"
+                                            />,
+                                        )}
+                                    </Form.Item>
+                                </div>
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {getFieldDecorator('cvv', {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Enter cvv',
+                                                },
+                                            ],
+                                        })(
+                                            <Input
+                                                className="form-control"
+                                                type="number"
+                                                placeholder="CVV"
+                                            />,
+                                        )}
+                                    </Form.Item>
+                                </div>
+                  
+                                       
+  
                                                     <div className="form-group">
                                                         <button className="ps-btn ps-btn--fullwidth">
                                                             Submit
                                                         </button>
                                                     </div>
-                                                </div>
-                                            ) : (
-                                                <div className="ps-block__tab">
-                                                    <a className="ps-btn">
-                                                        Process with Paypal
-                                                    </a>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
+                                               
+        
+                                  </Form>
                                     <div className="ps-block__footer">
                                         <Link href="/account/shipping">
                                             <a>
@@ -214,13 +279,13 @@ class Payment extends Component {
                                             <figure className="ps-block__items">
                                                 {cartItems &&
                                                     cartItems.map(product => (
-                                                        <Link
-                                                            href="/"
-                                                            key={product.id}>
+                                                        // <Link
+                                                        //     href="/"
+                                                        //     key={product.id}>
                                                             <a>
                                                                 <strong>
                                                                     {
-                                                                        product.title
+                                                                        product.product.name
                                                                     }
                                                                     <span>
                                                                         x
@@ -231,17 +296,16 @@ class Payment extends Component {
                                                                 </strong>
                                                                 <small>
                                                                     $
-                                                                    {product.quantity *
-                                                                        product.price}
+                                                                    {product.totalPrice}
                                                                 </small>
                                                             </a>
-                                                        </Link>
+                                                    //     </Link>
                                                     ))}
                                             </figure>
                                             <figure>
                                                 <figcaption>
                                                     <strong>Subtotal</strong>
-                                                    <small>${amount}</small>
+                                                    <small>${cartTotal}</small>
                                                 </figcaption>
                                             </figure>
                                             <figure>
@@ -254,7 +318,7 @@ class Payment extends Component {
                                                 <h3>
                                                     Total
                                                     <strong>
-                                                        ${parseInt(amount) + 20}
+                                                        ${parseInt(cartTotal) + 20}
                                                         .00
                                                     </strong>
                                                 </h3>
@@ -271,7 +335,10 @@ class Payment extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return state.cart;
-};
-export default connect(mapStateToProps)(Payment);
+// const mapStateToProps = state => {
+//     return state.cart;
+// };
+const WrapPaymentForm = Form.create()(Payment);
+
+export default WrapPaymentForm;
+

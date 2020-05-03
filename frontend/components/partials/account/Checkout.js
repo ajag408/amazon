@@ -11,7 +11,10 @@ class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            storage: ''
+            storage: '',
+            cartTotal: '',
+            cartItems: [],
+
         };
     }
 
@@ -27,9 +30,25 @@ class Checkout extends Component {
                 Router.push('/account/login')
             } else {
                 //replace hard-coded with local storage id
+
+                // axios.get(`${backendurl}/customer/getCustomer/5ea32fb4716ebc4f57fd8ae9`)
+                // .then((res) => {
+                //     // console.log("customer address",res.data[0].savedAddresses);
+                //     this.setState({
+                //         savedAddresses: res.data[0].savedAddresses
+                //     })
+    
+                // });
+
                 axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
                 .then((res) => {
                     console.log(res);
+                    this.setState({
+                        cartTotal: res.data.cartTotal,
+                        cartItems: res.data.cartItems,
+
+                    })
+        
     
                 });
         
@@ -40,7 +59,7 @@ class Checkout extends Component {
         
 
         render() {
-            const { amount, cartTotal, cartItems } = this.props;
+            const { cartTotal, cartItems } = this.state;
             return (
                 <div className="ps-checkout ps-section--shopping">
                     <div className="container">
@@ -49,7 +68,7 @@ class Checkout extends Component {
                         </div>
                         <div className="ps-section__content">
                             <FormCheckoutInformation
-                                amount={amount}
+                                // amount={amount}
                                 cartTotal={cartTotal}
                                 cartItems={cartItems}
                             />

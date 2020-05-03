@@ -22,6 +22,7 @@ const makeKafkaRequestCart = async (req, res) => {
 
 // CREATE User
 router.route('/customer/:customerId/show-cart').get((req, res) => {
+  console.log("hello")
   req.params.path = 'show-cart';
   makeKafkaRequestCart(req, res);
 });

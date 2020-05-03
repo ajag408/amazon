@@ -2,33 +2,54 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import axios from 'axios';
-import { Form, Input } from 'antd';
+import { Form, Input, Collapse,Popconfirm, message } from 'antd';
 import {backendurl} from './../../../../backendurl';
+const { Panel } = Collapse;
+
 
 class FormCheckoutInformation extends Component {
     constructor(props) {
         super(props);
-       
-            
 
 
+        this.state = {
+            orderAddress: undefined,
+            savedAddresses: [],
+        };
+
+        axios.get(`${backendurl}/customer/getCustomer/5ea32fb4716ebc4f57fd8ae9`)
+        .then((res) => {
+            console.log("customer address",res.data[0].savedAddresses);
+            this.setState({
+                savedAddresses: res.data[0].savedAddresses
+            })
+
+        });
     }
-
-
 
     handleLoginSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                Router.push('/account/shipping');
-            } else {
-            }
-        });
+        if(this.state.orderAddress){
+            localStorage.setItem("shippingAddress", JSON.stringify(this.state.orderAddress));
+            Router.push('/account/shipping')
+        } else {
+            this.props.form.validateFields((err, values) => {
+                if (!err) {
+                    localStorage.setItem("shippingAddress", JSON.stringify(this.state.orderAddress));
+                    Router.push('/account/shipping');
+                } else {
+                }
+            });
+        }
+
     };
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
         const { amount, cartItems, cartTotal } = this.props;
+
+    
         return (
             <Form
                 className="ps-form--checkout"
@@ -38,9 +59,41 @@ class FormCheckoutInformation extends Component {
                         <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                             <div className="ps-form__billing-info">
                                 <h3 className="ps-form__heading">
-                                    Select Saved Address
+                                    Select Saved Address (Click to Select)
                                 </h3>
+                                <Collapse accordion>
+                                {this.state.savedAddresses.map((address, i) =>(
+                                
+                                    
+                                        <Panel header = {address.streetAddressLine_1}>
+                                            <p>{address.streetAddressLine_2}</p>
+                                            <p>{address.city},&nbsp;{address.state},&nbsp;{address.country}&nbsp;{address.zipCode}</p>
+                                            <p>{address.phoneNumber}</p>
+                                            <Popconfirm
+                                            title="Use this address?"
+                                            onConfirm={() =>{
+                                                this.setState({ orderAddress: address });
+                                                message.success('Address Saved');
+                                            }}
+                                                
+                                            onCancel={() =>{
+                                                this.setState({ orderAddress: undefined });
+                                                message.error('Address Discarded');
+                                            }}
+                                            okText="Yes"
+                                            cancelText="No"
+                                             >
+                                            <a href = '#'><b>Select</b></a>
+                                            </Popconfirm>
+                                        </Panel>
+                                        
+                                ))}
+                                    </Collapse><br></br><br></br>
+                                
 
+                                <h3 className="ps-form__heading">
+                                   Or
+                                </h3><br></br>
                                 <h3 className="ps-form__heading">
                                    Enter New Shipping Address
                                 </h3>
@@ -49,13 +102,13 @@ class FormCheckoutInformation extends Component {
                                         <div className="form-group">
                                             <Form.Item>
                                                 {getFieldDecorator(
-                                                    'firstName',
+                                                    'fullName',
                                                     {
                                                         rules: [
                                                             {
                                                                 required: true,
                                                                 message:
-                                                                    'Enter your first name!',
+                                                                    'Enter your name!',
                                                             },
                                                         ],
                                                     },
@@ -63,74 +116,68 @@ class FormCheckoutInformation extends Component {
                                                     <Input
                                                         className="form-control"
                                                         type="text"
-                                                        placeholder="First Name"
+                                                        placeholder="Full Name"
                                                     />,
                                                 )}
                                             </Form.Item>
                                         </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                        <div className="form-group">
+                                    </div><br></br>
+
+                                    
+                                </div>
+                                                             
+                                <div className="form-group">
                                             <Form.Item>
-                                                {getFieldDecorator('lastName', {
+                                                {getFieldDecorator('streetAddressLine_1', {
                                                     rules: [
                                                         {
                                                             required: true,
                                                             message:
-                                                                'Enter your last name!',
+                                                                'Enter your primary address!',
                                                         },
                                                     ],
                                                 })(
                                                     <Input
                                                         className="form-control"
                                                         type="text"
-                                                        placeholder="Last Name"
+                                                        placeholder="Street Address 1"
                                                     />,
                                                 )}
                                             </Form.Item>
                                         </div>
-                                    </div>
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {getFieldDecorator('streetAddressLine_2', {
+        
+                                        })(
+                                            <Input
+                                                className="form-control"
+                                                type="text"
+                                                placeholder="Secondary Address (optional)"
+                                            />,
+                                        )}
+                                    </Form.Item>
                                 </div>
                                 <div className="form-group">
                                     <Form.Item>
-                                        {getFieldDecorator('address', {
+                                        {getFieldDecorator('state', {
                                             rules: [
                                                 {
                                                     required: true,
                                                     message:
-                                                        'Enter an address!',
+                                                        'Enter a state',
                                                 },
                                             ],
                                         })(
                                             <Input
                                                 className="form-control"
                                                 type="text"
-                                                placeholder="Address"
+                                                placeholder="State"
                                             />,
                                         )}
                                     </Form.Item>
                                 </div>
-                                <div className="form-group">
-                                    <Form.Item>
-                                        {getFieldDecorator('apartment', {
-                                            rules: [
-                                                {
-                                                    required: false,
-                                                    message:
-                                                        'Enter an Apartment!',
-                                                },
-                                            ],
-                                        })(
-                                            <Input
-                                                className="form-control"
-                                                type="text"
-                                                placeholder="Apartment, suite, etc. (optional)"
-                                            />,
-                                        )}
-                                    </Form.Item>
-                                </div>
-                                <div className="row">
-                                    <div className="col-sm-6">
+                  
                                         <div className="form-group">
                                             <Form.Item>
                                                 {getFieldDecorator('city', {
@@ -150,6 +197,28 @@ class FormCheckoutInformation extends Component {
                                                 )}
                                             </Form.Item>
                                         </div>
+  
+                                    <div className="row">
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <Form.Item>
+                                                {getFieldDecorator('country', {
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message:
+                                                                'Enter a country!',
+                                                        },
+                                                    ],
+                                                })(
+                                                    <Input
+                                                        className="form-control"
+                                                        type="country"
+                                                        placeholder="Country"
+                                                    />,
+                                                )}
+                                            </Form.Item>
+                                        </div>
                                     </div>
                                     <div className="col-sm-6">
                                         <div className="form-group">
@@ -159,9 +228,9 @@ class FormCheckoutInformation extends Component {
                                                     {
                                                         rules: [
                                                             {
-                                                                required: false,
+                                                                required: true,
                                                                 message:
-                                                                    'Enter a postal oce!',
+                                                                    'Enter a postal code!',
                                                             },
                                                         ],
                                                     },
@@ -175,19 +244,32 @@ class FormCheckoutInformation extends Component {
                                             </Form.Item>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="ps-checkbox">
-                                        <input
-                                            className="form-control"
-                                            type="checkbox"
-                                            id="keep-update"
-                                        />
-                                        <label htmlFor="keep-update">
-                                            Save this information for next time
-                                        </label>
+                                    <div className="col-sm-6">
+                                        <div className="form-group">
+                                            <Form.Item>
+                                                {getFieldDecorator(
+                                                    'phoneNumber',
+                                                    {
+                                                        rules: [
+                                                            {
+                                                                required: true,
+                                                                message:
+                                                                    'Enter a phone number!',
+                                                            },
+                                                        ],
+                                                    },
+                                                )(
+                                                    <Input
+                                                        className="form-control"
+                                                        type="text"
+                                                        placeholder="Phone Number"
+                                                    />,
+                                                )}
+                                            </Form.Item>
+                                        </div>
                                     </div>
                                 </div>
+ 
                                 <div className="ps-form__submit">
                                     <Link href="/account/shopping-cart">
                                         <a>
@@ -217,12 +299,12 @@ class FormCheckoutInformation extends Component {
                                         <figure className="ps-block__items">
                                             {cartItems &&
                                             cartItems.map(product => (
-                                                <Link
-                                                    href="/"
-                                                    key={product.id}>
+                                                // <Link
+                                                //     href="/"
+                                                //     key={product.id}>
                                                     <a>
                                                         <strong>
-                                                            {product.title}
+                                                            {product.product.name}
                                                             <span>
                                                                     x
                                                                 {
@@ -232,17 +314,16 @@ class FormCheckoutInformation extends Component {
                                                         </strong>
                                                         <small>
                                                             $
-                                                            {product.quantity *
-                                                            product.price}
+                                                            {product.totalPrice}
                                                         </small>
                                                     </a>
-                                                </Link>
+                                                // </Link>
                                             ))}
                                         </figure>
                                         <figure>
                                             <figcaption>
                                                 <strong>Subtotal</strong>
-                                                <small>${amount}</small>
+                                                <small>${cartTotal}</small>
                                             </figcaption>
                                         </figure>
                                         <figure className="ps-block__shipping">
