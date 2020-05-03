@@ -6,9 +6,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false,
     },
+    productName: {
+      type: DataTypes.STRING,
+      allowNull:true,
+    },
     orderId: {
       type: DataTypes.NUMBER,
       allowNull:false,
+    },
+    customerName: {
+      type: DataTypes.STRING,
+      allowNull:true,
     },
     customerId: {
       type: DataTypes.STRING,
@@ -17,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     sellerId: {
       type: DataTypes.STRING,
       allowNull:false,
+    },
+    sellerName: {
+      type: DataTypes.STRING,
+      allowNull:true,
     },
     quantity: {
       type: DataTypes.NUMBER,
@@ -41,6 +53,7 @@ module.exports = (sequelize, DataTypes) => {
             'Packing', 
             'Out for Shipping', 
             'Package Arrived', 
+            'Out for Delivery',
             'Delivered',
             'Cancelled'
           ]],
