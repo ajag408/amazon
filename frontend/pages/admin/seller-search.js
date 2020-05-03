@@ -34,6 +34,7 @@ closeModal() {
         addCategoryIsOpen: false ,
         viewCategoryModal:false,
         viewProductsModalFlag:false,
+        viewSalesModalFlag:false,
         pageIndex:1
     });
 }
@@ -109,7 +110,7 @@ pageCountDec=async()=>{
 }
 this.viewProducts();
 }
-viewsSalesModal=async(seller)=>{
+viewSalesModal=async(seller)=>{
     await this.setState({ 
         viewSalesModalFlag:true,
         sellerId:seller._id,
@@ -127,6 +128,33 @@ viewsSalesModal=async(seller)=>{
             console.log("Status Code : ",response.status);
             if(response.status === 200){
                 let sales=response.data;
+            for(let i=0;i<sales.length;i++)
+            {
+               if(sales[i].salesMonth==1)
+               sales[i].salesMonth='JANUARY'
+               else if(sales[i].salesMonth==2)
+               sales[i].salesMonth='FEBRUARY'
+               else if(sales[i].salesMonth==3)
+               sales[i].salesMonth='MARCH'
+               else if(sales[i].salesMonth==4)
+               sales[i].salesMonth='APRIL'
+               else if(sales[i].salesMonth==5)
+               sales[i].salesMonth='MAY'
+               else if(sales[i].salesMonth==6)
+               sales[i].salesMonth='JUNE'
+               else if(sales[i].salesMonth==7)
+               sales[i].salesMonth='JULY'
+               else if(sales[i].salesMonth==8)
+               sales[i].salesMonth='AUGUST'
+               else if(sales[i].salesMonth==9)
+               sales[i].salesMonth='SEPTEMBER'
+               else if(sales[i].salesMonth==10)
+               sales[i].salesMonth='OCTOBER'
+               else if(sales[i].salesMonth==11)
+               sales[i].salesMonth='NOVEMBER'
+               else if(sales[i].salesMonth==12)
+               sales[i].salesMonth='DECEMBER'
+            }
                 this.setState({
                     sales
                 });
@@ -139,11 +167,16 @@ viewsSalesModal=async(seller)=>{
  }
 render()
 {
-let message;let sellerList;
+let message;let sellerList;let salesMessage;
 
 if(this.state.products.length==0)
 {
   message=( <div><h3>No Products Available</h3></div> )
+
+}
+if(this.state.sales.length==0)
+{
+  salesMessage=( <div><h3>No Sales Data To Show</h3></div> )
 
 }
 
@@ -265,6 +298,54 @@ if(this.state.sellers)
                         <td>{product.description} </td>
                         <td>{product.price} </td>
                           
+                        </tr>
+                    )}
+                     </tbody>
+                </table>
+                <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
+            <nav aria-label="Page navigation example">
+  <ul className="pagination justify-content-center">
+    <li className="page-item">
+      <a className="page-link" href="#" onClick={() => this.pageCountDec()} tabIndex="-1">Previous</a>
+    </li>
+                <li className="page-item"><a className="page-link" href="#">{this.state.pageIndex}</a></li>
+    <li className="page-item">
+      <a className="page-link" href="#" onClick={() => this.pageCountInc()}>Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
+     <center> 
+                                <Button variant="primary" onClick={this.closeModal}>
+                                    <b>Close</b>
+                                </Button>
+                            </center>
+                            </div>
+                            </div>
+                        </div>
+                        </Modal>
+
+                        <Modal
+                            isOpen={this.state.viewSalesModalFlag}
+                            onRequestClose={this.closeModal}
+                             contentLabel="Example Modal" >
+                           <div>             
+                            <div className="container">
+                            <div className="panel panel-default">
+                            <div className="panel-heading"><h3>{this.state.sellerName}</h3> </div>
+                            {salesMessage}
+                            <table className="table table-hover">
+                    <thead>
+                        <tr>
+                        <th>Sales Month</th>
+                        <th>Total Sales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.sales.map(sale =>
+                        <tr>
+                        <td>{sale.salesMonth} </td>
+                        <td>{sale.totalAmount} </td>
                         </tr>
                     )}
                      </tbody>

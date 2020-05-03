@@ -167,6 +167,54 @@ router.post("/getSalesOfSeller", async (req, res) => {
       res.status(results.status).end(results.message);
     }
   });
+  
+})
+
+//Get Order Details from Admin Page
+router.post("/orderSearch", async (req, res) => {
+
+  let msg = req.body;
+  msg.route = "Seller orders details";
+  req.body.path="seller_orders";
+  
+  console.log('request reached seller sales details'+JSON.stringify(req.body));
+  
+  kafka.make_request('admin', req.body, (err, results) => {
+    if (err) {
+      res.status(500).end("System Error");
+    }
+    else if (results.status === 200) {
+      let payload = results.message;
+      console.log(payload)
+      res.status(results.status).end(payload);
+    }
+    else {
+      res.status(results.status).end(results.message);
+    }
+  });
+})
+//update Order Item status from Admin Page
+router.post("/orderItemUpdate", async (req, res) => {
+
+  let msg = req.body;
+  msg.route = "Seller orders Item update";
+  req.body.path="seller_orderItemUpdate";
+  
+  console.log('request reached seller sales details'+JSON.stringify(req.body));
+  
+  kafka.make_request('admin', req.body, (err, results) => {
+    if (err) {
+      res.status(500).end("System Error");
+    }
+    else if (results.status === 200) {
+      let payload = results.message;
+      console.log(payload)
+      res.status(results.status).end(payload);
+    }
+    else {
+      res.status(results.status).end(results.message);
+    }
+  });
 })
 
 

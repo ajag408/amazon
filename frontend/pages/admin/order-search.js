@@ -12,7 +12,8 @@ class OrderSearch extends Component {
         
         orders:[],
         searchCriteria:'',
-        pageIndex:1
+        pageIndex:1,
+        orderStatus:'Package Arrived'
     };
     this.closeModal = this.closeModal.bind(this);
 }
@@ -29,10 +30,7 @@ searchCriteriaChange=(e)=>
 
 closeModal() {
     this.setState({
-        addCategoryIsOpen: false ,
-        viewCategoryModal:false,
-        viewProductsModalFlag:false,
-        pageIndex:1
+        openStatus:false
     });
 }
 
@@ -41,22 +39,54 @@ viewOrders=()=>
     let data = {
         searchCriteria:this.state.searchCriteria
     }
-    // axios.post(backendurl +'/admin/orderSearch',data)
-    // .then(response => {
-    //     console.log("Status Code : ",response.status);
-    //     if(response.status === 200){
-    //         let orders=response.data;
-    //         this.setState({
-    //             orders
-    //         });
-    //         console.log(orders)   
-    //     }
-    // })
-    // .catch(err => { 
-    //     this.setState({errorMessage:"Orders could not be viewed"});
-    // });
+    axios.post(backendurl +'/admin/orderSearch',data)
+    .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
+            let orders=response.data;
+            this.setState({
+                orders
+            });
+            console.log(orders)   
+        }
+    })
+    .catch(err => { 
+        this.setState({errorMessage:"Orders could not be viewed"});
+    });
 }
+openStatus(order) {
+    this.setState({
+        openStatus: true ,
+        orderItemId:order.id
+             
+    });
+}
+handleStatusChange=(e)=>{
 
+    this.setState({
+        orderStatus: e.target.value
+    })
+}
+onUpdateStatus=(e)=>{
+    e.preventDefault()
+    const data={orderItemId :this.state.orderItemId,
+                orderStatus:this.state.orderStatus      
+    };
+    axios.post(backendurl +'/admin/orderItemUpdate',data)
+    .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
+            alert("updated status")
+            this.setState({
+                openStatus:false 
+            });
+        }
+this.viewOrders();
+    })
+    .catch(err => { 
+        this.setState({errorMessage:"Order Item not updated"});
+    });
+}
 render()
 {
 let message;let orderList;
@@ -67,7 +97,11 @@ if(this.state.orders)
         <table className="table table-hover">
                     <thead>
                         <tr>
+                            <th>Sub Order Id</th>
+                            <th>Seller Name</th>
                             <th>Order Id</th>
+                            <th>Customer Name</th>
+                            <th>Product Name</th>
                             <th>Order Total</th>
                             <th>Order Date</th>
                             <th>Order Status</th>
@@ -76,8 +110,17 @@ if(this.state.orders)
                     <tbody>
                     {this.state.orders.map(order =>
                         <tr key={order.id}>
-                        <td>{order.total}</td>
-                        <td><Button onClick={() => this.changeStatus(order)}>Change Status</Button></td>
+                        <td>{order.id}</td>
+                        <td>{order.sellerName}</td>
+                        <td>{order.orderId}</td>
+                        <td>{order.customerName}</td>
+                        <td>{order.productName}</td>
+                        <td>{order.totalPrice}</td>
+                        <td>{order.createdAt}</td>
+                        <td>{order.status}</td>
+                        {(order.status=='Out for Shipping'||order.status=='Package Arrived'||order.status=='Out for Delivery')&&
+                        <td><Button onClick={() => this.openStatus(order)}>Change Status</Button></td>
+                    }
                         </tr>
                     )}
                      </tbody>
@@ -152,6 +195,34 @@ if(this.state.orders)
 
 {orderList}
 </div>
+<Modal
+                            isOpen={this.state.openStatus}
+                            onRequestClose={this.closeModal}
+                             contentLabel="Example Modal" >
+                            
+                         <form onSubmit={this.onUpdateStatus}>
+                         <div className="input-group mb-2">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text" id="basic-addon1"><b>Order Status</b></span>
+                                </div>
+                                <select value={this.state.orderStatus} onChange={this.handleStatusChange}  className="form-control" aria-label="category" aria-describedby="basic-addon1"  required >
+                                <option value="Package Arrived">Package Arrived</option>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                                </select>
+                            </div>
+                            <center>
+                            <Button variant="primary" type="submit">
+                                    <b>Update Status</b>
+                                    </Button>{" "}
+                                <Button variant="primary" onClick={this.closeModal}>
+                                    <b>Close</b>
+                                </Button>
+                            </center>
+                            </form>
+                    
+                        </Modal>
+
 </div>
     </div>
     

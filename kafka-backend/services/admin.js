@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const redisClient = require("../utils/redisConfig");
+let models = require('../models')
 
 const { secret } = require('../../backend/database/db');
 const ProductCategory = require('../models/productCategory');
 const Product=require('../models/product');
 const Sellers=require('../models/seller');
+const Order =require('../models/order');
+let OrderItem = models.OrderItem;
+let OrderItemUpdate = models.OrderItemUpdate;
+const Op = require('sequelize').Op;
+const { QueryTypes } = require('sequelize');
+const sequelize = require('sequelize');
+
 
 async function handle_request(msg, callback) {
     var res = {};
@@ -211,27 +219,69 @@ if(msg.path==("seller_products"))
              
 }
 if(msg.path==("seller_sales"))
-{
-
-  let products = await Product.find({"seller":msg.sellerId}).limit(50).skip(50*(msg.pageIndex-1));
-  console.log(products);
-  if(products)
-  {
-  let payload=JSON.stringify(products);
-                  console.log(payload)
-                  res.status = 200;
-                  res.message = payload;
-                  callback(null, res);
-  }
-  else{
+{ 
+  OrderItem.findAll({
+    attributes: [
+      [sequelize.fn('MONTH', sequelize.col('createdAt')),  ' salesMonth'],
+      [sequelize.fn('sum', sequelize.col('totalPrice')), 'totalAmount'] 
+    ],
+    where: { 'sellerId': `${msg.sellerId}`,'status' : {
+      [Op.notIn]: ["Cancelled"]
+    } },
+    group: [[sequelize.fn('MONTH', sequelize.col('createdAt'))]],
+    raw: true,
+    
+  }).then(result => {
+    console.log(" result in admin:  ", result);
+    let payload=JSON.stringify(result);
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+  }).catch(err =>{
+    console.log("Error is: ", err);
     res.status = 500;
     res.message = "Database Error";
     callback(null, res);
-  }
-             
+  });
+}
+if(msg.path==("seller_orders"))
+{ 
+  OrderItem.findAll({}).then(result => {
+    console.log(" result in admin:  ", result);
+    let payload=JSON.stringify(result);
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+  }).catch(err =>{
+    console.log("Error is: ", err);
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  });
+}
+  
+
+  if(msg.path==("seller_orderItemUpdate"))
+{ const orderItemUpdate = {
+  message: msg.orderStatus,
+  orderItemId: msg.orderItemId
+}
+  OrderItem.update({ status: msg.orderStatus },{ where:{id: msg.orderItemId}})
+    .then(result => {
+      OrderItemUpdate.create(orderItemUpdate).then((savedObj) => {
+        res.status = 200;
+        res.messgae = "updated status"
+    callback(null, res);
+  }).catch(err =>{
+    console.log("Error is: ", err);
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  });
+})
+}
 }
 
-}
-
+  
 
 exports.handle_request = handle_request;
