@@ -18,7 +18,8 @@ class Payment extends Component {
             cartTotal: '',
             cartItems: [],
             savedPayments: [],
-            orderPayment: ''
+            orderPayment: '',
+            customerName: ''
         };
     }
     componentDidMount(){
@@ -35,14 +36,15 @@ class Payment extends Component {
                 .then((res) => {
                     // console.log("customer address",res.data[0].savedAddresses);
                     this.setState({
-                        savedPayments: res.data[0].savedPaymentOptions
+                        savedPayments: res.data[0].savedPaymentOptions,
+                        customerName: res.data[0].name
                     })
     
                 });
 
                 axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
                 .then((res) => {
-                    console.log(res);
+                    console.log(res.data.cartItems);
                     this.setState({
                         shippingAddress: JSON.parse(storage.shippingAddress),
                         cartTotal: res.data.cartTotal,
@@ -57,7 +59,7 @@ class Payment extends Component {
         });
     }
 
-    handlePlaceOrder = e => {
+handlePlaceOrder = e => {
         e.preventDefault();
         if(this.state.orderPayment){
             console.log("got payment")
@@ -65,12 +67,42 @@ class Payment extends Component {
             this.props.form.validateFields((err, values) => {
                 if (!err) {
                     console.log('got payment from form')
+                    console.log(values)
+                    axios.post(`${backendurl}/customer/addPayment/5ea32fb4716ebc4f57fd8ae9`, values)
+                    .then((res) => {
+                      console.log(res);
+                        const orderObject = {
+                            customerId: '5ea32fb4716ebc4f57fd8ae9',
+                            address: this.state.shippingAddress,
+                            card: values,
+                            deliveryCharge: 20.00,
+                            finalTotal: parseInt(this.state.cartTotal) + 20.00,
+                            orderItems: this.state.cartItems,
+                            customerName: this.state.customerName,
+
+                        }
+                      })
+                    //   if (res.data.error) {
+                    //     this.props.form.setFieldsValue({
+                    //         name: '', email: '', password: '', type: undefined}
+                    //       , () => {
+                    //         var status = document.getElementById('statusMessage');
+                    //         if(res.data.type === "User"){
+                    //             status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                    //         } else if(res.data.type === "Seller"){
+                    //             status.innerHTML = 'Unsuccessful signup; Seller name must be unique';
+                    //         }
+                    //         status.style.display = "block";
+                    //       });
+                    //    }
+                    
                 } else {
                 }
             });
+                
         }
+    }
 
-    };
 
     render() {
         const { getFieldDecorator } = this.props.form;

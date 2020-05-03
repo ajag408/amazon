@@ -12,17 +12,27 @@ function handle_request(msg, callback) {
         }
       });
     }
-    //  else if (msg.path === 'get-all-students') {
-    //   studentSchema.find({}, (error, students) => {
-    //     if (error) {
-    //       console.log(error);
-    //       callback(null, error);
-    //     } else {
-    //       console.log('All Students : ', JSON.stringify(students));
-    //       callback(null, JSON.stringify(students));
-    //     }
-    //   });
-    // }
+     else if (msg.path === 'addPayment') {
+
+        Customer.find({ _id: msg.paramID }, (err, customer) => {
+            if (err) {
+            console.log(err);
+            } else {
+            //   console.log('before:', customer);
+            //   console.log('customer: ', JSON.stringify(customer));
+            console.log(customer);
+            customer[0].savedPaymentOptions.push(msg)
+            customer[0].save(function (err){
+                if(err) {
+                    console.log(err)
+                }else {
+                    callback(null, "Added payment");
+                }
+            })
+            
+            }
+        });
+    }
   }
   // }
   

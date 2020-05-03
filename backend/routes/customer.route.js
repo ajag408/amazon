@@ -24,7 +24,8 @@ router.route('/getCustomer/:id').get((req, res) => {
     });
   });
 
-  router.route('/addPayment/:id').get((req, res) => {
+  router.route('/addPayment/:id').post((req, res) => {
+      console.log("hello")
     req.body.path = 'addPayment';
     req.body.paramID = req.params.id;
     kafka.make_request('customer', req.body, (err, results) => {
