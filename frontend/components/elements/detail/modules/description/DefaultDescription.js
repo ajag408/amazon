@@ -19,12 +19,6 @@ class DefaultDescription extends Component {
     }
     render() {
 
-        let hasRatings ;
-        if(this.props.product && this.props.product.hasRatings){
-            hasRatings = <TabPane tab={`Reviews (${this.props.product.ratingAndReviews.length})`} key="4">
-                <PartialReview product={this.props.product} />
-            </TabPane>
-        }
         return (
             <div>
                 <div className="ps-product__content ps-tab-root">
@@ -32,7 +26,9 @@ class DefaultDescription extends Component {
                         <TabPane tab="Description" key="1">
                             <PartialDescription product={this.props.product}/>
                         </TabPane>
-                       {hasRatings}
+                        <TabPane tab={`Reviews (${this.props.product.ratingAndReviews.length})`} key="4">
+                            <PartialReview product={this.props.product} />
+                        </TabPane>
                     </Tabs>
                 </div>
             </div>

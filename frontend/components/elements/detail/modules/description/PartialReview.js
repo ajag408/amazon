@@ -22,7 +22,7 @@ class PartialReview extends Component{
         let form = e.currentTarget;
         let url = `${backendurl}/product/${this.state.product._id}/add-review`;
         let data = {
-            customerId: '5ea3ab017c376a636208a017',// Need to change to take from local storage
+            customerId: localStorage.getItem('user_id'),
             rating: this.state.userRating,
             review: form.review.value
         }
@@ -36,10 +36,13 @@ class PartialReview extends Component{
     render(){
         let {ratingAndReviews} = this.state.product;
         let stars = [0,0,0,0,0,0];
+        let customerRatingGiven = false;
         ratingAndReviews.forEach(ratingAndReview => {
+            if(localStorage.getItem('user_id') === ratingAndReview.customer._id){
+                customerRatingGiven = true;
+            }
             stars[ratingAndReview.rating]++;    
         });
-        console.log(stars);
         return (
             <div className="row">
                 <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 ">
@@ -97,7 +100,10 @@ class PartialReview extends Component{
                             </div>
                         })}
                     </div>
-                    <form onSubmit={e => this.handleOnSubmit(e)} className="ps-form--review">
+                    {customerRatingGiven ? 
+                    (null) 
+                    : 
+                    (<form onSubmit={e => this.handleOnSubmit(e)} className="ps-form--review">
                         <h4>Submit Your Review</h4>
                         <p>
                             Your email address will not be published. Required fields are marked
@@ -116,7 +122,8 @@ class PartialReview extends Component{
                         <div className="form-group submit">
                             <button className="ps-btn">Submit Review</button>
                         </div>
-                    </form>
+                    </form>)
+                    }
                 </div>
             </div>
         );
