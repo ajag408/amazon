@@ -17,7 +17,7 @@ class FormCheckoutInformation extends Component {
             savedAddresses: [],
         };
 
-        axios.get(`${backendurl}/customer/getCustomer/5ea32fb4716ebc4f57fd8ae9`)
+        axios.get(`${backendurl}/customer/getCustomer/` + localStorage.getItem('user_id'))
         .then((res) => {
             console.log("customer address",res.data[0].savedAddresses);
             this.setState({

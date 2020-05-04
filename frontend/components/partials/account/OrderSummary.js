@@ -32,7 +32,7 @@ class OrderSummary extends Component {
                 Router.push('/account/checkout')
             } else {
 
-                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id +  `/show-cart`)
                 .then((res) => {
                     console.log(res.data.cartItems);
                     console.log(storage.payment);
@@ -54,7 +54,10 @@ class OrderSummary extends Component {
                         localStorage.removeItem('orderStatus');
                         localStorage.removeItem('paid');
                         console.log("storage", localStorage);
-                        //clear cart
+                        axios.post(`${backendurl}/cart/customer/` + storage.user_id +  `/clear-cart`)
+                        .then((res) => {
+                            console.log(res);
+                        })
                     })
         
     

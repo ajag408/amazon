@@ -43,14 +43,19 @@ class Checkout extends Component {
     
                 // });
 
-                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id + `/show-cart`)
                 .then((res) => {
                     console.log(res);
+                    if(res.data.cartItems.length == 0){
+                        alert("Cart is empty! Go shop!")
+                        Router.push('/')
+                    } else {
                     this.setState({
                         cartTotal: res.data.cartTotal,
                         cartItems: res.data.cartItems,
 
                     })
+                }
         
     
                 });

@@ -30,7 +30,7 @@ class Shipping extends Component {
             } else {
 
 
-                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id+ `/show-cart`)
                 .then((res) => {
                     console.log(res);
                     this.setState({
