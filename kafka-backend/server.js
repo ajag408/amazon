@@ -12,7 +12,6 @@ const sellerService = require('./services/seller');
 const orderService = require('./services/order');
 const customerService = require('./services/customer');
 
-
 function handleTopicRequest(topic_name, fname) {
 
   const consumer = connection.getConsumer(topic_name);

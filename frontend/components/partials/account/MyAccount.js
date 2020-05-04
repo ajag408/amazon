@@ -149,7 +149,7 @@ class MyAccount extends Component {
              //   || storage.role != "Customer"
                 Router.push('/account/login')
             } else {
-                debugger;
+                // debugger;
                 // var data = {
                 //     userId : storage.user_id
                 // };

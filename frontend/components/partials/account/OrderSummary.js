@@ -1,44 +1,61 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
-import { getCart } from '../../../store/cart/action';
-import axios from 'axios';
 import Link from 'next/link';
-import { Router } from 'next/router';
+// import { Form, Input, Select, Collapse,Popconfirm, message } from 'antd';
+import axios from 'axios';
+
+import  Router  from 'next/router';
 import {backendurl} from './../../../backendurl';
 
-class Shipping extends Component {
+// const { Option } = Select;
+// const { Panel } = Collapse;
+class OrderSummary extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             storage: '',
             shippingAddress: '',
             cartTotal: '',
-            cartItems: []
-
+            cartItems: [],
+            payment: '',
+            orderId: 0,
+            orderStatus: ''
         };
     }
-
     componentDidMount(){
         this.setState({ 
             storage : localStorage
         }, () => {
             const {storage} = this.state;
-            if(!storage.shippingAddress){
+            if(!storage.paid || !storage.shippingAddress){
 
                 Router.push('/account/checkout')
             } else {
 
-
                 axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
                 .then((res) => {
-                    console.log(res);
+                    console.log(res.data.cartItems);
+                    console.log(storage.payment);
+                    console.log(JSON.parse(storage.payment))
+                   
                     this.setState({
                         shippingAddress: JSON.parse(storage.shippingAddress),
                         cartTotal: res.data.cartTotal,
                         cartItems: res.data.cartItems,
+                        payment: JSON.parse(storage.payment),
+                        orderId: storage.orderId,
+                        orderStatus: storage.orderStatus
 
-                    }, ()=>{console.log(this.state)})
+                    }, ()=>{
+                        
+                        localStorage.removeItem('shippingAddress');
+                        localStorage.removeItem('payment');
+                        localStorage.removeItem('orderId');
+                        localStorage.removeItem('orderStatus');
+                        localStorage.removeItem('paid');
+                        console.log("storage", localStorage);
+                        //clear cart
+                    })
         
     
                 });
@@ -48,60 +65,56 @@ class Shipping extends Component {
     }
 
     render() {
-        const { cartTotal, cartItems, shippingAddress } = this.state;
+        const { cartTotal, cartItems, shippingAddress, payment, orderId, orderStatus } = this.state;
         return (
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
                     <div className="ps-section__header">
-                        <h1>Shipping Information</h1>
+                        <h1>Order Summary (Save for Your Records)</h1>
                     </div>
                     <div className="ps-section__content">
                         <div className="row">
                             <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                                 <div className="ps-block--shipping">
+                                <h3>Order #: {orderId}</h3>
+                                <h3>Order Status: {orderStatus}</h3>
+                                <h3>Ship To</h3>
                                     <div className="ps-block__panel">
                                         <figure>
-                                            <small>Name</small>
-                                            <p>{shippingAddress.fullName}</p>
-                                            <Link href="/account/checkout">
-                                                <a>Change</a>
-                                            </Link>
-                                        </figure>
-                                        <figure>
-                                            <small>Ship to</small>
-                                            <p>
-                                                {shippingAddress.streetAddressLine_1} {shippingAddress.zipCode}</p> 
-                                            
-                                            <Link href="/account/checkout">
-                                                <a>Change</a>
-                                            </Link>
-                                        </figure>
+                                                <small>{shippingAddress.fullName}</small>
+                                        
+                                            </figure>
+                                            <figure>
+                                                <small>{shippingAddress.streetAddressLine_1}</small></figure>
+                                                <figure><small>{shippingAddress.streetAddressLine_2}</small></figure>
+                                                <figure><small>{shippingAddress.city}, {shippingAddress.state}, {shippingAddress.country} {shippingAddress.zipCode} </small></figure>
+                                           
                                     </div>
-                                    <h4>Shipping Method</h4>
+                                    <h3>Shipping Method</h3>
                                     <div className="ps-block__panel">
                                         <figure>
                                             <small>
                                                 Standard Shipping
                                             </small>
-                                            <strong>$20.00</strong>
+                                            
                                         </figure>
                                     </div>
-                                    <div className="ps-block__footer">
-                                        <Link href="/account/checkout">
-                                            <a>
-                                                <i className="icon-arrow-left mr-2"></i>
-                                                Return to information
-                                            </a>
-                                        </Link>
-                                        <Link href="/account/payment">
-                                            <a className="ps-btn">
-                                                Continue to payment
-                                            </a>
-                                        </Link>
+                                    <h3>Payment Method</h3>
+                                    <div className="ps-block__panel">
+                                            <figure>
+                                                <small>Name on Card: {payment.NameOnCard}</small><br></br>
+                                               
+                                            </figure>
+                                            <figure>
+                                                
+                                                <small>CVV: {payment.cvv}</small>
+                                            </figure>
                                     </div>
+                                
+
                                 </div>
                             </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12  ps-block--checkout-order">
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 ">
                                 <div className="ps-form__orders">
                                     <div className="ps-block--checkout-order">
                                         <div className="ps-block__content">
@@ -115,8 +128,8 @@ class Shipping extends Component {
                                                 {cartItems &&
                                                     cartItems.map(product => (
                                                         // <Link
-                                                            // href="/"
-                                                            // key={product.id}>
+                                                        //     href="/"
+                                                        //     key={product.id}>
                                                             <a>
                                                                 <strong>
                                                                     {
@@ -134,7 +147,7 @@ class Shipping extends Component {
                                                                     {product.totalPrice}
                                                                 </small>
                                                             </a>
-                                                        // </Link>
+                                                    //     </Link>
                                                     ))}
                                             </figure>
                                             <figure>
@@ -151,7 +164,7 @@ class Shipping extends Component {
                                             </figure>
                                             <figure className="ps-block__total">
                                                 <h3>
-                                                    Total
+                                                    Total (PAID)
                                                     <strong>
                                                         ${parseInt(cartTotal) + 20}
                                                         .00
@@ -170,4 +183,10 @@ class Shipping extends Component {
     }
 }
 
-export default Shipping;
+// const mapStateToProps = state => {
+//     return state.cart;
+// };
+
+
+export default OrderSummary;
+

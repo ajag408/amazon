@@ -17,7 +17,7 @@ class ShoppingCartPage extends Component {
         this.handler = this.handler.bind(this);
     }
     componentDidMount() {
-        Axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`).then(resp =>{
+        Axios.get(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/show-cart`).then(resp =>{
             if(resp.status === 200 && resp.data){
                 this.setState(resp.data);
             }
