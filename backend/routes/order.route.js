@@ -41,6 +41,14 @@ router.route('/customer/getAllOrder/:customerId/:type').get((req, res) => {
   makeKafkaRequestCart(req, res);
 });
 
+// cancel openOrderItem Customer
+router.route('/customer/:customerId/orderItem/:orderItemId/cancel').get((req, res) => {
+  console.log("Cancel order item by customer",req.params );
+  req.params.path = 'cancel-orderItem';
+  req.params.usertype = 'Customer';
+  makeKafkaRequestCart(req, res);
+});
+
 // Get OrderItem By OrderId
 router.route('/getAllOrder/:orderId').get((req, res) => {
   console.log(req.params + "\n Query Params\n", req.query);

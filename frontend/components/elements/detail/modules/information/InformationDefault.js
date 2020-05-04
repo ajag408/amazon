@@ -50,7 +50,7 @@ class InformationDefault extends Component {
                 <h1>{product.name}</h1>
                 <div className="ps-product__meta">
                     <div className="ps-product__rating">
-                    <Rate disabled allowHalf defaultValue={product.ratings.toFixed(1)}/>
+                    <Rate disabled allowHalf value={product.ratings.toFixed(1)}/>
                         <span>({product.ratingAndReviews.length} review)</span>
                     </div>
                 </div>

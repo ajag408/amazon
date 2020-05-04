@@ -29,7 +29,7 @@ async function handle_request(msg, callback) {
     } else if (parseInt(msg.params.type) === 2) {
       conditions = {
         status: {
-          [Op.or]: ["Delivered", "Cancelled"]
+          [Op.or]: ["Delivered"]
         }
       }
     } else if(parseInt(msg.params.type) === 3){   // Only Cancelled Orders
@@ -47,7 +47,7 @@ async function handle_request(msg, callback) {
 
     OrderItem.findAll({
       where: Object.assign({}, userSpecCond , conditions),
-      include: [{ model: Order, as: 'order' }],
+      include: [{ model: Order, as: 'order' },{ model: OrderItemUpdate, as: 'orderItemUpdate' }],
       order: [['createdAt', 'DESC']],
     }).then(orderList => {
       callback(null, orderList)
@@ -75,6 +75,19 @@ async function handle_request(msg, callback) {
       include: [{ model: Order, as: 'order' }],
     }).then(orderList => {
       callback(null, orderList)
+    })
+      .catch(e => {
+        callback(null, { error: e })
+      })
+  }
+
+  if (msg.params.path === 'cancel-orderItem') {
+    OrderItem.findAll({
+      where: { id: msg.params.orderItemId },
+      include: [{ model: Order, as: 'order' }],
+    }).then(async orderItems => {
+      await orderItems[0].update({status: 'Cancelled'})
+      callback(null, orderItems[0])
     })
       .catch(e => {
         callback(null, { error: e })
