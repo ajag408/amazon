@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Wishlist from '../../components/partials/account/Wishlist';
 import NavigationList from '../../components/shared/navigation/NavigationList';
 import {backendurl} from './../../backendurl';
-
+import Router from 'next/router';
 
 class ShoppingCartPage extends Component {
     constructor(props) {
@@ -17,11 +17,23 @@ class ShoppingCartPage extends Component {
         this.handler = this.handler.bind(this);
     }
     componentDidMount() {
-        Axios.get(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/show-cart`).then(resp =>{
-            if(resp.status === 200 && resp.data){
-                this.setState(resp.data);
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
+                Router.push('/account/login')
+            } else {
+                Axios.get(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/show-cart`).then(resp =>{
+                    if(resp.status === 200 && resp.data){
+                        this.setState(resp.data);
+                    }
+                })
             }
-        })
+        });
+
     }
     handler(data) {
         this.setState(data)

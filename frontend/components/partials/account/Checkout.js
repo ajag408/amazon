@@ -24,9 +24,12 @@ class Checkout extends Component {
             storage : localStorage
         }, () => {
             console.log("hello")
+            
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
-
+            // alert(storage.role);
+            // console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
                 Router.push('/account/login')
             } else {
                 //replace hard-coded with local storage id

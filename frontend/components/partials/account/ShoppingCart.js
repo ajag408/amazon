@@ -12,14 +12,16 @@ class ShoppingCart extends Component {
             storage: '',
             setParentState: props.setState
         }
+        
     }
     componentDidMount(){
         this.setState({ 
             storage : localStorage
         }, () => {
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
-             //   || storage.role != "Customer"
+            // console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
                 Router.push('/account/login')
             }
         });
@@ -71,6 +73,7 @@ class ShoppingCart extends Component {
         if (cartItems && cartItems.length > 0) {
             currentCartItems = cartItems;
         }
+       
         return (
             <div className="ps-section--shopping ps-shopping-cart">
                 <div className="container">

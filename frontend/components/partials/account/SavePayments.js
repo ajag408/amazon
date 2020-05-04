@@ -30,7 +30,7 @@ class ManagePayment extends Component {
         }, () => {
             console.log("hello")
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
+            if(!storage.token || storage.role !== "Customer"){
 
                 Router.push('/account/login')
             } else {
