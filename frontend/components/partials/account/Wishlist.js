@@ -16,7 +16,7 @@ class Wishlist extends Component {
         let data = {
             productIds: [product]
         }
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/move-to-cart`,data).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/move-to-cart`,data).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }
@@ -24,7 +24,7 @@ class Wishlist extends Component {
     };
 
     handleRemoveWishListItem(product,handler){
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/remove-from-cart/${product}`).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }

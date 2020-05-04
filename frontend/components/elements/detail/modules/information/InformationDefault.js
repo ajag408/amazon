@@ -24,7 +24,7 @@ class InformationDefault extends Component {
         let data = {
             quantity: this.state.quantity
         }
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/add-to-cart/${product._id}`,data).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/add-to-cart/${product._id}`,data).then(resp =>{
             if(resp.status === 200 && resp.data){
                 this.setState({addedToCart: true});
             }
