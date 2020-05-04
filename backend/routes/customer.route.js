@@ -41,21 +41,54 @@ router.route('/addPayment/:id').post((req, res) => {
     });
 });
 
-router.route('/placeOrder/:id').post((req, res) => {
-
-    req.body.path = 'placeOrder';
+  router.route('/editPayment/:id').post((req, res) => {
+   
+    req.body.path = 'editPayment';
     req.body.paramID = req.params.id;
     kafka.make_request('customer', req.body, (err, results) => {
-        if (err) {
-            console.log('Inside err');
-            res.json({
-                status: 'error',
-                msg: 'System Error, Try Again.',
-            });
-        } else {
-            res.json(results)
-        }
+      if (err) {
+        console.log('Inside err');
+        res.json({
+          status: 'error',
+          msg: 'System Error, Try Again.',
+        });
+      } else {
+       res.json("edited payment")
+      }
     });
+  });
+  router.route('/deletePayment/:id').post((req, res) => {
+   
+    req.body.path = 'deletePayment';
+    req.body.paramID = req.params.id;
+    kafka.make_request('customer', req.body, (err, results) => {
+      if (err) {
+        console.log('Inside err');
+        res.json({
+          status: 'error',
+          msg: 'System Error, Try Again.',
+        });
+      } else {
+       res.json("deleted payment")
+      }
+    });
+  });
+
+  router.route('/placeOrder/:id').post((req, res) => {
+ 
+  req.body.path = 'placeOrder';
+  req.body.paramID = req.params.id;
+  kafka.make_request('customer', req.body, (err, results) => {
+    if (err) {
+      console.log('Inside err');
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+    } else {
+     res.json(results)
+    }
+  });
 });
 
 

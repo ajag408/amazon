@@ -24,9 +24,12 @@ class Checkout extends Component {
             storage : localStorage
         }, () => {
             console.log("hello")
+            
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
-
+            // alert(storage.role);
+            // console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
                 Router.push('/account/login')
             } else {
                 //replace hard-coded with local storage id
@@ -40,14 +43,19 @@ class Checkout extends Component {
     
                 // });
 
-                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id + `/show-cart`)
                 .then((res) => {
                     console.log(res);
+                    if(res.data.cartItems.length == 0){
+                        alert("Cart is empty! Go shop!")
+                        Router.push('/')
+                    } else {
                     this.setState({
                         cartTotal: res.data.cartTotal,
                         cartItems: res.data.cartItems,
 
                     })
+                }
         
     
                 });

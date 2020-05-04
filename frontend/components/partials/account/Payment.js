@@ -32,7 +32,7 @@ class Payment extends Component {
                 Router.push('/account/checkout')
             } else {
 
-                axios.get(`${backendurl}/customer/getCustomer/5ea32fb4716ebc4f57fd8ae9`)
+                axios.get(`${backendurl}/customer/getCustomer/` + storage.user_id)
                 .then((res) => {
                     // console.log("customer address",res.data[0].savedAddresses);
                     this.setState({
@@ -42,7 +42,7 @@ class Payment extends Component {
     
                 });
 
-                axios.get(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/show-cart`)
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id+ `/show-cart`)
                 .then((res) => {
                     console.log(res.data.cartItems);
                     this.setState({
@@ -65,7 +65,7 @@ handlePlaceOrder = e => {
             localStorage.setItem('payment', JSON.stringify(this.state.orderPayment))
             console.log("got payment")
             const orderObject = {
-                customerId: '5ea32fb4716ebc4f57fd8ae9',
+                customerId: this.state.storage.user_id,
                 address: this.state.shippingAddress,
                 card: this.state.orderPayment,
                 deliveryCharge: 20.00,
@@ -74,7 +74,7 @@ handlePlaceOrder = e => {
                 customerName: this.state.customerName,
 
             }
-            axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
+            axios.post(`${backendurl}/customer/placeOrder/` +this.state.storage.user_id, orderObject)
             .then((res) => {
               console.log(res);
               localStorage.setItem("paid", true)
@@ -88,13 +88,13 @@ handlePlaceOrder = e => {
                     console.log('got payment from form')
                     console.log(values)
                     localStorage.setItem('payment', JSON.stringify(values))
-                    axios.post(`${backendurl}/customer/addPayment/5ea32fb4716ebc4f57fd8ae9`, values)
+                    axios.post(`${backendurl}/customer/addPayment/` +this.state.storage.user_id, values)
                     .then((res) => {
                       console.log(res);
                       
                       })
                       const orderObject = {
-                        customerId: '5ea32fb4716ebc4f57fd8ae9',
+                        customerId: this.state.storage.user_id,
                         address: this.state.shippingAddress,
                         card: values,
                         deliveryCharge: 20.00,
@@ -103,7 +103,7 @@ handlePlaceOrder = e => {
                         customerName: this.state.customerName,
 
                     }
-                    axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
+                    axios.post(`${backendurl}/customer/placeOrder/` +this.state.storage.user_id, orderObject)
                     .then((res) => {
                       console.log(res);
                       localStorage.setItem("paid", true)

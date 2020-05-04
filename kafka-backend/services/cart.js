@@ -127,6 +127,27 @@ async function handle_request(msg, callback) {
     await customer.save().catch(e => callback(null,{error: e}));
     return callback(null,customer.shoppingCart);
   }; 
+
+  if(msg.params.path === 'clear-cart'){
+    Customer.find({ _id: msg.params.customerId }, (err, customer) => {
+      if (err) {
+      console.log(err);
+      } else {
+      //   console.log('before:', customer);
+      //   console.log('customer: ', JSON.stringify(customer));
+      console.log(customer);
+      customer[0].shoppingCart.cartItems = [];
+      customer[0].save(function (err){
+          if(err) {
+              console.log(err)
+          }else {
+              callback(null, "Cleared cart");
+          }
+      })
+      
+      }
+  });
+  }; 
 }
 
 exports.handle_request = handle_request;

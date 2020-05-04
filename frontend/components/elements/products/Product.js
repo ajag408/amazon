@@ -45,8 +45,8 @@ class Product extends Component {
     handleEditClick(e) {
         e.preventDefault();
         Router.push({
-            pathname: '/pages/faqs',
-            query: { product: this.props.product }
+            pathname: '/vendor/addproduct',
+            query: { product: JSON.stringify(this.props.product) }
 
         })
     }
