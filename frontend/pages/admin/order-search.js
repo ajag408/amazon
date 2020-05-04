@@ -18,9 +18,26 @@ class OrderSearch extends Component {
     this.closeModal = this.closeModal.bind(this);
 }
 componentDidMount(){
-    this.viewOrders();   
+    this.setState({ 
+        storage : localStorage
+    }, () => {
+        const {storage} = this.state;
+        if(!storage.token || storage.role != "Admin"){
+         //   || storage.role != "Customer"
+            Router.push('/account/login')
+        } else {
+            this.viewOrders();    
+        }
+    });
+     
 }
-
+handleLogout(e){
+    e.preventDefault();
+    console.log("hello")
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    Router.push('/account/login')
+};
 searchCriteriaChange=(e)=>
 {
     this.setState({
@@ -157,6 +174,11 @@ if(this.state.orders)
                     <li>
                     <Link href="/account/order-tracking">
                             <a>Analytics Dashboard</a>
+                        </Link>
+                    </li>
+                    <li>
+                    <Link href='/admin/order-search' >
+                            <a onClick={this.handleLogout}>Logout</a>
                         </Link>
                     </li>
                    
