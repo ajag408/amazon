@@ -11,11 +11,11 @@ async function handle_request(msg, callback) {
     console.log("Inside order" + typeof Order, "\n", Order);
     let userSpecCond;
     
-    if (parseInt(msg.params.usertype) === 'Seller') {  
+    if (msg.params.usertype === 'Seller') {  
       userSpecCond = { sellerId: msg.params.sellerId }
     }
 
-    if (parseInt(msg.params.usertype) === 'Customer') {  
+    if (msg.params.usertype === 'Customer') {  
       userSpecCond = { customerId: msg.params.customerId }
     }
 
