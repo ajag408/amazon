@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import axios from 'axios';
+import {backendurl} from '../../../backendurl';
 
 import { Form, Input, Select} from 'antd';
 
@@ -17,12 +18,32 @@ class Register extends Component {
         this.onChangeType = this.onChangeType.bind(this);
 
         this.state = {
+            storage: '',
             name: '',
             email: '',
             password: '',
             role: '',
 
         };
+    }
+    componentDidMount(){
+
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(storage.token){
+                console.log(storage);
+                if(storage.role == 'Admin'){
+                    Router.push('/admin/inventory')
+                } else {
+                    Router.push('/account/my-account')
+                }
+
+               
+            } 
+        });
+        
     }
     onChangeName(e) {
         this.setState({ name: e.target.value });
@@ -56,21 +77,25 @@ class Register extends Component {
                     password,
                     role,
                   };
-                  console.log(userObject);
-                  axios.post('http://localhost:4000/users/new-user', userObject)
+                  console.log(backendurl +  " "+ userObject);
+                  axios.post(backendurl+'/users/new-user', userObject)
                     .then((res) => {
                       console.log(res);
-                      if (res.data.name === "MongoError") {
+                      if (res.data.error) {
                         this.props.form.setFieldsValue({
                             name: '', email: '', password: '', type: undefined}
                           , () => {
                             var status = document.getElementById('statusMessage');
-                            status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                            if(res.data.type === "User"){
+                                status.innerHTML = 'Unsuccessful signup; make sure email is unique';
+                            } else if(res.data.type === "Seller"){
+                                status.innerHTML = 'Unsuccessful signup; Seller name must be unique';
+                            }
                             status.style.display = "block";
                           });
 
 
-                      } else {
+                     }  else {
 
 
                         Router.push('/account/login')

@@ -6,8 +6,75 @@ import VendorProducts from './modules/VendorProducts';
 import NextArrow from '../../elements/carousel/NextArrow';
 import PrevArrow from '../../elements/carousel/PrevArrow';
 import Rating from '../../elements/Rating';
+import Router from 'next/router';
+import axios from 'axios';
+import { backendurl } from '../../../backendurl';
+import { Form, Input, notification } from 'antd';
+import Link from 'next/link';
 
 class VendorStore extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            storage: ''
+            ,profileData : {}
+            ,sellerProducts : []
+        };
+
+        // this.onChangeName = this.onChangeName.bind(this);
+        // this.onChangeAddress = this.onChangeAddress.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
+        // this.uploadButton = this.uploadButton.bind(this);
+        // this.onCancelClick = this.onCancelClick.bind(this);
+        // this.onUploadClick = this.onUploadClick.bind(this);
+        // this.onProfilePicUpload = this.onProfilePicUpload.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.token){
+                Router.push('/account/login')
+            } else {
+                var sellerId = this.props.sellerId;
+                axios.get(backendurl+'/seller/getProfileData/'+sellerId)
+                .then((res) => {
+                    console.log(res);
+                   if(res.status == 500 || res.status == 204 ){
+                       console.log(res.data.message);
+                    } else {
+                        this.setState({
+                            profileData: res.data.message
+                        });
+                    }
+                });
+
+                var data = {
+                    sellerId: [sellerId]
+                };
+                debugger;
+                axios.post(backendurl + '/product/search-product/', data)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.status === 200 && res.data) {
+                            this.setState({
+                                sellerProducts: res.data.message
+                            })
+                        } else {
+                            console.log(res.data.message);
+                        }
+                    });
+            }
+        });
+    }
+
+    // componentDidMount(){
+
+    // }
+
     render() {
         const carouselSetting = {
             dots: false,
@@ -57,6 +124,21 @@ class VendorStore extends Component {
                 },
             ],
         };
+
+        var profileData = this.state.profileData;
+
+        debugger;
+        var SellerRating = 0;
+        var totalNumberOfRatings = 0;
+        if(this.state.sellerProducts && this.state.sellerProducts.length > 0){
+            var totalRating = 0;
+            for (let i = 0 ; i< this.state.sellerProducts.length; i++){
+                totalRating += this.state.sellerProducts[i].ratings;
+                totalNumberOfRatings += this.state.sellerProducts[i].ratingAndReviews.length;
+            }
+            SellerRating = totalRating/this.state.sellerProducts.length;
+        }
+
         return (
             <div className="ps-vendor-store">
                 <div className="container">
@@ -65,22 +147,21 @@ class VendorStore extends Component {
                             <div className="ps-block--vendor">
                                 <div className="ps-block__thumbnail">
                                     <img
-                                        src="/static/img/vendor/vendor-store.jpg"
-                                        alt="martfury"
+                                        src={profileData && profileData.profilePicture !== ""?profileData.profilePicture:"/static/img/vendor/vendor-store.jpg"}
+                                        alt="Image Load Error"
                                     />
                                 </div>
                                 <div className="ps-block__container">
                                     <div className="ps-block__header">
-                                        <h4>Digitalworld us</h4>
-                                        <Rating />
+                                        <h4>{profileData?profileData.name:""}</h4>
+                                        <Rating ratings = {SellerRating}/>
                                         <p>
-                                            <strong>85% Positive</strong> (562
-                                            rating)
+                                            ({totalNumberOfRatings} rating)
                                         </p>
                                     </div>
                                     <div className="ps-block__divider"></div>
                                     <div className="ps-block__content">
-                                        <p>
+                                        {/* <p>
                                             <strong>Digiworld US</strong>, New
                                             York’s no.1 online retailer was
                                             established in May 2012 with the aim
@@ -89,13 +170,12 @@ class VendorStore extends Component {
                                             implementation of best practices
                                             both online
                                         </p>
-                                        <span className="ps-block__divider"></span>
+                                        <span className="ps-block__divider"></span> */}
                                         <p>
-                                            <strong>Address</strong> 325 Orchard
-                                            Str, New York, NY 10002
+                                            <strong>Address</strong> {profileData? profileData.addresses:""}
                                         </p>
-                                        <figure>
-                                            <figcaption>
+                                        {/* <figure>
+                                                <figcaption>
                                                 Foloow us on social
                                             </figcaption>
                                             <ul className="ps-list--social-color">
@@ -128,20 +208,20 @@ class VendorStore extends Component {
                                                     </a>
                                                 </li>
                                             </ul>
-                                        </figure>
+                                        </figure> */}
                                     </div>
-                                    <div className="ps-block__footer">
+                                    {/* <div className="ps-block__footer">
                                         <p>
                                             Call us directly
                                             <strong>(+053) 77-637-3300</strong>
                                         </p>
                                         <p>or Or if you have any question</p>
-                                        <a
+                                        {/* <a
                                             className="ps-btn ps-btn--fullwidth"
                                             href="">
                                             Contact Seller
                                         </a>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -152,16 +232,16 @@ class VendorStore extends Component {
                                         <li className="active">
                                             <a href="#">Products</a>
                                         </li>
-                                        <li>
+                                        {/* <li>
                                             <a href="#">Reviews</a>
-                                        </li>
-                                        <li>
+                                        </li> */}
+                                        {/* <li>
                                             <a href="#">About</a>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                                 <div className="ps-block__right">
-                                    <form
+                                    {/* <form
                                         className="ps-form--search"
                                         action="/"
                                         method="get">
@@ -173,13 +253,13 @@ class VendorStore extends Component {
                                         <button>
                                             <i className="fa fa-search"></i>
                                         </button>
-                                    </form>
+                                    </form> */}
                                 </div>
                             </div>
-                            <div className="ps-vendor-best-seller">
+                            {/* <div className="ps-vendor-best-seller">
                                 <div className="ps-section__header">
                                     <h3>Best Seller items</h3>
-                                    <div className="ps-section__nav">
+                                     <div className="ps-section__nav">
                                         <a
                                             className="ps-carousel__prev"
                                             href="#vendor-bestseller">
@@ -205,8 +285,8 @@ class VendorStore extends Component {
                                             ))}
                                     </Slider>
                                 </div>
-                            </div>
-                            <VendorProducts />
+                            </div> */}
+                            <VendorProducts sellerProducts = {this.state.sellerProducts}/>
                         </div>
                     </div>
                 </div>

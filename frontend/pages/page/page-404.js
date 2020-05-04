@@ -5,6 +5,7 @@ import Newletters from '../../components/partials/commons/Newletters';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
 import NavigationList from '../../components/shared/navigation/NavigationList';
+import ListOrder from '../../components/partials/vendor/ListOrder';
 import Link from 'next/link';
 
 const Page404 = () => {
@@ -14,7 +15,7 @@ const Page404 = () => {
             <HeaderDefault />
             <HeaderMobile />
             <NavigationList />
-            <div className="ps-page--404">
+            {/* <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">
                         <figure>
@@ -44,8 +45,9 @@ const Page404 = () => {
                     </div>
                 </div>
             </div>
-            <Newletters layout="container" />
-            <FooterDefault />
+            <Newletters layout="container" /> */}
+            <ListOrder></ListOrder>
+            
         </div>
     );
 };

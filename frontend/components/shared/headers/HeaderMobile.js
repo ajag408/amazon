@@ -14,13 +14,13 @@ class HeaderMobile extends Component {
             <header className="header header--mobile">
                 <div className="header__top">
                     <div className="header__left">
-                        <p>Welcome to Martfury Online Shopping Store !</p>
+                        <p>Welcome to Amazon Online Shopping Store !</p>
                     </div>
                     <div className="header__right">
                         <ul className="navigation__extra">
                             <li>
                                 <Link href="/vendor/become-a-vendor">
-                                    <a>Sell on Martfury</a>
+                                    <a>Sell on Amazon</a>
                                 </Link>
                             </li>
                             <li>
@@ -28,12 +28,12 @@ class HeaderMobile extends Component {
                                     <a>Tract your order</a>
                                 </Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <CurrencyDropdown />
-                            </li>
-                            <li>
+                            </li> */}
+                            {/* <li>
                                 <LanguageSwicher />
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>

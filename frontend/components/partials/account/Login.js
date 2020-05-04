@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-// import { login } from '../../../store/auth/action';
+import {backendurl} from '../../../backendurl';
+import { login } from '../../../store/auth/action';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 import { Form, Input, notification } from 'antd';
 // import { connect } from 'react-redux';
+const jwt_decode = require('jwt-decode');
 
 class Login extends Component {
     constructor(props) {
@@ -12,17 +16,32 @@ class Login extends Component {
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.state = {
+            storage: '',
             email: '',
             password: ''
         };
     }
 
-    // static getDerivedStateFromProps(props) {
-    //     if (props.isLoggedIn === true) {
-    //         Router.push('/');
-    //     }
-    //     return false;
-    // }
+    componentDidMount(){
+
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(storage.token){
+                console.log(storage);
+                if(storage.role == 'Admin'){
+                    Router.push('/admin/inventory')
+                } else {
+                    Router.push('/account/my-account')
+                }
+
+               
+            } 
+        });
+        
+    }
+    
 
     // handleFeatureWillUpdate(e) {
     //     e.preventDefault();
@@ -33,6 +52,7 @@ class Login extends Component {
     //     });
     // }
     onChangeEmail(e) {
+       
         this.setState({ email: e.target.value });
       }
     
@@ -41,6 +61,7 @@ class Login extends Component {
       }
     handleLoginSubmit = e => {
         e.preventDefault();
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const { email, password } = this.state;
@@ -48,8 +69,42 @@ class Login extends Component {
                   email,
                   password,
                 };
-                console.log(userObject)
-                // Router.push('/');
+                console.log(backendurl +  " "+ userObject);
+                axios.post(backendurl+'/users/login', userObject)
+                  .then((res) => {
+                    if (!res.data.token) {
+                        this.props.form.setFieldsValue({
+                            email: '', password: ''}
+                          , () => {
+                            var status = document.getElementById('statusMessage');
+                           
+                            status.innerHTML = 'Login credentials invalid';
+                            status.style.color = "red";
+                            status.style.display = "block";
+                          });
+
+                    } else {
+
+                        // alert('logged in')
+                  
+                        localStorage.setItem("token", res.data.token);
+                        var decoded = jwt_decode(res.data.token.split(' ')[1]);
+                        console.log("decoded");
+                        console.log(decoded);
+                        localStorage.setItem("user_id", decoded._id);
+                        localStorage.setItem("role", decoded.role);
+                        if(decoded.role === 'Admin'){
+                       
+                            Router.push('/admin/inventory')
+                        } else {
+                            Router.push('/account/my-account')
+                        }
+                        
+                        
+
+                        
+                    }
+                  });
             } else {
             }
         });
@@ -58,7 +113,9 @@ class Login extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
+            
             <div className="ps-my-account">
+        
                 <div className="container">
                     <Form
                         className="ps-form--account"
@@ -176,7 +233,7 @@ class Login extends Component {
     }
 }
 const WrapFormLogin = Form.create()(Login);
-// const mapStateToProps = state => {
-//     return state.auth;
-// };
-export default WrapFormLogin;
+const mapStateToProps = state => {
+    return state.auth;
+};
+export default connect(mapStateToProps)(WrapFormLogin);

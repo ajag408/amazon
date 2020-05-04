@@ -4,23 +4,38 @@ import { addItem } from '../../../store/cart/action';
 import { removeWishlistItem } from '../../../store/wishlist/action';
 import Link from 'next/link';
 import { Rate } from 'antd';
-import ProductCart from '../../elements/products/ProductCart';
+import {backendurl} from './../../../backendurl';
+import Axios from 'axios';
+
 class Wishlist extends Component {
     constructor(props) {
         super(props);
     }
 
-    handleAddItemToCart = (e, product) => {
-        this.props.dispatch(addItem(product));
+    handleAddItemToCart(product,handler){
+        let data = {
+            productIds: [product]
+        }
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/move-to-cart`,data).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
     };
 
-    handleRemoveWishListItem = (e, product) => {
-        e.preventDefault();
-        this.props.dispatch(removeWishlistItem(product));
+    handleRemoveWishListItem(product,handler){
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
     };
 
     render() {
-        const { wishlistItems } = this.props;
+        const { cartItems } = this.props.state;
+        const wishlistItems = cartItems.filter(item => {
+            return item.isSavedForLater
+        });
         return (
             <div className="ps-section--shopping ps-whishlist">
                 <div className="container">
@@ -45,39 +60,51 @@ class Wishlist extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {wishlistItems.map(product => (
-                                            <tr key={product.id}>
+                                        {wishlistItems.map(wishlistItem => (
+                                            <tr key={wishlistItem.product.id}>
                                                 <td>
                                                     <a
                                                         href="#"
-                                                        onClick={e =>
-                                                            this.handleRemoveWishListItem(
-                                                                e,
-                                                                product
-                                                            )
-                                                        }>
+                                                        onClick={this.handleRemoveWishListItem.bind(this,wishlistItem.product._id,this.props.handler)}>
                                                         <i className="icon-cross"></i>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <ProductCart
-                                                        product={product}
-                                                    />
+                                                    <div className="ps-product--cart">
+                                                        <div className="ps-product__thumbnail">
+                                                            <Link
+                                                                href="/product/[pid]"
+                                                                as={`/product/${wishlistItem.product.id}`}>
+                                                                <a>
+                                                                    <img
+                                                                        src={
+                                                                            wishlistItem.product.thumbnail
+                                                                        }
+                                                                        alt="martfury"
+                                                                    />
+                                                                </a>
+                                                            </Link>
+                                                        </div>
+                                                        <div className="ps-product__content">
+                                                            <Link
+                                                                href="/product/[pid]"
+                                                                as={`/product/${wishlistItem.product.id}`}>
+                                                                <a className="ps-product__title">
+                                                                    {wishlistItem.product.name}
+                                                                </a>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td className="price">
-                                                    ${product.price}
+                                                    ${wishlistItem.product.price}
                                                 </td>
-                                                <td>{product.vendor}</td>
+                                                <td>{wishlistItem.product.vendor}</td>
                                                 <td>
                                                     <a
                                                         className="ps-btn"
-                                                        href=""
-                                                        onClick={e =>
-                                                            this.handleAddItemToCart(
-                                                                e,
-                                                                product
-                                                            )
-                                                        }>
+                                                        href="#"
+                                                        onClick={this.handleAddItemToCart.bind(this,wishlistItem.product._id,this.props.handler)}>
                                                         Add to cart
                                                     </a>
                                                 </td>

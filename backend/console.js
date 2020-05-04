@@ -27,11 +27,8 @@
 require('dotenv').config();
 let repl = require('repl');
 const mongoose = require('mongoose');
-let models = require('./models');
+let models = require('../kafka-backend/models');
 
-let UserSchema = require('./models/user');
-User = mongoose.model('User', UserSchema);
-global['User'] = User;
 Object.keys(models).forEach((modelName) => {
   // console.log(models);
   global[modelName] = models[modelName];

@@ -34,8 +34,6 @@ const ShippingPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Shipping />
             </div>
-            <Newsletters layout="container" />
-            <FooterDefault />
         </div>
     );
 };

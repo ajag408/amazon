@@ -613,16 +613,18 @@
 
 .ps-widget--account-dashboard {
     .ps-widget__header {
-        display: flex;
+        //display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: flex-start;
         padding-bottom: 20px;
+        text-align: center;
 
         img {
             flex-basis: 60px;
-            max-width: 60px;
+            max-width: 208px;
             border-radius: 50%;
+            border : 2px solid $color-heading;
         }
 
         figure {
@@ -639,6 +641,7 @@
                 font-size: 16px;
                 font-weight: 600;
                 color: $color-heading;
+                word-break: break-all;
             }
         }
     }

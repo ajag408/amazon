@@ -8,6 +8,7 @@ export const actionTypes = {
     GET_PRODUCTS_BY_KEYWORD: 'GET_PRODUCTS_BY_KEYWORD',
     GET_PRODUCT_BY_ID: 'GET_PRODUCT_BY_ID',
     GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
+    SET_PRODUCT_CATEGORY_ID: 'SET_PRODUCT_CATEGORY_ID'
 };
 
 export function getProducts() {
@@ -65,6 +66,12 @@ export function getProductsById(id) {
 export function getProductsByPrice(payload) {
     return {
         type: actionTypes.GET_PRODUCTS_BY_PRICE_RANGE,
+        payload,
+    };
+}
+export function setProductCategoryId(payload) {
+    return {
+        type: actionTypes.SET_PRODUCT_CATEGORY_ID,
         payload,
     };
 }

@@ -1,35 +1,56 @@
-import React from 'react';
-import Newsletters from '../../components/partials/commons/Newletters';
-import FooterDefault from '../../components/shared/footers/FooterDefault';
+import React, { Component } from 'react';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
-import BreadCrumb from '../../components/elements/BreadCrumb';
 import ShoppingCart from '../../components/partials/account/ShoppingCart';
-import HeaderMobile from '../../components/shared/headers/HeaderMobile';
+import Axios from 'axios';
+import Wishlist from '../../components/partials/account/Wishlist';
 import NavigationList from '../../components/shared/navigation/NavigationList';
+import {backendurl} from './../../backendurl';
+import Router from 'next/router';
 
-const ShoppingCartPage = () => {
-    const breadCrumb = [
-        {
-            text: 'Home',
-            url: '/',
-        },
-        {
-            text: 'Shopping Cart',
-        },
-    ];
-    return (
+class ShoppingCartPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cartItems: [],
+            cartTotal: 0 
+        }
+        this.handler = this.handler.bind(this);
+    }
+    componentDidMount() {
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
+                Router.push('/account/login')
+            } else {
+                Axios.get(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/show-cart`).then(resp =>{
+                    if(resp.status === 200 && resp.data){
+                        this.setState(resp.data);
+                    }
+                })
+            }
+        });
+
+    }
+    handler(data) {
+        this.setState(data)
+      }
+
+    render(){
+        return (
         <div className="site-content">
             <HeaderDefault />
-            <HeaderMobile />
             <NavigationList />
             <div className="ps-page--simple">
-                <BreadCrumb breacrumb={breadCrumb} />
-                <ShoppingCart />
+                <ShoppingCart state={this.state} handler={this.handler}/>
+                <Wishlist state={this.state} handler={this.handler}/>
             </div>
-            <Newsletters layout="container" />
-            <FooterDefault />
         </div>
-    );
+        );
+    }
 };
 
 export default ShoppingCartPage;

@@ -1,10 +1,29 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
+import { backendurl } from './../../../backendurl';
+import Axios from 'axios';
+import AddressItem from './../account/modules/AddressItem'
 
 class Addresses extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            address : []
+        };
+    }
+
+    componentWillMount(){
+        console.log("Addresses => component Did Mount ");
+        let data = {
+            customerId: '5e9e36cf6b95206ad289645f'
+        }
+        let url = `${backendurl}/customer/get-address`;
+        Axios.post(url, data).then(resp => {
+            if (resp.status === 200 && resp.data) {
+                console.log("response Address is: ", resp.data )
+                this.setState({ address: resp.data.message})
+            }
+        }); 
     }
 
     render() {
@@ -41,11 +60,12 @@ class Addresses extends Component {
                 icon: 'icon-heart',
             },
         ];
+      
         return (
             <section className="ps-my-account ps-page--account">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-4">
+                        {/* <div className="col-lg-4">
                             <div className="ps-section__left">
                                 <aside className="ps-widget--account-dashboard">
                                     <div className="ps-widget__header">
@@ -88,7 +108,7 @@ class Addresses extends Component {
                                     </div>
                                 </aside>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="col-lg-8">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
@@ -96,32 +116,33 @@ class Addresses extends Component {
                                         <div className="col-md-6 col-12">
                                             <figure className="ps-block--address">
                                                 <figcaption>
-                                                    Billing address
+                                                   Saved Address
                                                 </figcaption>
                                                 <div className="ps-block__content">
-                                                    <p>
-                                                        You Have Not Set Up This
-                                                        Type Of Address Yet.
-                                                    </p>
-                                                    <Link href="/account/edit-address">
-                                                        <a>Edit</a>
-                                                    </Link>
-                                                </div>
-                                            </figure>
-                                        </div>
-                                        <div className="col-md-6 col-12">
-                                            <figure className="ps-block--address">
-                                                <figcaption>
-                                                    Shipping address
-                                                </figcaption>
-                                                <div className="ps-block__content">
-                                                    <p>
-                                                        You Have Not Set Up This
-                                                        Type Of Address Yet.
-                                                    </p>
-                                                    <Link href="/account/edit-address">
-                                                        <a>Edit</a>
-                                                    </Link>
+                                                    
+                                                    {this.state.address && this.state.address.length > 0
+                                                        ? this.state.address.map(item => (
+                                                            <div
+                                                                className="col-lg-10 col-md-10 col-sm-8 col-8 "
+                                                                key={item._id}>
+                                                                <AddressItem address={item} />
+                                                            </div>
+                                                        ))
+                                                        : 
+                                                        <div>
+                                                            You Have Not Set Up This
+                                                            Type Of Address Yet.
+                                                          
+
+                                                        </div>
+                                                    }
+                                                    
+                                                    <div>
+                                                         <div></div>
+                                                        <Link href="/account/edit-address">
+                                                            <a>Add New Address</a>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </figure>
                                         </div>

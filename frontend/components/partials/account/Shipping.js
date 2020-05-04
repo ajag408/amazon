@@ -1,20 +1,54 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { getCart } from '../../../store/cart/action';
-
+import axios from 'axios';
 import Link from 'next/link';
+import { Router } from 'next/router';
+import {backendurl} from './../../../backendurl';
 
 class Shipping extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            storage: '',
+            shippingAddress: '',
+            cartTotal: '',
+            cartItems: []
+
+        };
     }
 
-    componentDidMount() {
-        this.props.dispatch(getCart());
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.shippingAddress){
+
+                Router.push('/account/checkout')
+            } else {
+
+
+                axios.get(`${backendurl}/cart/customer/` + storage.user_id+ `/show-cart`)
+                .then((res) => {
+                    console.log(res);
+                    this.setState({
+                        shippingAddress: JSON.parse(storage.shippingAddress),
+                        cartTotal: res.data.cartTotal,
+                        cartItems: res.data.cartItems,
+
+                    }, ()=>{console.log(this.state)})
+        
+    
+                });
+        
+            }
+        });
     }
 
     render() {
-        const { amount, cartItems } = this.props;
+        const { cartTotal, cartItems, shippingAddress } = this.state;
         return (
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
@@ -27,8 +61,8 @@ class Shipping extends Component {
                                 <div className="ps-block--shipping">
                                     <div className="ps-block__panel">
                                         <figure>
-                                            <small>Contact</small>
-                                            <p>test@gmail.com</p>
+                                            <small>Name</small>
+                                            <p>{shippingAddress.fullName}</p>
                                             <Link href="/account/checkout">
                                                 <a>Change</a>
                                             </Link>
@@ -36,9 +70,8 @@ class Shipping extends Component {
                                         <figure>
                                             <small>Ship to</small>
                                             <p>
-                                                2015 South Street, Midland,
-                                                Texas
-                                            </p>
+                                                {shippingAddress.streetAddressLine_1} {shippingAddress.zipCode}</p> 
+                                            
                                             <Link href="/account/checkout">
                                                 <a>Change</a>
                                             </Link>
@@ -48,7 +81,7 @@ class Shipping extends Component {
                                     <div className="ps-block__panel">
                                         <figure>
                                             <small>
-                                                International Shipping
+                                                Standard Shipping
                                             </small>
                                             <strong>$20.00</strong>
                                         </figure>
@@ -81,13 +114,13 @@ class Shipping extends Component {
                                             <figure className="ps-block__items">
                                                 {cartItems &&
                                                     cartItems.map(product => (
-                                                        <Link
-                                                            href="/"
-                                                            key={product.id}>
+                                                        // <Link
+                                                            // href="/"
+                                                            // key={product.id}>
                                                             <a>
                                                                 <strong>
                                                                     {
-                                                                        product.title
+                                                                        product.product.name
                                                                     }
                                                                     <span>
                                                                         x
@@ -98,17 +131,16 @@ class Shipping extends Component {
                                                                 </strong>
                                                                 <small>
                                                                     $
-                                                                    {product.quantity *
-                                                                        product.price}
+                                                                    {product.totalPrice}
                                                                 </small>
                                                             </a>
-                                                        </Link>
+                                                        // </Link>
                                                     ))}
                                             </figure>
                                             <figure>
                                                 <figcaption>
                                                     <strong>Subtotal</strong>
-                                                    <small>${amount}</small>
+                                                    <small>${cartTotal}</small>
                                                 </figcaption>
                                             </figure>
                                             <figure>
@@ -121,7 +153,7 @@ class Shipping extends Component {
                                                 <h3>
                                                     Total
                                                     <strong>
-                                                        ${parseInt(amount) + 20}
+                                                        ${parseInt(cartTotal) + 20}
                                                         .00
                                                     </strong>
                                                 </h3>
@@ -138,7 +170,4 @@ class Shipping extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return state.cart;
-};
-export default connect(mapStateToProps)(Shipping);
+export default Shipping;

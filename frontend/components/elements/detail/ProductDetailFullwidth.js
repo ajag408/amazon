@@ -28,7 +28,7 @@ class ProductDetailFullwidth extends Component {
                 ) : (
                     ''
                 )}
-                <DefaultDescription />
+                <DefaultDescription product={product}/>
             </div>
         );
     }

@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import Link from 'next/link';
 
 import MiniCart from './MiniCart';
-import AccountQuickLinks from './AccountQuickLinks';
+// import AccountQuickLinks from './AccountQuickLinks';
 
 class HeaderActions extends Component {
     constructor(props) {
         super(props);
-    }
 
+    }
+      
+      
     render() {
         const { compare, wishlist, auth } = this.props;
         return (
             <div className="header__actions">
-                <Link href="/account/compare">
+                {/* <Link href="/account/compare">
                     <a className="header__extra">
                         <i className="icon-chart-bars"></i>
                         <span>
@@ -33,13 +35,22 @@ class HeaderActions extends Component {
                             <i>{wishlist.wishlistTotal}</i>
                         </span>
                     </a>
+                </Link> */}
+                <Link href="/account/shopping-cart" as="/account/shopping-cart">
+                <a className="header__extra">
+                        <i className="icon-bag2"></i>
+                    </a>
                 </Link>
-                <MiniCart />
-                {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
+                {/* {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                     <AccountQuickLinks isLoggedIn={true} />
                 ) : (
                     <AccountQuickLinks isLoggedIn={false} />
-                )}
+                )} */}
+                <Link href="/account/my-account">
+                <a className="header__extra">
+                        <i className="icon-user"></i>
+                    </a>
+                </Link>
             </div>
         );
     }

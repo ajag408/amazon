@@ -29,8 +29,7 @@ const OrderTrackingPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Checkout />
             </div>
-            <Newsletters layout="container" />
-            <FooterDefault />
+
         </div>
     );
 };

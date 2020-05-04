@@ -53,13 +53,13 @@ body {
 .ps-container {
     max-width: 1650px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 10px;
     @media (max-width: 1680px) {
-        padding: 0 30px;
+        padding: 0 10px;
         max-width: 100%;
     }
     @include media('<xs') {
-        padding: 0 15px;
+        padding: 0 10px;
     }
 }
 

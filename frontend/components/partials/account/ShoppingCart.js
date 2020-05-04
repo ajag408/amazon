@@ -1,41 +1,79 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {
-    getCart,
-    increaseItemQty,
-    decreaseItemQty,
-    removeItem,
-} from '../../../store/cart/action';
-
+import Axios from 'axios';
+import {backendurl} from './../../../backendurl';
+import Router from 'next/router';
 import Link from 'next/link';
+import GiftMessage from './GiftMessage';
 
 class ShoppingCart extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            storage: '',
+            setParentState: props.setState
+        }
+        
+    }
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            // console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
+                Router.push('/account/login')
+            }
+        });
+    }
+    handleIncreaseItemQty(product, handler){
+        let data = {
+            quantity: 1
+        }
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/add-to-cart/${product}`,data).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
     }
 
-    componentDidMount() {
-        this.props.dispatch(getCart());
+    handleDecreaseItemQty(product, handler) {
+        let data = {
+            quantity: 1
+        }
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`,data).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
     }
 
-    handleIncreaseItemQty(product) {
-        this.props.dispatch(increaseItemQty(product));
-    }
+    handleRemoveCartItem = (product, handler) => {
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
+    };
 
-    handleDecreaseItemQty(product) {
-        this.props.dispatch(decreaseItemQty(product));
-    }
-
-    handleRemoveCartItem = product => {
-        this.props.dispatch(removeItem(product));
+    handleSaveForLater = (product, handler) => {
+        let data = {
+            productIds: [product]
+        }
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/move-to-save-for-later`,data).then(resp =>{
+            if(resp.status === 200 && resp.data){
+                handler(resp.data);
+            }
+        })
     };
 
     render() {
-        const { amount, cartTotal, cartItems } = this.props;
+        const { cartTotal, cartItems } = this.props.state;
         let currentCartItems = [];
         if (cartItems && cartItems.length > 0) {
             currentCartItems = cartItems;
         }
+       
         return (
             <div className="ps-section--shopping ps-shopping-cart">
                 <div className="container">
@@ -50,23 +88,26 @@ class ShoppingCart extends Component {
                                         <th>Product</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
+                                        <th>Gift Message</th>
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentCartItems.map(product => (
-                                        <tr key={product.id}>
+                                    {currentCartItems.filter(item => {
+                                        return !item.isSavedForLater
+                                        }).map(cartItem => (
+                                        <tr key={cartItem.product.id}>
                                             <td>
                                                 <div className="ps-product--cart">
                                                     <div className="ps-product__thumbnail">
                                                         <Link
                                                             href="/product/[pid]"
-                                                            as={`/product/${product.id}`}>
+                                                            as={`/product/${cartItem.product.id}`}>
                                                             <a>
                                                                 <img
                                                                     src={
-                                                                        product.thumbnail
+                                                                        cartItem.product.thumbnail
                                                                     }
                                                                     alt="martfury"
                                                                 />
@@ -76,30 +117,23 @@ class ShoppingCart extends Component {
                                                     <div className="ps-product__content">
                                                         <Link
                                                             href="/product/[pid]"
-                                                            as={`/product/${product.id}`}>
+                                                            as={`/product/${cartItem.product.id}`}>
                                                             <a className="ps-product__title">
-                                                                {product.title}
+                                                                {cartItem.product.name}
                                                             </a>
                                                         </Link>
-                                                        <p>
-                                                            Sold By:
-                                                            <strong>
-                                                                {product.vendor}
-                                                            </strong>
-                                                        </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="price">
-                                                ${product.price}
+                                                ${cartItem.product.price}
                                             </td>
                                             <td>
                                                 <div className="form-group--number">
                                                     <button
                                                         className="up"
-                                                        onClick={this.handleIncreaseItemQty.bind(
-                                                            this,
-                                                            product
+                                                        onClick={e => this.handleIncreaseItemQty(
+                                                            cartItem.product._id,this.props.handler
                                                         )}>
                                                         +
                                                     </button>
@@ -107,7 +141,7 @@ class ShoppingCart extends Component {
                                                         className="down"
                                                         onClick={this.handleDecreaseItemQty.bind(
                                                             this,
-                                                            product
+                                                            cartItem.product._id,this.props.handler
                                                         )}>
                                                         -
                                                     </button>
@@ -115,94 +149,86 @@ class ShoppingCart extends Component {
                                                         className="form-control"
                                                         type="text"
                                                         placeholder="1"
-                                                        value={product.quantity}
+                                                        value={cartItem.quantity}
                                                         readOnly={true}
                                                     />
                                                 </div>
                                             </td>
                                             <td>
-                                                $
-                                                {product.quantity *
-                                                    product.price}
+                                                <GiftMessage cartItem={cartItem} handler={this.props.handler}/>
                                             </td>
-                                            <td>
+                                            <td style={{'text-align': 'center'}}>
+                                                $
+                                                {cartItem.totalPrice}
+                                            </td>
+                                            <td style={{'text-align':'center'}}>
+                                                <a
+                                                    href="#"
+                                                    onClick={this.handleSaveForLater.bind(
+                                                        this,
+                                                        cartItem.product._id,this.props.handler
+                                                    )}>
+                                                    <i className="icon-heart"></i>
+                                                </a>
+                                                <br/>
+                                                {"  "}
                                                 <a
                                                     href="#"
                                                     onClick={this.handleRemoveCartItem.bind(
                                                         this,
-                                                        product
+                                                        cartItem.product._id,this.props.handler
                                                     )}>
                                                     <i className="icon-cross"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     ))}
+                                    <tr className='cart-total-final'>
+                                        <td>
+                                            <div className="ps-product--cart">
+                                                    Final Total
+                                            </div>
+                                        </td>
+                                        <td className="price">
+                                        </td>
+                                        <td>
+                                            <div className="form-group--number">
+                                            </div>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            $
+                                            {cartTotal}
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                                <div className="ps-product--cart">
+                                                </div>
+                                            </td>
+                                            <td className="price">
+                                            </td>
+                                            <td>
+                                                <div className="form-group--number">
+                                                </div>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <td>
+                                            <Link href="/account/checkout">
+                                                <a className="ps-btn ps-btn--fullwidth">
+                                                    Proceed to checkout
+                                                </a>
+                                            </Link>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <div className="ps-section__cart-actions">
-                            <Link href="/shop">
-                                <a>
-                                    <i className="icon-arrow-left mr-2"></i>
-                                    Back to Shop
-                                </a>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="ps-section__footer">
-                        <div className="row justify-content-end">
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
-                                <div className="ps-block--shopping-total">
-                                    <div className="ps-block__header">
-                                        <p>
-                                            Subtotal <span> ${amount}</span>
-                                        </p>
-                                    </div>
-                                    <div className="ps-block__content">
-                                        <ul className="ps-block__product">
-                                            {cartItems.length > 0
-                                                ? cartItems.map(
-                                                      (product, index) => {
-                                                          if (index < 3) {
-                                                              return (
-                                                                  <li
-                                                                      key={
-                                                                          product.id
-                                                                      }>
-                                                                      <span className="ps-block__estimate">
-                                                                          <Link
-                                                                              href="/product/[pid]"
-                                                                              as={`/product/${product.id}`}>
-                                                                              <a className="ps-product__title">
-                                                                                  {
-                                                                                      product.title
-                                                                                  }
-                                                                                  <br />{' '}
-                                                                                  x{' '}
-                                                                                  {
-                                                                                      product.quantity
-                                                                                  }
-                                                                              </a>
-                                                                          </Link>
-                                                                      </span>
-                                                                  </li>
-                                                              );
-                                                          }
-                                                      }
-                                                  )
-                                                : ''}
-                                        </ul>
-                                        <h3>
-                                            Total <span>${amount}</span>
-                                        </h3>
-                                    </div>
-                                </div>
-                                <Link href="/account/checkout">
-                                    <a className="ps-btn ps-btn--fullwidth">
-                                        Proceed to checkout
-                                    </a>
-                                </Link>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,7 +237,5 @@ class ShoppingCart extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return state.cart;
-};
-export default connect(mapStateToProps)(ShoppingCart);
+
+export default ShoppingCart;

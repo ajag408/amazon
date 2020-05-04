@@ -4,13 +4,98 @@ import { connect } from 'react-redux';
 import { addItem } from '../../../store/cart/action';
 import { addItemToCompare } from '../../../store/compare/action';
 import { addItemToWishlist } from '../../../store/wishlist/action';
+import { Rate, Modal } from 'antd';
+import Rating from '../Rating';
+import Router from 'next/router';
+import axios from 'axios';
+import { backendurl } from '../../../backendurl';
+import { notification } from 'antd';
 
 class ProductWide extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isQuickView: false,
+            isQuickView: false
+            ,isDelete : false
+            ,storage: {}
         };
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.handleDeleteClick = this.handleDeleteClick.bind(this);
+        this.handleCancelDelete = this.handleCancelDelete.bind(this);
+        this.handleConfirmClick = this.handleConfirmClick.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({ 
+            storage : localStorage
+        }, () => {
+            const {storage} = this.state;
+            if(!storage.token){
+             //   || storage.role != "Customer"
+                Router.push('/account/login')
+            }
+        })
+    }
+
+    handleEditClick(e) {
+        e.preventDefault();
+        Router.push({
+            pathname: '/pages/faqs',
+            query: { product: this.props.product }
+
+        })
+    }
+
+    handleCancelDelete(e){
+        e.preventDefault();
+        this.setState({
+            isDelete : false
+        },() => {
+            notification['warning']({
+                message: 'Warning!',
+                description: 'Product Deletion Cancelled',
+                duration: 2,
+            });
+        })
+    }
+
+    handleConfirmClick(e){
+        var data = {
+            productId: this.props.product._id
+        }
+
+        debugger;
+        axios.post(backendurl + '/seller/deleteSellerProduct', data)
+            .then((res) => {
+                debugger;
+                if (res.status === 200) {
+                    this.setState({
+                        isDelete : false
+                    })
+                    notification['success']({
+                        message: 'Success!!',
+                        description: 'Product Deleted',
+                        duration: 2,
+                    });
+                } else {
+                    this.setState({
+                        isDelete : false
+                    })
+                    notification['warning']({
+                        message: 'Warning!',
+                        description: 'Oops! Something went wrong.!Product Not Deleted',
+                        duration: 2,
+                    });
+                }
+            });
+    }
+
+    handleDeleteClick(e) {
+        e.preventDefault();
+
+        this.setState({
+            isDelete : true
+        })
     }
 
     handleAddItemToCart = e => {
@@ -42,6 +127,7 @@ class ProductWide extends Component {
     };
 
     render() {
+
         const { product, currency } = this.props;
         let productRating = null;
         if (product.badge) {
@@ -65,12 +151,19 @@ class ProductWide extends Component {
                 }
             });
         }
+
+        debugger;
+        let hasImages;
+        if(product.images && product.images.length >0)
+        {
+            hasImages = <img src={product.images[0].imageUrl} alt="ProductImage" />
+        }
         return (
             <div className="ps-product ps-product--wide">
                 <div className="ps-product__thumbnail">
-                    <Link href="/product/[pid]" as={`/product/${product.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${product._id}`}>
                         <a>
-                            <img src={product.thumbnail} alt="martfury" />
+                            {hasImages}
                         </a>
                     </Link>
                 </div>
@@ -78,27 +171,39 @@ class ProductWide extends Component {
                     <div className="ps-product__content">
                         <Link
                             href="/product/[pid]"
-                            as={`/product/${product.id}`}>
-                            <a className="ps-product__title">{product.title}</a>
+                            as={`/product/${product._id}`}>
+                            <a className="ps-product__title">{product.name}</a>
                         </Link>
+                        <div className="ps-product__rating">
+                            <Rating ratings={product.ratings} /> <span>({product.ratingAndReviews ? product.ratingAndReviews.length : 0} rating)</span>
+                        </div>
                         <p className="ps-product__vendor">
-                            Sold by:
-                            <Link href="/shop">
-                                <a>{product.vendor}</a>
-                            </Link>
+                            {/* Sold by:
+                            <Link href="#">
+                                <a>{product.seller?product.seller.name:""}</a>
+                            </Link> */}
                         </p>
                         <ul className="ps-product__desc">
-                            <li>
-                                Unrestrained and portable active stereo speaker
-                            </li>
-                            <li> Free from the confines of wires and chords</li>
-                            <li> 20 hours of portable capabilities</li>
-                            <li>
-                                Double-ended Coil Cord with 3.5mm Stereo Plugs
-                                Included
-                            </li>
-                            <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
+                            <li>{product.description}</li>
                         </ul>
+                        <br></br>
+                        {this.state.storage && this.state.storage.role === "Seller" ? (
+                        <div className="row">
+                            <div className="col-md-6">
+                                <button onClick={this.handleDeleteClick}
+                                    type="submit"
+                                    className="ps-btn ps-btn--lg ps-btn--rounded ps-btn--delete">
+                                    Delete
+                                    </button>
+                            </div>
+                            <div className="col-md-6">
+                                <button onClick={this.handleEditClick}
+                                    type="submit"
+                                    className="ps-btn ps-btn--lg ps-btn--rounded ps-btn--edit">
+                                    Edit
+                                    </button>
+                            </div>
+                        </div>) : (<div></div>)}
                     </div>
                     <div className="ps-product__shopping">
                         {product.sale === true ? (
@@ -116,7 +221,10 @@ class ProductWide extends Component {
                                 {product.price}
                             </p>
                         )}
-                        <a
+
+                        {this.state.storage.role !== "Seller"?(
+                            <div>
+                            <a
                             className="ps-btn"
                             href="#"
                             onClick={this.handleAddItemToCart.bind(this)}>
@@ -142,8 +250,38 @@ class ProductWide extends Component {
                                 </a>
                             </li>
                         </ul>
+                        </div>
+                        ):(<div></div>)}
+                        
                     </div>
                 </div>
+                { this.state.storage && this.state.storage.role === "Seller" ?
+                    (<Modal
+                        title= "Are you sure you want to delete this product?"
+                        centered
+                        footer={null}
+                        width={512}
+                        onCancel={this.handleCancelDelete}
+                        visible={this.state.isDelete}>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <button onClick={this.handleConfirmClick}
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth ps-btn--rounded ps-btn--delete">
+                                        Yes
+                                        </button>
+                                </div>
+                                <div className="col-md-6">
+                                    <button onClick={this.handleCancelDelete}
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth ps-btn--rounded ps-btn--edit">
+                                        No
+                                        </button>
+                                </div>
+                            </div>
+                        {/* <ProductDetailQuickView product={product} /> */}
+                    </Modal>) : (<div></div>)
+                }
             </div>
         );
     }

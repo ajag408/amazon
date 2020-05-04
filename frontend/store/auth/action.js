@@ -7,7 +7,7 @@ export const actionTypes = {
 };
 
 export function login() {
-    return { type: actionTypes.LOGIN_REQUEST };
+    return { type: actionTypes.LOGIN_REQUEST};
 }
 
 export function loginSuccess() {

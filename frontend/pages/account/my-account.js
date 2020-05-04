@@ -34,8 +34,8 @@ class MyAccountPage extends Component {
                     <BreadCrumb breacrumb={this.state.breadCrumb} />
                     <MyAccount />
                 </div>
-                <Newsletters layout="container" />
-                <FooterDefault />
+                {/* <Newsletters layout="container" /> */}
+                {/* <FooterDefault /> */}
             </div>
         );
     }

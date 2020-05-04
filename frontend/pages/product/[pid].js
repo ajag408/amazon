@@ -2,21 +2,30 @@ import React, { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import { connect } from 'react-redux';
 
-import FooterDefault from '../../components/shared/footers/FooterDefault';
-import Newletters from '../../components/partials/commons/Newletters';
-import CustomerBought from '../../components/partials/product/CustomerBought';
 import ProductDetailFullwidth from '../../components/elements/detail/ProductDetailFullwidth';
-import ProductWidgets from '../../components/partials/product/ProductWidgets';
 import NavigationList from '../../components/shared/navigation/NavigationList';
 import BreadCrumb from '../../components/elements/BreadCrumb';
-import RelatedProductFullwidth from '../../components/partials/product/RelatedProductFullwidth';
 import HeaderMobileProduct from '../../components/shared/header-mobile/HeaderMobileProduct';
 import { getProductsById } from '../../store/product/action';
 import HeaderProduct from '../../components/shared/headers/HeaderProduct';
+import axios from 'axios';
+import { backendurl } from '../../backendurl';
 
 class ProductDefaultPage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            singleProduct : {
+                active: true,
+                name: '',
+                seller: {name: ''},
+                price: '',
+                description: '',
+                images: [],
+                ratingAndReviews: [],
+                ratings: 0,
+            }
+        }
     }
 
     static async getInitialProps(ctx) {
@@ -25,13 +34,20 @@ class ProductDefaultPage extends React.Component {
     }
     componentDidMount() {
         const { pid } = this.props.query;
-        if (isNaN(pid)) {
+        if (!pid) {
             Router.push('/page/page-404');
+        }else {
+            let url = `${backendurl}/product/${pid}`;
+            axios.get(url).then(resp => {
+                if(resp.status === 200 && resp.data){
+                    this.setState({singleProduct: resp.data});
+                }
+            })
         }
     }
 
     render() {
-        const { singleProduct } = this.props;
+        const { singleProduct } = this.state;
         const breadCrumb = [
             {
                 text: 'Home',
@@ -42,34 +58,24 @@ class ProductDefaultPage extends React.Component {
                 url: '/shop',
             },
             {
-                text: singleProduct.title,
+                text: singleProduct.name,
             },
         ];
 
         return (
             <div className="site-content">
                 <HeaderProduct productData={singleProduct} />
-                <HeaderMobileProduct />
                 <NavigationList />
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
                 <div className="ps-page--product">
                     <div className="ps-container">
                         <div className="ps-page__container">
-                            <div className="ps-page__left">
-                                <ProductDetailFullwidth
-                                    product={singleProduct}
-                                />
-                            </div>
-                            <div className="ps-page__right">
-                                <ProductWidgets />
-                            </div>
+                            <ProductDetailFullwidth
+                                product={singleProduct}
+                            />
                         </div>
-                        <CustomerBought layout="fullwidth" />
-                        <RelatedProductFullwidth />
                     </div>
                 </div>
-                <Newletters />
-                <FooterDefault />
             </div>
         );
     }
