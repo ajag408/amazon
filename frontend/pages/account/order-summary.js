@@ -1,13 +1,10 @@
 import React from 'react';
-import Newsletters from '../../components/partials/commons/Newletters';
-import FooterDefault from '../../components/shared/footers/FooterDefault';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import BreadCrumb from '../../components/elements/BreadCrumb';
-import Shipping from '../../components/partials/account/Shipping';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
 import NavigationList from '../../components/shared/navigation/NavigationList';
-
-const ShippingPage = () => {
+import OrderSummary from '../../components/partials/account/OrderSummary';
+const PaymentPage = () => {
     const breadCrumb = [
         {
             text: 'Home',
@@ -22,7 +19,7 @@ const ShippingPage = () => {
             url: '/account/checkout',
         },
         {
-            text: 'Shipping',
+            text: 'Payment',
         },
     ];
     return (
@@ -32,10 +29,10 @@ const ShippingPage = () => {
             <NavigationList />
             <div className="ps-page--simple">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Shipping />
+                <OrderSummary />
             </div>
         </div>
     );
 };
 
-export default ShippingPage;
+export default PaymentPage;

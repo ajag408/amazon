@@ -1,14 +1,15 @@
 
 
 const mongoose = require('mongoose');
-
+let models = require('../models')
 const jwt = require('jsonwebtoken');
-
+const sequelize = require ('sequelize');
 const { secret } = require('../../backend/database/db');
 const User = require('../models/user');
 const Customer = require('../models/customer');
 const Seller = require('../models/seller');
 const Product = require('../models/product');
+let OrderItem = models.OrderItem;
 
 
 function handle_request(msg, callback) {
@@ -138,6 +139,27 @@ function handle_request(msg, callback) {
                 callback(null,res);
             }  
         })   
+  }
+  else if (msg.params.path  === 'getSalesDetails') {
+    console.log( "Kafka Backed get Sales Details " , msg)
+    var res = {};
+    OrderItem.findAll({
+      attributes: ['productId', [sequelize.fn('sum', sequelize.col('quantity')), 'quantityTotal'],
+        [sequelize.fn('sum', sequelize.col('totalPrice')), 'amount'],
+        [sequelize.fn('MONTH', sequelize.col('createdAt')),  ' month'] 
+      ],
+      where: { 'sellerId': '5e8187df8bea9e66dcedbf99' },
+      group: ['OrderItem.productId', [sequelize.fn('MONTH', sequelize.col('createdAt'))]],
+      raw: true,
+      //order: sequelize.literal('total DESC')
+    }).then(result => {
+      console.log(" result in seller:  ", result);
+      res.status = 200;
+      res.message = result;
+      callback(null, res);
+    }).catch(err =>{
+      console.log("Error is: ", err);
+    });
   }
 }
 // }

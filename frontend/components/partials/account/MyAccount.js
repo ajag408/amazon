@@ -145,11 +145,11 @@ class MyAccount extends Component {
             storage : localStorage
         }, () => {
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
+            if(!storage.token || storage.role === "Admin"){
              //   || storage.role != "Customer"
                 Router.push('/account/login')
             } else {
-                debugger;
+                // debugger;
                 // var data = {
                 //     userId : storage.user_id
                 // };

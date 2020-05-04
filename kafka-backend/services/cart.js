@@ -4,7 +4,13 @@ const Product = mongoose.models.Product;
 
 async function handle_request(msg, callback) {
   if(msg.params.path === 'show-cart'){
-    let customer = await Customer.findById(msg.params.customerId).populate('shoppingCart.cartItems.product').populate('shoppingCart.cartItems.product').catch(err =>{
+    let customer = await Customer.findById(msg.params.customerId).populate(
+      {path: 'shoppingCart.cartItems.product',
+      populate: {
+        path: 'seller'
+      }})
+      // .populate('shoppingCart.cartItems.product')
+      .catch(err =>{
       console.log(err);
       callback(null,{error: err});
     });
@@ -120,6 +126,27 @@ async function handle_request(msg, callback) {
     cartItem.giftMessage = null;
     await customer.save().catch(e => callback(null,{error: e}));
     return callback(null,customer.shoppingCart);
+  }; 
+
+  if(msg.params.path === 'clear-cart'){
+    Customer.find({ _id: msg.params.customerId }, (err, customer) => {
+      if (err) {
+      console.log(err);
+      } else {
+      //   console.log('before:', customer);
+      //   console.log('customer: ', JSON.stringify(customer));
+      console.log(customer);
+      customer[0].shoppingCart.cartItems = [];
+      customer[0].save(function (err){
+          if(err) {
+              console.log(err)
+          }else {
+              callback(null, "Cleared cart");
+          }
+      })
+      
+      }
+  });
   }; 
 }
 

@@ -22,6 +22,7 @@ const makeKafkaRequestCart = async (req, res) => {
 
 // CREATE User
 router.route('/customer/:customerId/show-cart').get((req, res) => {
+  console.log("hello")
   req.params.path = 'show-cart';
   makeKafkaRequestCart(req, res);
 });
@@ -61,5 +62,10 @@ router.route('/customer/:customerId/remove-gift-message').post(async (req, res) 
   makeKafkaRequestCart(req, res);
 });
 
+router.route('/customer/:customerId/clear-cart').post((req, res) => {
+  console.log("hello")
+  req.params.path = 'clear-cart';
+  makeKafkaRequestCart(req, res);
+});
 
 module.exports = router;

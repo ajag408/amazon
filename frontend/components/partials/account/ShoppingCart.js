@@ -12,14 +12,16 @@ class ShoppingCart extends Component {
             storage: '',
             setParentState: props.setState
         }
+        
     }
     componentDidMount(){
         this.setState({ 
             storage : localStorage
         }, () => {
             const {storage} = this.state;
-            if(!storage.token || storage.token === "Admin"){
-             //   || storage.role != "Customer"
+            // console.log(storage);
+            if(!storage.token || storage.role != "Customer"){
+                
                 Router.push('/account/login')
             }
         });
@@ -28,7 +30,7 @@ class ShoppingCart extends Component {
         let data = {
             quantity: 1
         }
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/add-to-cart/${product}`,data).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/add-to-cart/${product}`,data).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }
@@ -39,7 +41,7 @@ class ShoppingCart extends Component {
         let data = {
             quantity: 1
         }
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/remove-from-cart/${product}`,data).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`,data).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }
@@ -47,7 +49,7 @@ class ShoppingCart extends Component {
     }
 
     handleRemoveCartItem = (product, handler) => {
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/remove-from-cart/${product}`).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-from-cart/${product}`).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }
@@ -58,7 +60,7 @@ class ShoppingCart extends Component {
         let data = {
             productIds: [product]
         }
-        Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/move-to-save-for-later`,data).then(resp =>{
+        Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/move-to-save-for-later`,data).then(resp =>{
             if(resp.status === 200 && resp.data){
                 handler(resp.data);
             }
@@ -71,6 +73,7 @@ class ShoppingCart extends Component {
         if (cartItems && cartItems.length > 0) {
             currentCartItems = cartItems;
         }
+       
         return (
             <div className="ps-section--shopping ps-shopping-cart">
                 <div className="container">

@@ -2,53 +2,25 @@
     "menuPrimary": {
         "menu_1": [
             {
-                "text": "Home",
-                "url": "/",
-                "extraClass": "menu-item-has-children",
+                "text": "Product",
+                "url": "/vendor/addproduct",
+                "alias" :  "/vendor/addproduct",
+                "name" : "Add Product",
+                "key" : "ab12",
                 "subClass": "sub-menu",
-                "subMenu": [
+                "extraClass": "menu-item-has-children",
+                "megaContent": [
                     {
-                        "text": "Marketplace Full Width",
-                        "url": "/"
-                    },
-                    {
-                        "text": "Home Auto Parts",
-                        "url": "/home/auto-part"
-                    },
-                    {
-                        "text": "Home Technology",
-                        "url": "/home/technology"
-                    },
-                    {
-                        "text": "Home Organic",
-                        "url": "/home/organic"
-                    },
-                    {
-                        "text": "Home Marketplace V1",
-                        "url": "/home/market-place"
-                    },
-                    {
-                        "text": "Home Marketplace V2",
-                        "url": "/home/market-place-2"
-                    },
-                    {
-                        "text": "Home Marketplace V3",
-                        "url": "/home/market-place-3"
-                    },
-                    {
-                        "text": "Home Marketplace V4",
-                        "url": "/home/market-place-4"
-                    },
-                    {
-                        "text": "Home Electronic",
-                        "url": "/home/electronic"
-                    },
-                    {
-                        "text": "Home Furniture",
-                        "url": "/home/furniture"
+
+                        "megaItems": [
+                            {
+                                "text": "Add Product",
+                                "url": "/vendor/addproduct"
+                            }
+                        ]
                     }
                 ]
-            },
+             },
             {
                 "text": "Shop",
                 "url": "/shop",
