@@ -69,10 +69,10 @@ class Product extends Component {
             productId: this.props.product._id
         }
 
-        debugger;
+        //debugger;
         axios.post(backendurl + '/seller/deleteSellerProduct', data)
             .then((res) => {
-                debugger;
+                //debugger;
                 if (res.status === 200) {
                     this.setState({
                         isDelete : false
@@ -133,33 +133,33 @@ class Product extends Component {
 
     render() {
         const { product, currency } = this.props;
-        let productBadge = null;
-        if (product.badge && product.badge !== null) {
-            product.badge.map(badge => {
-                if (badge.type === 'sale') {
-                    return (productBadge = (
-                        <div className="ps-product__badge">{badge.value}</div>
-                    ));
-                } else if (badge.type === 'outStock') {
-                    return (productBadge = (
-                        <div className="ps-product__badge out-stock">
-                            {badge.value}
-                        </div>
-                    ));
-                } else {
-                    return (productBadge = (
-                        <div className="ps-product__badge hot">
-                            {badge.value}
-                        </div>
-                    ));
-                }
-            });
-        }
+        //let productBadge = null;
+        // if (product.badge && product.badge !== null) {
+        //     product.badge.map(badge => {
+        //         if (badge.type === 'sale') {
+        //             return (productBadge = (
+        //                 <div className="ps-product__badge">{badge.value}</div>
+        //             ));
+        //         } else if (badge.type === 'outStock') {
+        //             return (productBadge = (
+        //                 <div className="ps-product__badge out-stock">
+        //                     {badge.value}
+        //                 </div>
+        //             ));
+        //         } else {
+        //             return (productBadge = (
+        //                 <div className="ps-product__badge hot">
+        //                     {badge.value}
+        //                 </div>
+        //             ));
+        //         }
+        //     });
+        // }
         let hasImages;
         if (product.images && product.images.length > 0) {
             hasImages = <img src={product.images[0].imageUrl} alt="ProductImage" />
         }
-        debugger;
+        //debugger;
 
         return (
 
@@ -171,57 +171,8 @@ class Product extends Component {
                         </a>
                     </Link>
                     {product.badge ? productBadge : ''}
-                    {/* <ul className="ps-product__actions">
-                        <li>
-                            <a
-                                href="#"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Read More"
-                                onClick={this.handleAddItemToCart.bind(this)}>
-                                <i className="icon-bag2"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Quick View"
-                                onClick={this.handleShowQuickView.bind(this)}>
-                                <i className="icon-eye"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Add to wishlist"
-                                onClick={this.handleAddItemToWishlist.bind(
-                                    this
-                                )}>
-                                <i className="icon-heart"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Compare"
-                                onClick={this.handleAddItemToCompare.bind(
-                                    this
-                                )}>
-                                <i className="icon-chart-bars"></i>
-                            </a>
-                        </li>
-                    </ul> */}
                 </div>
                 <div className="ps-product__container">
-                    {/* <Link href="/shop">
-                        <a className="ps-product__vendor">Young Shop</a>
-                    </Link> */}
                     <div className="ps-product__content">
                         <Link
                             href="/product/[pid]"

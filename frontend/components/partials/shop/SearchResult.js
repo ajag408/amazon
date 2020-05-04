@@ -9,8 +9,7 @@ import {
 import Product from '../../elements/products/Product';
 import ProductWide from '../../elements/products/ProductWide';
 import ShopWidget from './modules/ShopWidget';
-import { backendurl } from './../../../backendurl';
-import Axios from 'axios';
+
 class SearchResult extends Component {
     state = {
         listView: true,

@@ -135,6 +135,9 @@ router.route('/uploadProfilePic').post((req, res) => {
     }
   });
 });
+
+
+
 // router.route('/login').post((req, res) => {
 //   req.body.path = 'login';
 
@@ -151,5 +154,29 @@ router.route('/uploadProfilePic').post((req, res) => {
 //     }
 //   });
 // });
+
+
+router.route('/getSalesDetails').post((req, res) => {
+  console.log("Backend searching Orders for a seller : ", req.body);
+  req.params.path = 'getSalesDetails';
+  makeKafkaRequestCart(req, res);
+});
+
+
+const makeKafkaRequestCart = async (req, res) => {
+  kafka.make_request('seller', { body: req.body, params: req.params }, (err, results) => {
+    if (err) {
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+    } else {
+      console.log("Result from seller details are: ", results)
+      res.json(results);
+    }
+  });
+}
+
+
 
 module.exports = router;

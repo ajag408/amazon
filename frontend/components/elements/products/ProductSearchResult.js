@@ -12,16 +12,6 @@ class ProductResult extends Component {
         //console.log(" ProductResult => props are: ", props);
     }
 
-    // handleClickProduct = (productId, handler) => {
-    //     console.log("handleClickProduct => id is: ", productId);
-    //     Axios.post(`${backendurl}/product/${productId}`).then(resp => {
-    //         if (resp.status === 200 && resp.data) {
-    //             console.log("  ProductResult => response data is: ",resp.data)
-    //             //handler(resp.data);
-    //         }
-    //     })
-    // };
-
     render() {
         const { product, currency } = this.props;
 
