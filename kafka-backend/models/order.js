@@ -6,14 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false,
       validate: {
         notNull: 'address cannot be empty'
       }
     },
     card: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull:false,
       validate: {
         notNull: 'card cannot be empty'

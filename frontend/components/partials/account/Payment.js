@@ -63,6 +63,21 @@ handlePlaceOrder = e => {
         e.preventDefault();
         if(this.state.orderPayment){
             console.log("got payment")
+            const orderObject = {
+                customerId: '5ea32fb4716ebc4f57fd8ae9',
+                address: this.state.shippingAddress,
+                card: this.state.orderPayment,
+                deliveryCharge: 20.00,
+                finalTotal: parseInt(this.state.cartTotal) + 20.00,
+                orderItems: this.state.cartItems,
+                customerName: this.state.customerName,
+
+            }
+            axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
+            .then((res) => {
+              console.log(res);
+              
+              })
         } else {
             this.props.form.validateFields((err, values) => {
                 if (!err) {
@@ -71,16 +86,22 @@ handlePlaceOrder = e => {
                     axios.post(`${backendurl}/customer/addPayment/5ea32fb4716ebc4f57fd8ae9`, values)
                     .then((res) => {
                       console.log(res);
-                        const orderObject = {
-                            customerId: '5ea32fb4716ebc4f57fd8ae9',
-                            address: this.state.shippingAddress,
-                            card: values,
-                            deliveryCharge: 20.00,
-                            finalTotal: parseInt(this.state.cartTotal) + 20.00,
-                            orderItems: this.state.cartItems,
-                            customerName: this.state.customerName,
+                      
+                      })
+                      const orderObject = {
+                        customerId: '5ea32fb4716ebc4f57fd8ae9',
+                        address: this.state.shippingAddress,
+                        card: values,
+                        deliveryCharge: 20.00,
+                        finalTotal: parseInt(this.state.cartTotal) + 20.00,
+                        orderItems: this.state.cartItems,
+                        customerName: this.state.customerName,
 
-                        }
+                    }
+                    axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
+                    .then((res) => {
+                      console.log(res);
+                      
                       })
                     //   if (res.data.error) {
                     //     this.props.form.setFieldsValue({
