@@ -56,8 +56,8 @@ class NavigationDefault extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/account/order-tracking">
-                                    <a>Track your order</a>
+                                <Link href="/account/my-orders">
+                                    <a>My Orders</a>
                                 </Link>
                             </li>
                             {/* <li>

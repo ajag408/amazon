@@ -62,7 +62,13 @@ class InformationDefault extends Component {
                         Sold By:
                         <Link href="/shop">
                             <a>
-                                {/* <strong> {product.seller.name}</strong> */}
+                            <Link
+                                href="/vendor/[vendorId]"
+                                as={`/vendor/${product.seller._id}`}>
+                                <a className="ps-product__title">
+                                    <strong>{product.seller.name}</strong>
+                                </a>
+                            </Link>
                             </a>
                         </Link>
                     </p>
