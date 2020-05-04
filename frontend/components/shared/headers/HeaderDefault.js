@@ -43,15 +43,15 @@ class HeaderDefault extends Component {
             document.body.scrollTop ||
             0;
 
-        if (number >= 300) {
-            document
-                .getElementById('headerSticky')
-                .classList.add('header--sticky');
-        } else {
-            document
-                .getElementById('headerSticky')
-                .classList.remove('header--sticky');
-        }
+        // if (number >= 300) {
+        //     document
+        //         .getElementById('headerSticky')
+        //         .classList.add('header--sticky');
+        // } else {
+        //     document
+        //         .getElementById('headerSticky')
+        //         .classList.remove('header--sticky');
+        // }
     };
 
     render() {

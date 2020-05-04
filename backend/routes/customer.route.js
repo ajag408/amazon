@@ -110,21 +110,21 @@ const makeKafkaRequestCart = async (req, res) => {
 // CREATE User
 router.route('/add-address').post((req, res) => {
 
-    console.log("Inside Add address", req.body);
+    //console.log("Inside Add address", req.body);
     req.params.path = 'add-address';
     makeKafkaRequestCart(req, res);
 });
 
 router.route('/get-address').post((req, res) => {
 
-    console.log("Inside Get address", req.body);
+    //console.log("Inside Get address", req.body);
     req.params.path = 'get-address';
     makeKafkaRequestCart(req, res);
 });
 
 router.route('/edit-address').post((req, res) => {
 
-    console.log("Inside Edit address", req.body);
+    //console.log("Inside Edit address", req.body);
     req.params.path = 'edit-address';
     makeKafkaRequestCart(req, res);
 });
@@ -132,7 +132,7 @@ router.route('/edit-address').post((req, res) => {
 
 router.route('/delete-address').post((req, res) => {
 
-    console.log("Inside Delete address", req.body);
+    //console.log("Inside Delete address", req.body);
     req.params.path = 'delete-address';
     makeKafkaRequestCart(req, res);
 });
