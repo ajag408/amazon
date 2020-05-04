@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Form, Input, Select, Collapse,Popconfirm, message } from 'antd';
 import axios from 'axios';
 
-import { Router } from 'next/router';
+import  Router  from 'next/router';
 import {backendurl} from './../../../backendurl';
 
 const { Option } = Select;
@@ -62,6 +62,7 @@ class Payment extends Component {
 handlePlaceOrder = e => {
         e.preventDefault();
         if(this.state.orderPayment){
+            localStorage.setItem('payment', JSON.stringify(this.state.orderPayment))
             console.log("got payment")
             const orderObject = {
                 customerId: '5ea32fb4716ebc4f57fd8ae9',
@@ -76,13 +77,17 @@ handlePlaceOrder = e => {
             axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
             .then((res) => {
               console.log(res);
-              
+              localStorage.setItem("paid", true)
+              localStorage.setItem("orderId", res.data.id)
+               localStorage.setItem('orderStatus', res.data.status)
+              Router.push('/account/order-summary')
               })
         } else {
             this.props.form.validateFields((err, values) => {
                 if (!err) {
                     console.log('got payment from form')
                     console.log(values)
+                    localStorage.setItem('payment', JSON.stringify(values))
                     axios.post(`${backendurl}/customer/addPayment/5ea32fb4716ebc4f57fd8ae9`, values)
                     .then((res) => {
                       console.log(res);
@@ -101,21 +106,12 @@ handlePlaceOrder = e => {
                     axios.post(`${backendurl}/customer/placeOrder/5ea32fb4716ebc4f57fd8ae9`, orderObject)
                     .then((res) => {
                       console.log(res);
-                      
-                      })
-                    //   if (res.data.error) {
-                    //     this.props.form.setFieldsValue({
-                    //         name: '', email: '', password: '', type: undefined}
-                    //       , () => {
-                    //         var status = document.getElementById('statusMessage');
-                    //         if(res.data.type === "User"){
-                    //             status.innerHTML = 'Unsuccessful signup; make sure email is unique';
-                    //         } else if(res.data.type === "Seller"){
-                    //             status.innerHTML = 'Unsuccessful signup; Seller name must be unique';
-                    //         }
-                    //         status.style.display = "block";
-                    //       });
-                    //    }
+                      localStorage.setItem("paid", true)
+                      localStorage.setItem("orderId", res.data.id)
+                      localStorage.setItem('orderStatus', res.data.status)
+                      Router.push('/account/order-summary')
+                    })
+
                     
                 } else {
                 }

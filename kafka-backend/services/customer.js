@@ -83,7 +83,7 @@ function handle_request(msg, callback) {
       
                   // console.log("after:", jobs[i]);
                 }
-                callback(null, "order successfully placed");
+                callback(null, order);
               })();
             
         }).catch(err =>{

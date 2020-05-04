@@ -35,7 +35,7 @@ class FormCheckoutInformation extends Component {
         } else {
             this.props.form.validateFields((err, values) => {
                 if (!err) {
-                    localStorage.setItem("shippingAddress", JSON.stringify(this.state.orderAddress));
+                    localStorage.setItem("shippingAddress", JSON.stringify(values));
                     Router.push('/account/shipping');
                 } else {
                 }
@@ -224,7 +224,7 @@ class FormCheckoutInformation extends Component {
                                         <div className="form-group">
                                             <Form.Item>
                                                 {getFieldDecorator(
-                                                    'postalCode',
+                                                    'zipCode',
                                                     {
                                                         rules: [
                                                             {
