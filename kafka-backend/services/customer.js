@@ -38,6 +38,44 @@ function handle_request(msg, callback) {
             }
         });
     }
+    else if (msg.path === 'editPayment') {
+
+        Customer.findOneAndUpdate({ _id: msg.paramID, "savedPaymentOptions._id":  msg.id}, 
+        { 
+            "$set": {
+                "savedPaymentOptions.$": msg
+            }
+        },
+        (err, customer) => {
+            if (err) {
+                console.log(err);
+              } else {
+ 
+                callback(null, "Edited payment");
+              }
+        });
+    }
+    else if (msg.path === 'deletePayment') {
+
+        Customer.find({ _id: msg.paramID }, (err, customer) => {
+            if (err) {
+            console.log(err);
+            } else {
+            //   console.log('before:', customer);
+            //   console.log('customer: ', JSON.stringify(customer));
+            console.log(customer);
+            customer[0].savedPaymentOptions.id(msg.id).remove()
+            customer[0].save(function (err){
+                if(err) {
+                    console.log(err)
+                }else {
+                    callback(null, "Deleted payment");
+                }
+            })
+            
+            }
+        });
+    }
     else if (msg.path === 'placeOrder') {
         msg.status = "Paid"
         console.log("msg",msg);
