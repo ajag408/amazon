@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull:false,
     }
-  }, {  timestamps: true });
+  }, { timestamps: true});
 
   // class methods
   OrderItemUpdate.associate = function(models) {

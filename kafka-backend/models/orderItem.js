@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
       }
 
     }
-  }, {  timestamps: true });
+  }, { timestamps: true});
 
   // class methods
   OrderItem.associate = function(models) {
