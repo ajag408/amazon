@@ -7,7 +7,6 @@ function AllOrders(props) {
   let [orders,setOrders] = useState([]);
   useEffect(() => {
       let url = `${backendurl}/order/customer/getAllOrder/${localStorage.getItem('user_id')}`;
-      url = `${backendurl}/order/customer/getAllOrder/5ea32fb4716ebc4f57fd8ae9`;
     Axios.get(url).then(resp => {
       if(resp.status === 200 && resp.data){
         setOrders(resp.data);
