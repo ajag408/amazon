@@ -245,7 +245,8 @@ if(msg.path==("seller_sales"))
   });
 }
 if(msg.path==("seller_orders"))
-{ 
+{ if(msg.statusFilter=="All"&&msg.searchCriteria=="")
+{
   OrderItem.findAll({}).then(result => {
     console.log(" result in admin:  ", result);
     let payload=JSON.stringify(result);
@@ -258,6 +259,63 @@ if(msg.path==("seller_orders"))
     res.message = "Database Error";
     callback(null, res);
   });
+}
+else if(msg.statusFilter=="All"&&msg.searchCriteria!="")
+{
+  OrderItem.findAll({
+    where: { sellerName: {
+      [Op.like]:`%${msg.searchCriteria}%`
+  }}
+  }).then(result => {
+    console.log(" result in admin:  ", result);
+    let payload=JSON.stringify(result);
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+  }).catch(err =>{
+    console.log("Error is: ", err);
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  });
+}
+else if(msg.statusFilter!="All"&&msg.searchCriteria=="")
+{
+OrderItem.findAll({
+  where: { 'status': `${msg.statusFilter}`,
+}
+}).then(result => {
+  console.log(" result in admin:  ", result);
+  let payload=JSON.stringify(result);
+  res.status = 200;
+  res.message = payload;
+  callback(null, res);
+}).catch(err =>{
+  console.log("Error is: ", err);
+  res.status = 500;
+  res.message = "Database Error";
+  callback(null, res);
+});
+}
+else{
+  OrderItem.findAll({
+    where: { 'status': `${msg.statusFilter}`,
+    'sellerName': {
+      [Op.like]:`%${msg.searchCriteria}%`
+  }}
+  }).then(result => {
+    console.log(" result in admin:  ", result);
+    let payload=JSON.stringify(result);
+    res.status = 200;
+    res.message = payload;
+    callback(null, res);
+  }).catch(err =>{
+    console.log("Error is: ", err);
+    res.status = 500;
+    res.message = "Database Error";
+    callback(null, res);
+  });
+}
 }
   
 
@@ -280,8 +338,6 @@ if(msg.path==("seller_orders"))
   });
 })
 }
-}
-
-  
+} 
 
 exports.handle_request = handle_request;
