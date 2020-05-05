@@ -77,10 +77,7 @@ handlePlaceOrder = e => {
             axios.post(`${backendurl}/customer/placeOrder/` +this.state.storage.user_id, orderObject)
             .then((res) => {
               console.log(res);
-              localStorage.setItem("paid", true)
-              localStorage.setItem("orderId", res.data.id)
-               localStorage.setItem('orderStatus', res.data.status)
-              Router.push('/account/order-summary')
+              Router.push(`/account/orders/${res.data.id}`)
               })
         } else {
             this.props.form.validateFields((err, values) => {

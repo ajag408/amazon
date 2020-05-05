@@ -17,7 +17,7 @@ class GiftMessage extends Component {
         productId: this.props.cartItem.product._id,
         giftMessage: form.giftMessage.value
       }
-      Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/add-gift-message/`,data).then(resp =>{
+      Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/add-gift-message/`,data).then(resp =>{
           if(resp.status === 200 && resp.data){
               this.props.handler(resp.data);
           }
@@ -28,7 +28,7 @@ class GiftMessage extends Component {
       let data = {
         productId: this.props.cartItem.product._id,
       }
-      Axios.post(`${backendurl}/cart/customer/5ea32fb4716ebc4f57fd8ae9/remove-gift-message/`,data).then(resp =>{
+      Axios.post(`${backendurl}/cart/customer/${localStorage.getItem('user_id')}/remove-gift-message/`,data).then(resp =>{
           if(resp.status === 200 && resp.data){
               this.props.handler(resp.data);
           }

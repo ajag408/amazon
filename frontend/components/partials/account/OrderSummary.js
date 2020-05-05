@@ -13,62 +13,32 @@ class OrderSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            storage: '',
             shippingAddress: '',
-            cartTotal: '',
-            cartItems: [],
+            orderTotal: '',
+            orderItems: [],
             payment: '',
             orderId: 0,
             orderStatus: ''
         };
     }
     componentDidMount(){
-        this.setState({ 
-            storage : localStorage
-        }, () => {
-            const {storage} = this.state;
-            if(!storage.paid || !storage.shippingAddress){
-
-                Router.push('/account/checkout')
-            } else {
-
-                axios.get(`${backendurl}/cart/customer/` + storage.user_id +  `/show-cart`)
-                .then((res) => {
-                    console.log(res.data.cartItems);
-                    console.log(storage.payment);
-                    console.log(JSON.parse(storage.payment))
-                   
-                    this.setState({
-                        shippingAddress: JSON.parse(storage.shippingAddress),
-                        cartTotal: res.data.cartTotal,
-                        cartItems: res.data.cartItems,
-                        payment: JSON.parse(storage.payment),
-                        orderId: storage.orderId,
-                        orderStatus: storage.orderStatus
-
-                    }, ()=>{
-                        
-                        localStorage.removeItem('shippingAddress');
-                        localStorage.removeItem('payment');
-                        localStorage.removeItem('orderId');
-                        localStorage.removeItem('orderStatus');
-                        localStorage.removeItem('paid');
-                        console.log("storage", localStorage);
-                        axios.post(`${backendurl}/cart/customer/` + storage.user_id +  `/clear-cart`)
-                        .then((res) => {
-                            console.log(res);
-                        })
-                    })
-        
-    
+        axios.get(`${backendurl}/order/getAllOrder/${this.props.orderId}`)
+        .then((res) => {
+            if(res.status === 200 && res.data){
+                this.setState({
+                    shippingAddress: JSON.parse(res.data.address),
+                    orderTotal: res.data.finalTotal,
+                    orderItems: res.data.orderItem,
+                    payment: JSON.parse(res.data.card),
+                    orderId: res.data.id,
+                    orderStatus: res.data.status
                 });
-        
             }
         });
     }
 
     render() {
-        const { cartTotal, cartItems, shippingAddress, payment, orderId, orderStatus } = this.state;
+        const { orderTotal, orderItems, shippingAddress, payment, orderId, orderStatus } = this.state;
         return (
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
@@ -124,30 +94,32 @@ class OrderSummary extends Component {
                                             <figure>
                                                 <figcaption>
                                                     <strong>Product</strong>
-                                                    <strong>total</strong>
+                                                    <strong>Quantity</strong>
+                                                    <strong>Total</strong>
                                                 </figcaption>
                                             </figure>
                                             <figure className="ps-block__items">
-                                                {cartItems &&
-                                                    cartItems.map(product => (
+                                                {orderItems &&
+                                                    orderItems.map(orderItem => (
                                                         // <Link
                                                         //     href="/"
-                                                        //     key={product.id}>
+                                                        //     key={orderItem.id}>
                                                             <a>
                                                                 <strong>
-                                                                    {
-                                                                        product.product.name
-                                                                    }
-                                                                    <span>
-                                                                        x
-                                                                        {
-                                                                            product.quantity
-                                                                        }
-                                                                    </span>
+                                                                    <Link
+                                                                        href="/product/[pid]"
+                                                                        as={`/product/${orderItem.productId}`}>
+                                                                        <a style={{'padding-top': '0px'}}>
+                                                                        {orderItem.productName}
+                                                                        </a>
+                                                                    </Link>
+                                                                </strong>
+                                                                <strong>
+                                                                    {orderItem.quantity}
                                                                 </strong>
                                                                 <small>
                                                                     $
-                                                                    {product.totalPrice}
+                                                                    {orderItem.totalPrice}
                                                                 </small>
                                                             </a>
                                                     //     </Link>
@@ -156,7 +128,7 @@ class OrderSummary extends Component {
                                             <figure>
                                                 <figcaption>
                                                     <strong>Subtotal</strong>
-                                                    <small>${cartTotal}</small>
+                                                    <small>${orderTotal}</small>
                                                 </figcaption>
                                             </figure>
                                             <figure>
@@ -167,9 +139,9 @@ class OrderSummary extends Component {
                                             </figure>
                                             <figure className="ps-block__total">
                                                 <h3>
-                                                    Total (PAID)
+                                                    Total ({orderStatus})
                                                     <strong>
-                                                        ${parseInt(cartTotal) + 20}
+                                                        ${parseInt(orderTotal) + 20}
                                                         .00
                                                     </strong>
                                                 </h3>

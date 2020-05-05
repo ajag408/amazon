@@ -7,7 +7,6 @@ function OpenOrders(props) {
   let [orderItems,setOrderItems] = useState([]);
   useEffect(() => {
       let url = `${backendurl}/order/customer/getAllOrder/${localStorage.getItem('user_id')}/1`;
-      url = `${backendurl}/order/customer/getAllOrder/5ea32fb4716ebc4f57fd8ae9/1`;
       Axios.get(url).then(resp => {
         if(resp.status === 200 && resp.data){
           setOrderItems(resp.data);
@@ -16,7 +15,6 @@ function OpenOrders(props) {
   }, []);
   const handleCancelOrderItem = (orderItemId) => {
     let url = `${backendurl}/order/customer/${localStorage.getItem('user_id')}/orderItem/${orderItemId}/cancel`;
-    url = `${backendurl}/order/customer/5ea32fb4716ebc4f57fd8ae9/orderItem/${orderItemId}/cancel`;
     Axios.get(url).then(resp => {
       if(resp.status === 200 && resp.data){
         setOrderItems(orderItems.filter(item => item.id !== orderItemId));

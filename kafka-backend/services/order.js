@@ -70,11 +70,11 @@ async function handle_request(msg, callback) {
   }
 
   if (msg.params.path === 'all-order-by-orderId') {
-    OrderItem.findAll({
-      where: { orderId: msg.params.orderId },
-      include: [{ model: Order, as: 'order' }],
+    Order.findAll({
+      where: { id: msg.params.orderId },
+      include: [{ model: OrderItem, as: 'orderItem' }],
     }).then(orderList => {
-      callback(null, orderList)
+      callback(null, orderList[0])
     })
       .catch(e => {
         callback(null, { error: e })

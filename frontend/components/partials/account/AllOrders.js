@@ -39,8 +39,8 @@ function AllOrders(props) {
                                       <div className="ps-product--cart">
                                           <div className="ps-product__content">
                                               <Link
-                                                  href="/product/[pid]"
-                                                  as={`/product/${order.id}`}>
+                                                  href="/account/orders/[orderId]"
+                                                  as={`/account/orders/${order.id}`}>
                                                   <a className="ps-product__title">
                                                       {order.id}
                                                   </a>

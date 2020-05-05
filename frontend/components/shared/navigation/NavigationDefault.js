@@ -55,17 +55,17 @@ class NavigationDefault extends Component {
                                     <a>Sell on Amazon</a>
                                 </Link>
                             </li>
-                            <li>
+                            {localStorage.getItem('role') === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>
                                 </Link>
-                            </li>
+                            </li>): (null)}
                             {/* <li>
                                 <CurrencyDropdown />
                             </li> */}
-                            <li>
+                            {/* <li>
                                 <LanguageSwicher />
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>
