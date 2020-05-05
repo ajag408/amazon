@@ -279,7 +279,7 @@ if(this.state.productCategories)
                         </Link>
                     </li>
                     <li>
-                    <Link href="/account/order-tracking">
+                    <Link href="/admin/analytics">
                             <a>Analytics Dashboard</a>
                         </Link>
                     </li>

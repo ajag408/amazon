@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import {backendurl} from '../../backendurl';
 import axios from 'axios';
-
+import Router from 'next/router';
 class SellerSearch extends Component {
     constructor(props) {
         super(props);
@@ -250,7 +250,7 @@ if(this.state.sellers)
                         </Link>
                     </li>
                     <li>
-                    <Link href="/account/order-tracking">
+                    <Link href="/admin/analytics">
                             <a>Analytics Dashboard</a>
                         </Link>
                     </li>
