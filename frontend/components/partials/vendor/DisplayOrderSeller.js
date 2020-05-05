@@ -57,9 +57,7 @@ class DisplayOrderSeller extends Component {
         console.log(this.props.order);
         let productId = this.props.order.productId
          Router.push({           
-                 pathname: '/product',
-                 query: { pid : productId }
-             
+                 pathname: '/product/'+productId
          })
     //     Router.push('/order/'+JSON.stringify(this.props.order));
      }

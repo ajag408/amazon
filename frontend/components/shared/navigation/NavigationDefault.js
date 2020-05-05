@@ -55,7 +55,7 @@ class NavigationDefault extends Component {
                                     <a>Sell on Amazon</a>
                                 </Link>
                             </li>
-                            {localStorage.getItem('role') === 'Customer' ? (<li>
+                            {typeof window !== 'undefined' && localStorage.getItem('role') === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>
                                 </Link>
