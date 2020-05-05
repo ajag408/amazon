@@ -3,6 +3,7 @@ import { backendurl } from './../../../../backendurl';
 import Axios from 'axios'; 
 import { withRouter } from 'next/router'
 import Router from 'next/router';
+import stateData from '../../../../public/static/data/states.json';
 
 class FormEditAddress extends Component {
 
@@ -27,11 +28,15 @@ class FormEditAddress extends Component {
 
     componentDidMount(){
         let address= "";
+        //console.log("States are: ", stateData.states);
+
+        // var isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test("90210-4251");
+        // console.log("valid Zip: ", isValidZip);
        if(this.props.router.query.address)
        {
         console.log( " component Did mount: " , JSON.parse(this.props.router.query.address));
         address =  JSON.parse(this.props.router.query.address);
-    }
+        }
         this.setState({
             addressId: address? address._id: "",
             fullName : address? address.fullName : "",
@@ -145,7 +150,10 @@ class FormEditAddress extends Component {
                         <label>
                             State <sup>*</sup>
                         </label>
-                        <input type="text" placeholder="" className="form-control" name="state" value={this.state.state} onChange={this.onChangeHandler}/>
+                        <select name="state" onChange={this.onChangeHandler}>
+                            {stateData.states.map((obj) => <option  value={obj.name}   >{obj.name}</option>)}
+                        </select>
+                        {/* <input type="text" placeholder="" className="form-control" name="state" value={this.state.state} onChange={this.onChangeHandler}/> */}
                     </div>
                     <div className="form-group">
                         <label>
@@ -157,7 +165,7 @@ class FormEditAddress extends Component {
                         <label>
                             Zip code <sup>*</sup>
                         </label>
-                        <input type="text" placeholder="" className="form-control" name="zipCode" value={this.state.zipCode } onChange={this.onChangeHandler}/>
+                        <input type="text" placeholder="" className="form-control" name="zipCode" value={this.state.zipCode} onChange={this.onChangeHandler} pattern="(^\d{5}$)|(^\d{5}-\d{4}$)"/>
                     </div>
                     <div className="form-group">
                         <label>

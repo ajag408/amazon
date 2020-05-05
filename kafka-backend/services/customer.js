@@ -186,6 +186,9 @@ function handle_request(msg, callback) {
                     "savedAddresses.$.city": msg.body.city,
                     "savedAddresses.$.state": msg.body.state,
                     "savedAddresses.$.country": msg.body.country,
+                    "savedAddresses.$.zipCode": msg.body.zipCode,
+                    "savedAddresses.$.phoneNumber": msg.body.phoneNumber,
+                    
                 }
             }, (err, result) => {
                 if (err) return console.error(err);
