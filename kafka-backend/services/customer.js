@@ -130,7 +130,84 @@ function handle_request(msg, callback) {
             }).catch(err => {
                 console.log("Error is: ", err);
             });
-    } else if (msg.params.path === 'add-address') {
+    } else if (msg.path === 'getProfileData') {
+        var res = {};
+        Customer.findOne({ _id: msg.userId }).populate('user').exec((err, customer) => {
+            if (err) {
+                res.status = 500;
+                res.message = "Database Error";
+                callback(null, res);
+            } else if (customer) {
+                res.status = 200;
+                customer.user.password = undefined;
+                customer.user.salt = undefined;
+                res.message = customer;
+                callback(null, res);
+            } else {
+                res.status = 204;
+                res.message = "User not found";
+                callback(null, res);
+            }
+        })
+    } else if (msg.path === 'updateBasicDetails') {
+        console.log(msg)
+        var res = {};
+        Customer.updateOne({ _id: msg.userId },
+            {
+                $set: { name: msg.updatedName }
+            },
+            (error, success) => {
+                if (error) {
+                    res.message = error.message;
+                    res.status = 400;
+                    callback(null, res);
+                } else if (success.n > 0) {
+                    console.log("Customer Profile updated")
+                    res.message = "Customer Profile updated";
+                    res.status = 200;
+                    callback(null, res);
+                } else {
+                    res.message = "User Not Found";
+                    res.status = 400;
+                    callback(null, res);
+                }
+            })
+    } else if (msg.path === 'getCommentsAndReview') {
+        var res = {};
+        // db.getCollection('products').aggregate([
+        //     { $unwind: '$ratingAndReviews'},
+        //     { $match: {'ratingAndReviews.customer': ObjectId("5e9e36cf6b95206ad289645f")}},
+        //     { $group: {_id: '$_id', ratingAndReviews: {$push: '$ratingAndReviews'}, seller : {$first:"$seller"}}}
+        //   ])
+        Product.aggregate([
+            { $unwind: '$ratingAndReviews' }
+            , { $match: { 'ratingAndReviews.customer': mongoose.Types.ObjectId(msg.userId) } }
+            , {
+                $group: {
+                    _id: '$_id'
+                    , ratingAndReviews: { $push: '$ratingAndReviews' }
+                    , seller: { $first: '$seller' }
+                    , productName: { $first: '$name' }
+                }
+            }
+        ]).exec((err, products) => {
+            if (err) {
+                res.status = 500;
+                res.message = "Database Error";
+                callback(null, res);
+            } else if (products) {
+                console.log("Products with Customer Reviews", products);
+                res.status = 200;
+                res.message = products;
+                callback(null, res);
+            } else {
+                res.status = 204;
+                res.message = "User not found";
+                callback(null, res);
+            }
+        })
+    } 
+    else if (msg.params.path === 'add-address') {
         var newAddress = {
             fullName: msg.body.fullName,
             streetAddressLine_1: msg.body.streetAddressLine_1,
@@ -209,83 +286,7 @@ function handle_request(msg, callback) {
                 callback(null, res);
             }
         })
-    } else if (msg.path === 'getProfileData') {
-        var res = {};
-        Customer.findOne({ _id: msg.userId }).populate('user').exec((err, customer) => {
-            if (err) {
-                res.status = 500;
-                res.message = "Database Error";
-                callback(null, res);
-            } else if (customer) {
-                res.status = 200;
-                customer.user.password = undefined;
-                customer.user.salt = undefined;
-                res.message = customer;
-                callback(null, res);
-            } else {
-                res.status = 204;
-                res.message = "User not found";
-                callback(null, res);
-            }
-        })
-    } else if (msg.path === 'updateBasicDetails') {
-        console.log(msg)
-        var res = {};
-        Customer.updateOne({ _id: msg.userId },
-            {
-                $set: { name: msg.updatedName }
-            },
-            (error, success) => {
-                if (error) {
-                    res.message = error.message;
-                    res.status = 400;
-                    callback(null, res);
-                } else if (success.n > 0) {
-                    console.log("Customer Profile updated")
-                    res.message = "Customer Profile updated";
-                    res.status = 200;
-                    callback(null, res);
-                } else {
-                    res.message = "User Not Found";
-                    res.status = 400;
-                    callback(null, res);
-                }
-            })
-    } else if (msg.path === 'getCommentsAndReview') {
-        var res = {};
-        // db.getCollection('products').aggregate([
-        //     { $unwind: '$ratingAndReviews'},
-        //     { $match: {'ratingAndReviews.customer': ObjectId("5e9e36cf6b95206ad289645f")}},
-        //     { $group: {_id: '$_id', ratingAndReviews: {$push: '$ratingAndReviews'}, seller : {$first:"$seller"}}}
-        //   ])
-        Product.aggregate([
-            { $unwind: '$ratingAndReviews' }
-            , { $match: { 'ratingAndReviews.customer': mongoose.Types.ObjectId(msg.userId) } }
-            , {
-                $group: {
-                    _id: '$_id'
-                    , ratingAndReviews: { $push: '$ratingAndReviews' }
-                    , seller: { $first: '$seller' }
-                    , productName: { $first: '$name' }
-                }
-            }
-        ]).exec((err, products) => {
-            if (err) {
-                res.status = 500;
-                res.message = "Database Error";
-                callback(null, res);
-            } else if (products) {
-                console.log("Products with Customer Reviews", products);
-                res.status = 200;
-                res.message = products;
-                callback(null, res);
-            } else {
-                res.status = 204;
-                res.message = "User not found";
-                callback(null, res);
-            }
-        })
-    }
+    } 
 }
 
 exports.handle_request = handle_request;
