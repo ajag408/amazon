@@ -317,6 +317,11 @@ class MyAccount extends Component {
                     </Link>
                 </li>
                 <li>
+                    <Link href="/account/save-payments">
+                        <a>Manage Payments</a>
+                    </Link>
+                </li>
+                <li>
                     <Link href="/account/my-account">
                         <a onClick={this.handleLogout.bind(this)}>Logout</a>
                     </Link>
