@@ -157,7 +157,8 @@ async function handle_request(msg, callback) {
             }
             var filter = {
                 $and: [
-                    { name: { $regex: ".*" + pName + ".*", $options: 'i' } }
+                    { name: { $regex: ".*" + pName + ".*", $options: 'i' } }, 
+                    { active: true}
                 ]
             }
            if (msg.body.sellerId && msg.body.sellerId.length >0){

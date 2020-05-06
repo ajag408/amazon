@@ -22,6 +22,7 @@ class SearchHeader extends Component {
     }
 
     handleSearch =  (e) =>  {
+        e.preventDefault();
         this.setState({
             keyword: e.target.value, 
             searchProducts : [], 
@@ -34,12 +35,12 @@ class SearchHeader extends Component {
                     }
                     Axios.post(`${backendurl}/product/search-product`, data).then(resp => {
                         if (resp.status === 200 && resp.data) {
-                            console.log("Response in front end is: ", resp.data.message);
+                            //console.log("Response in front end is: ", resp.data.message);
                             this.setState({
                                 searchProducts: resp.data.message, 
                                 searchPanel :true
                             });
-                            console.log("handle search  ", this.state, " Value :  ", this.state.keyword); 
+                            //console.log("handle search  ", this.state, " Value :  ", this.state.keyword); 
                         }
                     })
                 }else {
@@ -51,7 +52,6 @@ class SearchHeader extends Component {
         })
         
     }
-
     handleSubmit(e) {
         e.preventDefault();
         console.log("handle Submit: ", this.state);
