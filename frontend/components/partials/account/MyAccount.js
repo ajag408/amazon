@@ -252,6 +252,7 @@ class MyAccount extends Component {
         e.preventDefault();
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
+        localStorage.removeItem('role');
         Router.push('/account/login')
     };
 
