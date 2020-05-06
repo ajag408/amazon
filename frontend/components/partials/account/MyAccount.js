@@ -293,6 +293,11 @@ class MyAccount extends Component {
                     </Link>
                 </li>
                 <li>
+                    <Link href="/vendor/vendor-report">
+                        <a>View Sales Report</a>
+                    </Link>
+                </li>
+                <li>
                     <Link href="/account/my-account">
                         <a onClick={this.handleLogout.bind(this)}>Logout</a>
                     </Link>
@@ -305,6 +310,11 @@ class MyAccount extends Component {
                 </li>
                 <li>
                     <a onClick={this.handleViewComments}>My Comments And Reviews</a>
+                </li>
+                <li>
+                    <Link href="/account/addresses">
+                        <a>Manage Addresses</a>
+                    </Link>
                 </li>
                 <li>
                     <Link href="/account/my-account">
@@ -320,6 +330,11 @@ class MyAccount extends Component {
                 </li>
                 <li className="active">
                     <a onClick={this.handleViewComments}>My Comments And Reviews</a>
+                </li>
+                <li>
+                    <Link href="/account/addresses">
+                        <a>Manage Addresses</a>
+                    </Link>
                 </li>
                 <li>
                     <Link href="/account/my-account">
