@@ -150,7 +150,7 @@ async function handle_request(msg, callback) {
             });
         }
         else if (msg.params.path === 'search-products') {
-
+            //console.log("Inside Search products: ", msg.params.path ,  " ", msg.body);
             let pName="";
             if(msg.body.productName){
                 pName = msg.body.productName

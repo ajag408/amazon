@@ -21,44 +21,35 @@ class SearchHeader extends Component {
         };
     }
 
-    componentDidMount(){
-        Axios.get(`${backendurl}/product/getAllProducts`).then(resp => {
-            if (resp.status === 200 && resp.data) {
-
-                //console.log("Response in front end is: ", resp.data.message);
-                this.setState({
-                    searchProducts: resp.data.message});
-            }
+    handleSearch =  (e) =>  {
+        this.setState({
+            keyword: e.target.value, 
+            searchProducts : [], 
+       
+        },()=> {
+               
+                if (this.state.keyword !== ''){
+                    var data = {
+                        productName: this.state.keyword
+                    }
+                    Axios.post(`${backendurl}/product/search-product`, data).then(resp => {
+                        if (resp.status === 200 && resp.data) {
+                            console.log("Response in front end is: ", resp.data.message);
+                            this.setState({
+                                searchProducts: resp.data.message, 
+                                searchPanel :true
+                            });
+                            console.log("handle search  ", this.state, " Value :  ", this.state.keyword); 
+                        }
+                    })
+                }else {
+                    this.setState({
+                        searchPanel: false
+                    })
+                }
+                
         })
-    }
-
-    searchByProductName = (keyword, object) => {
-        let matches = [];
-        let regexp = new RegExp(keyword.toLowerCase(), 'g');
-
-        object.forEach(product => {
-            if (product.name.toLowerCase().match(regexp))
-                matches.push(product);
-        });
-
-        return matches;
-    }
-
-    handleSearch(e) {
-        console.log("handle search  ", this.state)
-        if (e.target.value !== '') {
-            this.setState({
-                searchPanel: true,
-                keyword: e.target.value,
-                searchProducts: this.searchByProductName(
-                    e.target.value,
-                    //products
-                    this.state.searchProducts
-                ),
-            });
-        } else {
-            this.setState({ searchPanel: false, searchProducts: [] });
-        }
+        
     }
 
     handleSubmit(e) {
@@ -74,18 +65,10 @@ class SearchHeader extends Component {
         return (
             <form
                 className="ps-form--quick-search"
-                method="get"
+                method="post"
                 action="/"
                 onSubmit={this.handleSubmit.bind(this)}>
                 <div className="ps-form__categories">
-                    {/* <select className="form-control" value = {this.state.category} onChange= {(e)=> {this.setState({category: e.target.value})}}>
-                        {exampleCategories.map(category => (
-                            <option value={category} key={category}>
-                                {option}
-                            </option>
-                        ))}
-                    </select> */}
-
                 </div>
                 <input
                     className="form-control"
@@ -99,7 +82,7 @@ class SearchHeader extends Component {
                         searchPanel && searchPanel === true ? ' active ' : ''
                     }`}>
                     <div className="ps-panel__content">
-                        {searchProducts.length > 0 ? (
+                        {searchProducts  && searchProducts.length > 0 ? (
                             searchProducts.map(product => (
                                 <ProductResult
                                     product={product}
