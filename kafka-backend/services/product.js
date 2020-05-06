@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 //const Customer = mongoose.models.Customer;
 const Product = mongoose.models.Product;
 const Customer = mongoose.models.Customer;
-
+const ProductView = mongoose.models.ProductViews;
 async function handle_request(msg, callback) {
     try{
         var res = {};
@@ -95,7 +95,23 @@ async function handle_request(msg, callback) {
                 })   
         } else if (msg.params.path === 'get-product') {
             console.log("Product => Kafka Backend: ", msg);
-            
+            let queryObj = {}
+            const startOfDay = new Date(new Date().setUTCHours(0, 0, 0, 0)).toISOString()
+            const endOfDay = new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+
+            queryObj.createdAt = {
+            $gte: startOfDay, // 2019-11-08T00:00:00.000Z
+            $lt: endOfDay // 2019-11-08T23:59:59.999Z
+            }
+
+            ProductView.updateOne({productId : msg.params.productId , createdAt : {$gte: startOfDay, $lt: endOfDay}} ,
+                {$inc: { viewCount : 1} } ,
+                {upsert: true, setDefaultsOnInsert: true}
+                ).exec((error,result) => {
+                    if(error);
+                    console.log(error);
+                    console.log("Updated View");
+                });
             Product.findById(msg.params.productId)
             .populate({
                 path: 'seller',
