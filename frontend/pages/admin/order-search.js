@@ -4,7 +4,9 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import {backendurl} from '../../backendurl';
 import axios from 'axios';
-
+import Router from 'next/router';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 class OrderSearch extends Component {
     constructor(props) {
         super(props);
@@ -13,14 +15,32 @@ class OrderSearch extends Component {
         orders:[],
         searchCriteria:'',
         pageIndex:1,
-        orderStatus:'Package Arrived'
+        orderStatus:'Package Arrived',
+        statusFilter:'All'
     };
     this.closeModal = this.closeModal.bind(this);
 }
 componentDidMount(){
-    this.viewOrders();   
+    this.setState({ 
+        storage : localStorage
+    }, () => {
+        const {storage} = this.state;
+        if(!storage.token || storage.role != "Admin"){
+         //   || storage.role != "Customer"
+            Router.push('/account/login')
+        } else {
+            this.viewOrders();    
+        }
+    });
+     
 }
-
+handleLogout(e){
+    e.preventDefault();
+    console.log("hello")
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    Router.push('/account/login')
+};
 searchCriteriaChange=(e)=>
 {
     this.setState({
@@ -37,7 +57,8 @@ closeModal() {
 viewOrders=()=>
 {
     let data = {
-        searchCriteria:this.state.searchCriteria
+        searchCriteria:this.state.searchCriteria,
+        statusFilter:this.state.statusFilter
     }
     axios.post(backendurl +'/admin/orderSearch',data)
     .then(response => {
@@ -87,9 +108,93 @@ this.viewOrders();
         this.setState({errorMessage:"Order Item not updated"});
     });
 }
+handleAll=()=>{
+    this.state.statusFilter='All'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handlePending=()=>{
+    this.state.statusFilter='Pending'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handlePaid=()=>{
+    this.state.statusFilter='Paid'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handlePacking=()=>{
+    this.state.statusFilter='Packing'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+
+handleOFS=()=>{
+    this.state.statusFilter='Out for Shipping'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handlePA=()=>{
+    this.state.statusFilter='Package Arrived'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handleOFD=()=>{
+    this.state.statusFilter='Out for Delivery'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handleDelivered=()=>{
+    this.state.statusFilter='Delivered'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+handleCancelled=()=>{
+    this.state.statusFilter='Cancelled'
+    this.setState({
+        statusFilter:this.state.statusFilter 
+    })
+    this.viewOrders();
+}
+
+
 render()
 {
-let message;let orderList;
+let message;let orderList;let orderStatusFilter;
+orderStatusFilter=(
+    <Dropdown>
+    <Dropdown.Toggle variant="success" id="dropdown-basic">
+     {this.state.statusFilter}
+    </Dropdown.Toggle>
+  
+    <Dropdown.Menu>
+    <Dropdown.Item onClick={() => this.handleAll()}>All</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handlePending()}>Pending</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handlePaid()}>Paid</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handlePacking()}>Packing</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handleOFS()}>Out for Shipping</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handlePA()}>Package Arrived</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handleOFD()}>Out for Delivery</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handleDelivered()}>Delivered</Dropdown.Item>
+    <Dropdown.Item onClick={() => this.handleCancelled()}>Cancelled</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>)
 
 if(this.state.orders)
 {
@@ -155,8 +260,13 @@ if(this.state.orders)
                         </Link>
                     </li>
                     <li>
-                    <Link href="/account/order-tracking">
+                    <Link href="/admin/analytics">
                             <a>Analytics Dashboard</a>
+                        </Link>
+                    </li>
+                    <li>
+                    <Link href='/admin/order-search' >
+                            <a onClick={this.handleLogout}>Logout</a>
                         </Link>
                     </li>
                    
@@ -183,7 +293,8 @@ if(this.state.orders)
          
             <input type="text" size="100" className="form-control" name="search" placeholder="Seller Name" onChange={this.searchCriteriaChange}/>
             <div style={{display: "flex",justifyContent: "center",alignItems: "center"}}>
-                <button className="btn btn-primary" type="button" onClick={this.viewSellers}><span className="glyphicon glyphicon-search"></span>Search</button>
+                <button className="btn btn-primary" type="button" onClick={this.viewOrders}><span className="glyphicon glyphicon-search"></span>Search</button>{" "}
+                {orderStatusFilter}
             </div>
         </div>
     </div>

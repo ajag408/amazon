@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 import {backendurl} from '../../backendurl';
 import axios from 'axios';
-
+import Router from 'next/router';
 class SellerSearch extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +19,26 @@ class SellerSearch extends Component {
     this.closeModal = this.closeModal.bind(this);
 }
 componentDidMount(){
-    this.viewSellers();   
+    this.setState({ 
+        storage : localStorage
+    }, () => {
+        const {storage} = this.state;
+        if(!storage.token || storage.role != "Admin"){
+         //   || storage.role != "Customer"
+            Router.push('/account/login')
+        } else {
+            this.viewSellers();     
+        }
+    });
+   
 }
+handleLogout(e){
+    e.preventDefault();
+    console.log("hello")
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    Router.push('/account/login')
+};
 
 searchCriteriaChange=(e)=>
 {
@@ -232,8 +250,13 @@ if(this.state.sellers)
                         </Link>
                     </li>
                     <li>
-                    <Link href="/account/order-tracking">
+                    <Link href="/admin/analytics">
                             <a>Analytics Dashboard</a>
+                        </Link>
+                    </li>
+                    <li>
+                    <Link href='/admin/order-search' >
+                            <a onClick={this.handleLogout}>Logout</a>
                         </Link>
                     </li>
                    
@@ -338,7 +361,7 @@ if(this.state.sellers)
                     <thead>
                         <tr>
                         <th>Sales Month</th>
-                        <th>Total Sales</th>
+                        <th>Total Sales Amount</th>
                         </tr>
                     </thead>
                     <tbody>
