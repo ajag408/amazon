@@ -140,4 +140,72 @@ router.route('/delete-address').post((req, res) => {
 
 
 
+router.route('/getProfileData/:userId').get((req, res) => {
+  req.params.path = 'getProfileData';
+  console.log("request is: ", req.params.userId);
+  kafka.make_request('customer', req.params, (err, results) => {
+    console.log('in result');
+    console.log(results);
+    if (err) {
+      console.log('Inside err');
+      res.status(500);
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+      res.end();
+    } else {
+      console.log('inside else of request');
+      res.status(results.status);
+      res.json(results);
+      res.end();
+    }
+  });
+});
+
+router.route('/updateBasicDetails').post((req, res) => {
+  req.body.path = 'updateBasicDetails';
+  kafka.make_request('customer', req.body, (err, results) => {
+    console.log('in result');
+    console.log(results);
+    if (err) {
+      console.log('Inside err');
+      res.status(500);
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+      res.end();
+    } else {
+      console.log('inside else of request');
+      res.status(results.status);
+      res.json(results);
+      res.end();
+    }
+  });
+});
+
+router.route('/getCommentsAndReview/:userId').get((req, res) => {
+  req.params.path = 'getCommentsAndReview';
+  console.log("request is: ", req.params.userId);
+  kafka.make_request('customer', req.params, (err, results) => {
+    console.log('in result');
+    console.log(results);
+    if (err) {
+      console.log('Inside err');
+      res.status(500);
+      res.json({
+        status: 'error',
+        msg: 'System Error, Try Again.',
+      });
+      res.end();
+    } else {
+      console.log('inside else of request');
+      res.status(results.status);
+      res.json(results);
+      res.end();
+    }
+  });
+});
+
 module.exports = router;

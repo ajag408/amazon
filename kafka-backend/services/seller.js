@@ -119,7 +119,15 @@ function handle_request(msg, callback) {
   else if (msg.path === 'uploadProfilePic') {
     console.log(msg)
     var res = {};
-    Seller.updateOne({_id : msg.sellerId} , 
+    var document;
+    if(msg.role === "Seller")
+    {
+      document = Seller;
+    }
+    else if(msg.role === "Customer"){
+      document = Customer;
+    }
+    document.updateOne({_id : msg.sellerId} , 
        {
            $set : {profilePicture : msg.profileImagePath.imageUrl}
     } ,

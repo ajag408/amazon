@@ -4,20 +4,24 @@ import Router from 'next/router';
 import axios from 'axios';
 import { backendurl } from '../../../backendurl';
 import { Form, Input, notification } from 'antd';
+import { relativeTimeThreshold } from 'moment';
+import Rating from '../../elements/Rating';
 
 class MyAccount extends Component {
     constructor(props) {
         super(props);
         this.state = {
             storage: ''
-            ,profileData : {}
-            ,updatedName : ""
-            ,updatedAddress : ""
-            ,isValueUpdated : false
-            ,error : ""
-            ,isImageUploadEnabled : false
-            ,profilePic : null
-            ,isImageUploaded : false
+            , profileData: {}
+            , updatedName: ""
+            , updatedAddress: ""
+            , isValueUpdated: false
+            , error: ""
+            , isImageUploadEnabled: false
+            , profilePic: null
+            , isImageUploaded: false
+            , activeModule: ""
+            , reviewCount: 0
         };
 
         this.onChangeName = this.onChangeName.bind(this);
@@ -27,31 +31,67 @@ class MyAccount extends Component {
         this.onCancelClick = this.onCancelClick.bind(this);
         this.onUploadClick = this.onUploadClick.bind(this);
         this.onProfilePicUpload = this.onProfilePicUpload.bind(this);
+        this.handleViewComments = this.handleViewComments.bind(this);
+        this.handleEditProfile = this.handleEditProfile.bind(this);
     }
 
-    onChangeName(e){
+    handleViewComments(e) {
+        debugger;
+        var storage;
+        if (this.state.storage) {
+            storage = this.state.storage
+        };
+        axios.get(backendurl + '/customer/getCommentsAndReview/' + storage.user_id)
+            .then((res) => {
+                debugger;
+                console.log(res);
+                if (res.status == 500 || res.status == 204) {
+                    console.log(res.data.message);
+                } else {
+                    var reviewCounts = 0;
+                    var productsWithReview = res.data.message;
+                    debugger;
+                    for (var i = 0; i < productsWithReview.length; i++) {
+                        reviewCounts += productsWithReview[i].ratingAndReviews.length;
+                    }
+                    this.setState({
+                        productsWithCommentsAndReviews: res.data.message
+                        , activeModule: "ViewComments"
+                        , reviewCount: reviewCounts
+                    });
+                }
+            });
+    }
+
+    handleEditProfile(e) {
         this.setState({
-            updatedName : e.target.value
+            activeModule: "EditProfile"
         });
     }
 
-    onChangeAddress(e){
+    onChangeName(e) {
         this.setState({
-            updatedAddress : e.target.value
+            updatedName: e.target.value
         });
     }
 
-    uploadButton(e){
+    onChangeAddress(e) {
+        this.setState({
+            updatedAddress: e.target.value
+        });
+    }
+
+    uploadButton(e) {
         e.preventDefault();
         this.setState({
-            isImageUploadEnabled : true
+            isImageUploadEnabled: true
         })
     }
 
-    onCancelClick(e){
+    onCancelClick(e) {
         //e.preventDefault();
         this.setState({
-            isImageUploadEnabled : false
+            isImageUploadEnabled: false
         })
     }
 
@@ -69,6 +109,7 @@ class MyAccount extends Component {
         let formData = new FormData();
 
         formData.set("sellerId", this.state.storage.user_id);
+        formData.set("role", this.state.storage.role);
         formData.append("file", this.state.profilePic);
 
         axios({
@@ -85,86 +126,125 @@ class MyAccount extends Component {
 
                     profileData1.profilePicture = response.data.profileImagePath
                     this.setState({
-                        isImageUploaded :true
-                        ,profileData : profileData1
-                        ,isImageUploadEnabled:false
+                        isImageUploaded: true
+                        , profileData: profileData1
+                        , isImageUploadEnabled: false
                     })
                     // Router.push('/account/login')
                 } else if (parseInt(response.data.status) === 400) {
                     console.log(response.data);
                     this.setState({
                         error: response.data.message
-                        ,isImageUploaded : false
-                        ,isImageUploadEnabled : false
+                        , isImageUploaded: false
+                        , isImageUploadEnabled: false
                     })
                 }
             }).catch(error => {
                 this.setState({
                     error: error.message
-                    ,isImageUploaded : false
+                    , isImageUploaded: false
                 })
             })
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         e.preventDefault();
         debugger;
         var isValid = true;
-        if(1!==1){
+        if (1 !== 1) {
             isValid = false;
             this.setState({
-                error : <div id='statusMessage' style={{ color: 'red'}}>Invalid values</div>
+                error: <div id='statusMessage' style={{ color: 'red' }}>Invalid values</div>
             })
         }
 
-        if(isValid){
+        if (this.state.updatedName === "") {
+            this.setState({
+                updatedName: this.state.profileData.name
+            })
+        }
+        if (this.state.updatedAddress === "") {
+            this.setState({
+                updatedAddress: this.state.profileData.addresses
+            })
+        }
+        if (isValid) {
             var data = {
-                updatedName : this.state.updatedName
-                ,updatedAddress : this.state.updatedAddress
-                ,userId : this.state.storage.user_id
+                updatedName: this.state.updatedName
+                , updatedAddress: this.state.updatedAddress
+                , userId: this.state.storage.user_id
             }
 
-            axios.post(backendurl+'/seller/updateBasicDetails', data)
-                  .then((res) => {
-                    if (res.status === 200) {
-                        this.setState({
-                            isValueUpdated :true
-                            ,error : ""
-                        })
-                    } else {
-                       this.setState({
-                           error : <div id='statusMessage' style={{ color: 'red'}}>Data not Updated Try Again</div>
-                       })  
-                    }
-                  });
+            if (this.state.storage && this.state.storage.role === "Seller") {
+                axios.post(backendurl + '/seller/updateBasicDetails', data)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            this.setState({
+                                isValueUpdated: true
+                                , error: ""
+                            })
+                        } else {
+                            this.setState({
+                                error: <div id='statusMessage' style={{ color: 'red' }}>Data not Updated Try Again</div>
+                            })
+                        }
+                    });
+            } else if (this.state.storage && this.state.storage.role === "Customer") {
+                axios.post(backendurl + '/customer/updateBasicDetails', data)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            this.setState({
+                                isValueUpdated: true
+                                , error: ""
+                            })
+                        } else {
+                            this.setState({
+                                error: <div id='statusMessage' style={{ color: 'red' }}>Data not Updated Try Again</div>
+                            })
+                        }
+                    });
+            }
         }
     }
 
-    componentDidMount(){
-        this.setState({ 
-            storage : localStorage
+    componentDidMount() {
+        this.setState({
+            storage: localStorage
         }, () => {
-            const {storage} = this.state;
-            if(!storage.token || storage.role === "Admin"){
-             //   || storage.role != "Customer"
+            const { storage } = this.state;
+            if (!storage.token || storage.role === "Admin") {
+                //   || storage.role != "Customer"
                 Router.push('/account/login')
             } else {
-                // debugger;
-                // var data = {
-                //     userId : storage.user_id
-                // };
-                //console.log(backendurl+'/seller/getProfileData/'+storage.user_id);
-                axios.get(backendurl+'/seller/getProfileData/'+storage.user_id)
-                .then((res) => {
-                    console.log(res);
-                   if(res.status == 500 || res.status == 204 ){
-                       console.log(res.data.message);
-                   } else {
-                      this.setState({
-                        profileData : res.data.message
-                      });
-                  }
-                });
+                if (storage.role === "Seller") {
+                    axios.get(backendurl + '/seller/getProfileData/' + storage.user_id)
+                        .then((res) => {
+                            console.log(res);
+                            if (res.status == 500 || res.status == 204) {
+                                console.log(res.data.message);
+                            } else {
+                                this.setState({
+                                    profileData: res.data.message
+                                    , updatedName: res.data.message.name
+                                    , updatedAddress: res.data.message.addresses
+                                });
+                            }
+                        });
+                } else if (storage.role === "Customer") {
+                    axios.get(backendurl + '/customer/getProfileData/' + storage.user_id)
+                        .then((res) => {
+                            console.log(res);
+                            if (res.status == 500 || res.status == 204) {
+                                console.log(res.data.message);
+                            } else {
+                                this.setState({
+                                    profileData: res.data.message
+                                    , activeModule: "EditProfile"
+                                    , updatedName: res.data.message.name
+                                });
+                            }
+                        });
+                }
             }
         });
     }
@@ -188,7 +268,7 @@ class MyAccount extends Component {
                 </div>
             </div>
                 <div className="row">
-                    <div className="col-md-6"> 
+                    <div className="col-md-6">
                         <div className="form-group"><button name="uploadButton" onClick={this.onUploadClick}>Upload</button></div>
                     </div>
                     <div className="col-md-6">
@@ -197,6 +277,179 @@ class MyAccount extends Component {
                 </div>
             </div>);
         }
+        debugger;
+        var listOptions;
+        if (this.state.storage && this.state.storage.role === "Seller") {
+            listOptions = (<ul>
+                <li className="active">
+                    <Link href="/account/my-account">
+                        <a> Edit Account Details</a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/vendor/[vendorId]/"
+                        as={`/vendor/${this.state.storage ? this.state.storage.user_id : ""}`}>
+                        <a>View Profile And Inventory</a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/account/my-account">
+                        <a onClick={this.handleLogout.bind(this)}>Logout</a>
+                    </Link>
+                </li>
+            </ul>)
+        } else if (this.state.storage && this.state.storage.role === "Customer" && this.state.activeModule === "EditProfile") {
+            listOptions = (<ul>
+                <li className="active">
+                    <a> Edit Account Details</a>
+                </li>
+                <li>
+                    <a onClick={this.handleViewComments}>My Comments And Reviews</a>
+                </li>
+                <li>
+                    <Link href="/account/my-account">
+                        <a onClick={this.handleLogout.bind(this)}>Logout</a>
+                    </Link>
+                </li>
+            </ul>
+            )
+        } else if (this.state.storage && this.state.storage.role === "Customer" && this.state.activeModule === "ViewComments") {
+            listOptions = (<ul>
+                <li>
+                    <a onClick={this.handleEditProfile}> Edit Account Details</a>
+                </li>
+                <li className="active">
+                    <a onClick={this.handleViewComments}>My Comments And Reviews</a>
+                </li>
+                <li>
+                    <Link href="/account/my-account">
+                        <a onClick={this.handleLogout.bind(this)}>Logout</a>
+                    </Link>
+                </li>
+            </ul>
+            )
+        }
+
+        var mainContent;
+        if (this.state.storage && this.state.storage.role === "Seller") {
+            mainContent = (
+                <div className="data-card">
+                    <div className="ps-page__content">
+                        <div className="ps-page__dashboard">
+                            <strong><h2>Edit Profile</h2></strong>
+                            <Form
+                                className="ps-form--account customFormClass"
+                                onSubmit={this.handleSubmit}>
+                                {this.state.error}
+
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {(
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                onChange={this.onChangeName}
+                                                placeholder="Seller Name"
+                                                defaultValue={profileData ? profileData.name : ""}
+                                            />
+                                        )}
+                                    </Form.Item>
+                                </div>
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {(
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                onChange={this.onChangeAddress}
+                                                placeholder="Address"
+                                                defaultValue={profileData ? profileData.addresses : ""}
+                                            />
+                                        )}
+                                    </Form.Item>
+                                </div>
+
+                                <div className="form-group submit customSubmitButton">
+                                    <button
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth">
+                                        Submit
+                                     </button>
+                                </div>
+                            </Form>
+                        </div>
+                    </div>
+                </div>)
+        } else if (this.state.storage && this.state.storage.role === "Customer" && this.state.activeModule === "EditProfile") {
+            mainContent = (
+
+                <div className="data-card">
+                    <div className="ps-page__content">
+                        <div className="ps-page__dashboard">
+                            <strong><h2>Edit Profile</h2></strong>
+                            <Form
+                                className="ps-form--account customFormClass"
+                                onSubmit={this.handleSubmit}>
+                                {this.state.error}
+
+                                <div className="form-group">
+                                    <Form.Item>
+                                        {(
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                onChange={this.onChangeName}
+                                                placeholder="Seller Name"
+                                                defaultValue={profileData ? profileData.name : ""}
+                                            />
+                                        )}
+                                    </Form.Item>
+                                </div>
+                                <div className="form-group submit customSubmitButton">
+                                    <button
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth">
+                                        Submit
+                    </button>
+                                </div>
+                            </Form>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (this.state.storage && this.state.storage.role === "Customer" && this.state.activeModule === "ViewComments") {
+            var ratingAndReviewsData;
+            ratingAndReviewsData = this.state.productsWithCommentsAndReviews.map(ele => {
+                var allProductReviews;
+                allProductReviews = ele.ratingAndReviews.map(rAndR => {
+                    return (<div>
+                        <div><b>Rating:</b> <Rating ratings={rAndR.rating} /></div>
+                        <div><b>Review:</b> {rAndR.review}</div> 
+                        <div className="spacer-sm"></div>
+                    </div>)
+                })
+                return (<div className="row">
+                    <div className="col-md-12">
+                        <Link href="/product/[pid]" as={`/product/${ele._id}`}>
+                            <a><p><b className="productLink">{ele.productName}</b></p></a>
+                        </Link>
+                        {allProductReviews}
+                        <div className="seperator"></div>
+                    </div>
+                </div>)
+            })
+            mainContent = (
+                    <div className="data-card">
+                        <div className="ps-page__content">
+                            <div className="ps-page__dashboard">
+                            <strong><h2>Comments And Reviews</h2></strong>
+                                <h4>Total Votes: {this.state.reviewCount}</h4>
+                                <div className="spacer"></div>
+                                <div>{ratingAndReviewsData}</div>
+                            </div>
+                        </div>
+                    </div>)
+        }
 
         debugger;
         return (
@@ -204,120 +457,34 @@ class MyAccount extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-12">
-                            <div className = "data-card">
-                            <div className="ps-section__left">
-                                <aside className="ps-widget--account-dashboard">
-                                    <div className="ps-widget__header">
-                                        {/* <img src="/static/img/users/3.jpg" /> */}
+                            <div className="data-card">
+                                <div className="ps-section__left">
+                                    <aside className="ps-widget--account-dashboard">
+                                        <div className="ps-widget__header">
                                             <div className="form-group">
-                                                <button  onClick={this.uploadButton} >
-                                                    <img src={profileData 
-                                                            && profileData.profilePicture
-                                                            && profileData.profilePicture !== ""?profileData.profilePicture :"/static/img/users/blankProfile.jpeg"} />
+                                                <button onClick={this.uploadButton} >
+                                                    <img src={profileData
+                                                        && profileData.profilePicture
+                                                        && profileData.profilePicture !== "" ? profileData.profilePicture : "/static/img/users/blankProfile.jpeg"} />
                                                 </button>
                                             </div>
                                             <div className="form-group">
                                                 {profilePicUploadSection}
                                             </div>
-                                        <figure>
-                                            <figcaption>Hello</figcaption>
-                                            <p>{profileData && profileData.user ? profileData.user.emailId:""}</p>
-                                        </figure>
-                                    </div>
-                                    <div className="ps-widget__content">
-                                        <ul>
-                                            {/* <li>
-                                                <Link href="/account/my-account">
-                                                    <a>Dashboard</a>
-                                                </Link>
-                                            </li> */}
-                                            {/* <li>
-                                                <Link href="/account/my-account">
-                                                    <a>Orders</a>
-                                                </Link>
-                                            </li> */}
-                                            <li className="active">
-                                                <Link href="/account/my-account">
-                                                    <a> Edit Account Details</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/vendor/vendor-store/" 
-                                                    as ={`/vendor/${this.state.storage ? this.state.storage.user_id : ""}`}>
-                                                    <a>View Profile And Inventory</a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/account/my-account">
-                                                    <a onClick={this.handleLogout.bind(this)}>Logout</a>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </aside>
-                            </div>
+                                            <figure>
+                                                <figcaption>Hello</figcaption>
+                                                <p>{profileData && profileData.user ? profileData.user.emailId : ""}</p>
+                                            </figure>
+                                        </div>
+                                        <div className="ps-widget__content">
+                                            {listOptions}
+                                        </div>
+                                    </aside>
+                                </div>
                             </div>
                         </div>
                         <div className="col-lg-9">
-                            <div className="data-card">
-                                <div className="ps-page__content">
-                                    <div className="ps-page__dashboard">
-                                        <strong><h2>Edit Profile</h2></strong>
-                                        <Form
-                                            className="ps-form--account customFormClass"
-                                            onSubmit={this.handleSubmit}>
-                                            {/* <div id='statusMessage' style={{ color: 'red'}}></div> */}
-                                            {this.state.error}
-
-                                        <div className="form-group">
-                                            <Form.Item>
-                                                {(
-                                                    <input
-                                                        className="form-control"
-                                                        type="text"
-                                                        onChange={this.onChangeName}
-                                                        placeholder="Seller Name"
-                                                        //value = {this.state.updatedName==undefined?profileData.name:this.state.updatedName}
-                                                        defaultValue = {profileData?profileData.name:""}
-                                                    />
-                                                )}
-                                            </Form.Item>
-                                        </div>
-                                        <div className="form-group">
-                                            <Form.Item>
-                                                {(
-                                                    <input
-                                                        className="form-control"
-                                                        type="text"
-                                                        onChange={this.onChangeAddress}
-                                                        placeholder="Address"
-                                                        defaultValue = {profileData? profileData.addresses : ""}
-                                                    />
-                                                )}
-                                                </Form.Item>
-                                            </div>
-
-                                            <div className="form-group submit customSubmitButton">
-                                                <button
-                                                    type="submit"
-                                                    className="ps-btn ps-btn--fullwidth">
-                                                    Submit
-                                                </button>
-                                            </div>
-
-                                        {/* <strong><h4>Seller Name</h4></strong>
-                                        <div className="form-group">
-                                            <input type="text" className="form-control" placeholder="Seller Name" defaultValue="" />
-                                        </div>
-
-                                        <strong><h4>Address</h4></strong>
-                                        <div className="form-group">
-                                            <input type="text" className="form-control" placeholder="Seller Address" defaultValue="" />
-                                        </div> */}
-                                        </Form>
-                                    </div>
-                            </div>
-                            </div>
+                           {mainContent}
                         </div>
                     </div>
                 </div>
