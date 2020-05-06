@@ -35,6 +35,11 @@ class OrderSummary extends Component {
                 });
             }
         });
+        axios.post(`${backendurl}/cart/customer/` + localStorage.getItem('user_id')+  `/clear-cart`)
+        .then((res) => {
+            console.log(res);
+        })
+
     }
 
     render() {
