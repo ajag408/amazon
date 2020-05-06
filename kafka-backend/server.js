@@ -11,6 +11,7 @@ const productService = require('./services/product');
 const sellerService = require('./services/seller');
 const orderService = require('./services/order');
 const customerService = require('./services/customer');
+const analytics = require('./services/analytics');
 
 function handleTopicRequest(topic_name, fname) {
 
@@ -53,3 +54,4 @@ handleTopicRequest('product', productService);
 handleTopicRequest('seller', sellerService);
 handleTopicRequest('order', orderService);
 handleTopicRequest('customer', customerService);
+handleTopicRequest('analytics', analytics);

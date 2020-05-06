@@ -368,7 +368,7 @@ if(this.state.sellers)
                     {this.state.sales.map(sale =>
                         <tr>
                         <td>{sale.salesMonth} </td>
-                        <td>{sale.totalAmount} </td>
+                        <td>{sale.totalAmount.toFixed(2)} </td>
                         </tr>
                     )}
                      </tbody>
