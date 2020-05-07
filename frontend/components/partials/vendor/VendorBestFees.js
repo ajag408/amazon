@@ -38,7 +38,7 @@ const VendorBestFrees = () => (
                     </figure>
                 </div>
                 <div className="ps-section__highlight">
-                    <img src="img/icons/vendor-4.png" alt="martfury" />
+                    <img src="img/icons/vendor-4.png" alt="Amazon" />
                     <figure>
                         <p>
                             We process payments with PayPal, an external payments platform that

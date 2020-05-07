@@ -74,7 +74,7 @@ class HeaderMarketPlace extends Component {
                         <div className="header__content-left">
                             <Link href="/home/market-place">
                                 <a className="ps-logo">
-                                    <img src="/static/img/logo.png" alt="martfury" />
+                                    <img src="/static/img/logo.png" alt="Amazon" />
                                 </a>
                             </Link>
 

@@ -10,7 +10,7 @@ const HomeAds = () => (
                         <a className="ps-collection">
                             <img
                                 src="/static/img/collection/home-1/ad-1.jpg"
-                                alt="martfury"
+                                alt="Amazon"
                             />
                         </a>
                     </Link>
@@ -20,7 +20,7 @@ const HomeAds = () => (
                         <a className="ps-collection">
                             <img
                                 src="/static/img/collection/home-1/ad-2.jpg"
-                                alt="martfury"
+                                alt="Amazon"
                             />
                         </a>
                     </Link>

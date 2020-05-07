@@ -57,7 +57,7 @@ class HeaderOrganic extends Component {
                                 <a className="ps-logo">
                                     <img
                                         src="/static/img/logo-organic.png"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </Link>

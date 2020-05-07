@@ -21,12 +21,12 @@ class ShopCarouselBanner extends Component {
                 <Slider {...carouselSetting} className="ps-carousel inside">
                     <div className="item">
                         <Link href="/shop">
-                            <img src="/static/img/slider/shop-default/1.jpg" alt="martfury" />
+                            <img src="/static/img/slider/shop-default/1.jpg" alt="Amazon" />
                         </Link>
                     </div>
                     <div className="item">
                         <Link href="/shop">
-                            <img src="/static/img/slider/shop-default/2.jpg" alt="martfury" />
+                            <img src="/static/img/slider/shop-default/2.jpg" alt="Amazon" />
                         </Link>
                     </div>
                 </Slider>

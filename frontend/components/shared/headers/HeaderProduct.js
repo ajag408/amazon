@@ -61,7 +61,7 @@ class HeaderProduct extends Component {
                                     <a className="ps-logo">
                                         <img
                                             src="/static/img/logo_light.png"
-                                            alt="martfury"
+                                            alt="Amazon"
                                         />
                                     </a>
                                 </Link>
