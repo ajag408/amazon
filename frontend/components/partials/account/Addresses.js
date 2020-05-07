@@ -13,9 +13,13 @@ class Addresses extends Component {
     }
 
     componentWillMount(){
-        console.log("Addresses => component Did Mount ");
+
+        let id = "";
+        if (typeof window !== 'undefined') {
+            id = localStorage.getItem('user_id');
+        }
         let data = {
-            customerId: '5e9e36cf6b95206ad289645f'
+            customerId: id
         }
         let url = `${backendurl}/customer/get-address`;
         Axios.post(url, data).then(resp => {

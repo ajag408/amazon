@@ -110,7 +110,7 @@ const makeKafkaRequestCart = async (req, res) => {
 // CREATE User
 router.route('/add-address').post((req, res) => {
 
-    //console.log("Inside Add address", req.body);
+console.log("Inside Add address", req.body);
     req.params.path = 'add-address';
     makeKafkaRequestCart(req, res);
 });

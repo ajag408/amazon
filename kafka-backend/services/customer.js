@@ -208,6 +208,8 @@ function handle_request(msg, callback) {
         })
     } 
     else if (msg.params.path === 'add-address') {
+
+        console.log("Kafka Backed Add Addreess");
         var newAddress = {
             fullName: msg.body.fullName,
             streetAddressLine_1: msg.body.streetAddressLine_1,
@@ -242,7 +244,7 @@ function handle_request(msg, callback) {
     } else if (msg.params.path === 'get-address') {
         Customer.findById(msg.body.customerId).exec((err, results) => {
             if (err) {
-                res.message = error.message;
+                res.message = err.message;
                 res.status = 400;
                 callback(null, res);
             } else {

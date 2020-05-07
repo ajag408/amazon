@@ -49,15 +49,23 @@ class AddressItem extends Component {
     handleDeleteClick(e) {
         e.preventDefault();
         console.log("Inside handleDelete Click : ", this.props.address);
-        //TODO replace customerId to dynamic value
+        let id = "";
+        if (typeof window !== 'undefined') {
+            id = localStorage.getItem('user_id');
+        }
         let data = {
             addressId: this.props.address._id,
-            customerId: '5e9e36cf6b95206ad289645f',
+            customerId: id,
         }
         Axios.post(`${backendurl}/customer/delete-address`, data).then(async resp => {
             if (resp.status === 200 && resp.data) {
              await   this.setState({ product: resp.data, userRating: 1 })
             }
+            Router.push({
+                pathname: '/account/addresses'
+                //query: { address: addressDetails }
+
+            })
         }); 
 
     }
