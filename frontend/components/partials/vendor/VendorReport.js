@@ -13,15 +13,19 @@ class VendorReport extends Component {
     }
 
     componentWillMount(){
+        let id = "";
+        if (typeof window !== 'undefined' ) {
+          id = localStorage.getItem('user_id');
+        }
+        console.log("User id:  ", id);
         const data = {
-            sellerId: '5e8187df8bea9e66dcedbf99'
+            sellerId: id
         }
         
         axios.post(backendurl + '/seller/getSalesDetails', data)
             .then(response => {
                 console.log(" Status Code : ", response.status,  "  response: " , response);
                 if (response.status === 200) {
-                    //let seller = response.data;
                     this.setState({
                         reportDetails:response.data.message
                     });
@@ -55,7 +59,7 @@ class VendorReport extends Component {
                                     <table className="table ps-table ps-table--vendor">
                                         <thead>
                                             <tr>
-                                                <th>Product Id</th>
+                                                <th>Product Name</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
                                                 <th>Month</th>
@@ -64,7 +68,7 @@ class VendorReport extends Component {
                                         <tbody>
                                             {this.state && this.state.reportDetails.map(listItem => (
                                                 <tr>
-                                                    <td>{listItem.productId}</td>
+                                                    <td>{listItem.productName}</td>
                                                     <td>{listItem.quantityTotal}</td>
                                                     <td>{listItem.amount}</td>
                                                     <td>{listItem.month}</td>
