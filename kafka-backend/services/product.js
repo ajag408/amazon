@@ -156,6 +156,8 @@ async function handle_request(msg, callback) {
                         rating: msg.body.rating,
                         review: msg.body.review
                     })
+                    
+                    product.ratings = averageRatings(product.ratingAndReviews);
                     await product.save().catch(err => {
                         console.log("error is saving review and rating: ", err);
                         callback(null, {error : err});
@@ -216,6 +218,20 @@ async function handle_request(msg, callback) {
         console.log("error occured in product ", error);
         callback(null, { error: error });
     }
+}
+
+function averageRatings(ratingAndReviews){
+    if(!ratingAndReviews || ratingAndReviews.length < 1){
+        return 0;
+    }
+    let totalRating = (ratingAndReviews || []).reduce((totalRating,ratingAndReview)=>{
+        return totalRating + ratingAndReview.rating;
+    },0)
+    return roundHalf(totalRating/ratingAndReviews.length);
+};
+
+function roundHalf(num) {
+    return Math.round(num*2)/2;
 }
 
 exports.handle_request = handle_request;
