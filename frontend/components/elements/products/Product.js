@@ -133,7 +133,7 @@ class Product extends Component {
 
     render() {
         const { product, currency } = this.props;
-        //let productBadge = null;
+        // let productBadge = null;
         // if (product.badge && product.badge !== null) {
         //     product.badge.map(badge => {
         //         if (badge.type === 'sale') {
@@ -170,7 +170,7 @@ class Product extends Component {
                             {hasImages}
                         </a>
                     </Link>
-                    {product.badge ? productBadge : ''}
+                    {/* {product.badge ? productBadge : ''} */}
                 </div>
                 <div className="ps-product__container">
                     <div className="ps-product__content">

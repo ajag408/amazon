@@ -27,7 +27,7 @@ class FormCheckoutInformation extends Component {
         });
     }
 
-    handleLoginSubmit = e => {
+    handleLoginSubmit = (e) => {
         e.preventDefault();
         if(this.state.orderAddress){
             localStorage.setItem("shippingAddress", JSON.stringify(this.state.orderAddress));

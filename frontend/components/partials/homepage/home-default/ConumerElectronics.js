@@ -161,8 +161,8 @@ class ConsumerElectronics extends Component {
                 {/* {console.log("ConsumerElectronics  Props received are:  ", this.props.category)} */}
                 <div className="ps-container">
                     <div className="ps-section__header">
-                        <h3>Consumer Electronics</h3>
-                        <ul className="ps-section__links">
+                        <h3>Home</h3>
+                        {/* <ul className="ps-section__links">
                             {sectionLinks.map(link => (
                                 <li
                                     className={
@@ -188,7 +188,7 @@ class ConsumerElectronics extends Component {
                                     <a>View All</a>
                                 </Link>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
                     <div className="ps-section__content">
                         

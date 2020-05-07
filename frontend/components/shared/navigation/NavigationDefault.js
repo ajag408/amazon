@@ -36,10 +36,10 @@ class NavigationDefault extends Component {
             <nav className="navigation">
                 <div className="ps-container">
                     <div className="navigation__left">
-                        <Menu
+                        {/* <Menu
                             data={menuData.menuPrimary.menu_1}
                             className="menu"
-                        />
+                        /> */}
                         {/* <div className="menu--product-categories">
                             <div className="menu__toggle">
                                 <i className="icon-menu"></i>
@@ -57,14 +57,10 @@ class NavigationDefault extends Component {
                         <ul className="navigation__extra">
                             <li>
                                 <Link href="/search/">
-                                    <a>Search By Seller</a>
+                                    <a>Product Search</a>
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/vendor/become-a-vendor">
-                                    <a>Sell on Amazon</a>
-                                </Link>
-                            </li>
+      
                             {this.state.role === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>

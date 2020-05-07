@@ -68,8 +68,7 @@ class ProductDealOfDay extends Component {
                 }
             });
         }
-        return (
-            <div className="ps-product ps-product--inner">
+        return ( <div className="ps-product ps-product--inner">
                 <div className="ps-product__thumbnail">
                     <Link href="/product/[pid]" as={`/product/${product.id}`}>
                         <a>

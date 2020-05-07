@@ -165,7 +165,7 @@ class OrderSummary extends Component {
                           <strong>Subtotal</strong>
                           <small>
                             $
-                            {orderTotal}
+                            {parseFloat(orderTotal)-20.00}
                           </small>
                         </figcaption>
                       </figure>
@@ -182,7 +182,7 @@ class OrderSummary extends Component {
                           )
                           <strong>
                             $
-                            {parseInt(orderTotal) + 20}
+                            {parseFloat(orderTotal)}
                             .00
                           </strong>
                         </h3>

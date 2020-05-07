@@ -74,7 +74,7 @@ router.route('/deleteSellerProduct').post((req, res) => {
   });
 });
 
-const BUCKET_NAME = 'sellerpicsamazon';
+const BUCKET_NAME = 'test-demo-amazon2';
 const s3 = new AWS.S3({
   accessKeyId: process.env.ID,
   secretAccessKey: process.env.SECRET
