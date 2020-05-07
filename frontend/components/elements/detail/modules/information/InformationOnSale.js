@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import Rating from '../../../Rating';
-import CountDown from '../../../CountDown';
+// import CountDown from '../../../CountDown';
 import { addItem } from '../../../../../store/cart/action';
 import { addItemToCompare } from '../../../../../store/compare/action';
 import { addItemToWishlist } from '../../../../../store/wishlist/action';
@@ -95,7 +95,7 @@ class InformationOnSale extends Component {
                     </ul>
                 </div>
                 <div className="ps-product__countdown">
-                    <figure>
+                    {/* <figure>
                         <figcaption>
                             Don't Miss Out! This promotion will expires in
                         </figcaption>
@@ -103,7 +103,7 @@ class InformationOnSale extends Component {
                             timeTillDate="12 31 2020, 6:00 am"
                             timeFormat="MM DD YYYY, h:mm a"
                         />
-                    </figure>
+                    </figure> */}
                     <figure>
                         <figcaption>Sold Items</figcaption>
                         <div
