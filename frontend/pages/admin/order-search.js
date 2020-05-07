@@ -221,7 +221,7 @@ if(this.state.orders)
                         <td>{order.customerName}</td>
                         <td>{order.productName}</td>
                         <td>{order.totalPrice}</td>
-                        <td>{order.createdAt}</td>
+                        <td>{order.createdAt.toString().slice(0,10)}</td>
                         <td>{order.status}</td>
                         {(order.status=='Out for Shipping'||order.status=='Package Arrived'||order.status=='Out for Delivery')&&
                         <td><Button onClick={() => this.openStatus(order)}>Change Status</Button></td>

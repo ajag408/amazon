@@ -17,6 +17,7 @@ const productRoute = require('./routes/product.route');
 const sellerRoute = require('./routes/seller.route');
 const orderRoute = require('./routes/order.route');
 const customerRoute = require('./routes/customer.route');
+const analytics = require('./routes/analytics');
 
 const app = express();
 app.use(bodyParser.json());
@@ -51,6 +52,7 @@ app.use('/product', productRoute);
 app.use('/seller', sellerRoute);
 app.use('/order', orderRoute);
 app.use('/customer', customerRoute);
+app.use('/analytics', analytics);
 
 // PORT
 const port = process.env.PORT || 4000;

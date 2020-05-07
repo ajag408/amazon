@@ -10,6 +10,17 @@ import LanguageSwicher from '../headers/modules/LanguageSwicher';
 class NavigationDefault extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            customerId: null,
+            role: null,
+        }
+    }
+
+    componentDidMount(){
+        this.setState({
+            customerId: localStorage.getItem('user_id'),
+            role: localStorage.getItem('role'),
+        })
     }
 
     handleFeatureWillUpdate(e) {
@@ -20,7 +31,6 @@ class NavigationDefault extends Component {
             duration: 500,
         });
     }
-
     render() {
         return (
             <nav className="navigation">
@@ -55,7 +65,7 @@ class NavigationDefault extends Component {
                                     <a>Sell on Amazon</a>
                                 </Link>
                             </li>
-                            {typeof window !== 'undefined' && localStorage.getItem('role') === 'Customer' ? (<li>
+                            {this.state.role === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>
                                 </Link>

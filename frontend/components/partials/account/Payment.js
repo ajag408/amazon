@@ -106,7 +106,7 @@ handlePlaceOrder = e => {
                       localStorage.setItem("paid", true)
                       localStorage.setItem("orderId", res.data.id)
                       localStorage.setItem('orderStatus', res.data.status)
-                      Router.push('/account/order-summary')
+                      Router.push(`/account/orders/${res.data.id}`)
                     })
 
                     
