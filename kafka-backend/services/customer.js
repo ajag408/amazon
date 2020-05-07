@@ -3,6 +3,7 @@ const Product = require('../models/product');
 let models = require('../models')
 let Order = models.Order;
 let OrderItem = models.OrderItem;
+let OrderItemUpdate = models.OrderItemUpdate;
 const { QueryTypes } = require('sequelize');
 const sequelize = require('sequelize');
 const mongoose = require('mongoose');
@@ -91,6 +92,7 @@ function handle_request(msg, callback) {
                 (async () => {
                     let orderId = order.id;
                     var i;
+                    var thisOrderItem
                     for (i = 0; i < msg.orderItems.length; i += 1) {
                         //   await console.log('This student');
                         //   await console.log(students[i].name);
@@ -104,26 +106,38 @@ function handle_request(msg, callback) {
                         msg.orderItems[i].status = "Paid";
                         delete msg.orderItems[i].id
                         console.log(msg.orderItems[i]);
-                        await OrderItem.create(msg.orderItems[i])
+                      
+                         await OrderItem.create(msg.orderItems[i])
                             //     student: students[i]._id,
                             //     major: {
                             //       $regex: msg.major,
                             //       $options: 'i',
                             //     },
                             //   },
-
+                        
                             .then((orderItem) => {
                                 // async (error, student) => {
+
                                 console.log("order item id", orderItem.id)
+                                thisOrderItem = orderItem;
 
                             }).catch(err => {
                                 console.log(err)
                                 // console.log("Error is: ", err);
                             });
 
-                        // console.log('done');
+                            await OrderItemUpdate.create({orderItemId: thisOrderItem.id, message: "Order received"})
+                            .then((update) => {
+                                // async (error, student) => {
 
-                        // console.log("after:", jobs[i]);
+                                console.log("order item update", update)
+                              
+
+                            }).catch(err => {
+                                console.log(err)
+                               
+                            });
+        
                     }
                     callback(null, order);
                 })();
