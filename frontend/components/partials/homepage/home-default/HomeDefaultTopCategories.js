@@ -11,7 +11,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/1.jpg" alt="martfury" />
+                        <img src="/static/img/categories/1.jpg" alt="Amazon" />
                         <p>Electronics</p>
                     </div>
                 </div>
@@ -20,7 +20,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/2.jpg" alt="martfury" />
+                        <img src="/static/img/categories/2.jpg" alt="Amazon" />
                         <p>Clothings</p>
                     </div>
                 </div>
@@ -29,7 +29,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/3.jpg" alt="martfury" />
+                        <img src="/static/img/categories/3.jpg" alt="Amazon" />
                         <p>Computers</p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/4.jpg" alt="martfury" />
+                        <img src="/static/img/categories/4.jpg" alt="Amazon" />
                         <p>Home & Kitchen</p>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/5.jpg" alt="martfury" />
+                        <img src="/static/img/categories/5.jpg" alt="Amazon" />
                         <p>Health & Beauty</p>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/6.jpg" alt="martfury" />
+                        <img src="/static/img/categories/6.jpg" alt="Amazon" />
                         <p>Health & Beauty</p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/7.jpg" alt="martfury" />
+                        <img src="/static/img/categories/7.jpg" alt="Amazon" />
                         <p>Jewelry & Watch</p>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ const HomeDefaultTopCategories = () => (
                         <Link href="/shop">
                             <a className="ps-block__overlay"></a>
                         </Link>
-                        <img src="/static/img/categories/8.jpg" alt="martfury" />
+                        <img src="/static/img/categories/8.jpg" alt="Amazon" />
                         <p>Technology Toys</p>
                     </div>
                 </div>

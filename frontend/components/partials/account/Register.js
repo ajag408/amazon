@@ -120,6 +120,7 @@ class Register extends Component {
             className="ps-form--account"
             onSubmit={this.handleSubmit}
           >
+            <div className="data-card-wrap">
             <ul className="ps-tab-list">
               <li>
                 <Link href="/account/login">
@@ -254,6 +255,7 @@ class Register extends Component {
                                     </li>
                                 </ul> */}
               </div>
+            </div>
             </div>
           </Form>
         </div>

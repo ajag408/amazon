@@ -47,7 +47,7 @@ class HeaderFurniture extends Component {
                                 <a className="ps-logo">
                                     <img
                                         src="/static/img/logo-furniture.png"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </Link>

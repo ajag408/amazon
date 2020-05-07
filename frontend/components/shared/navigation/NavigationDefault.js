@@ -32,10 +32,21 @@ class NavigationDefault extends Component {
         });
     }
     render() {
+        let data = {};
+        if (typeof window !== 'undefined') {
+            data = localStorage;
+        }
         return (
             <nav className="navigation">
                 <div className="ps-container">
                     <div className="navigation__left">
+                        {data.role === "Seller" ? (<Menu
+                            data={menuData.menuPrimary.menu_1}
+                            className="menu"
+                        />) : <Menu
+                        data={menuData.menuPrimary.menu_2}
+                        className="menu"
+                    />}
                         {/* <Menu
                             data={menuData.menuPrimary.menu_1}
                             className="menu"

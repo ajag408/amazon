@@ -80,7 +80,7 @@ class Wishlist extends Component {
                                                                         src={
                                                                             wishlistItem.product.thumbnail
                                                                         }
-                                                                        alt="martfury"
+                                                                        alt="Amazon"
                                                                     />
                                                                 </a>
                                                             </Link>

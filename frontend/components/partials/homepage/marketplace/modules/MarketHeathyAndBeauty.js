@@ -74,13 +74,13 @@ class MarketHeathyAndBeauty extends Component {
                 <div className="ps-block__slider">
                     <Slider {...carouselSettings}>
                         <a>
-                            <img src="/static/img/slider/home-3/healthy-1.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/healthy-1.jpg" alt="Amazon" />
                         </a>
                         <a>
-                            <img src="/static/img/slider/home-3/healthy-2.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/healthy-2.jpg" alt="Amazon" />
                         </a>
                         <a>
-                            <img src="/static/img/slider/home-3/healthy-3.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/healthy-3.jpg" alt="Amazon" />
                         </a>
                     </Slider>
                 </div>

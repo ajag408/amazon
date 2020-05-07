@@ -38,7 +38,7 @@ class PanelCartMobile extends Component {
                                                 <a>
                                                     <img
                                                         src={product.thumbnail}
-                                                        alt="martfury"
+                                                        alt="Amazon"
                                                     />
                                                 </a>
                                             </Link>

@@ -18,39 +18,65 @@ class VendorStore extends Component {
         super(props);
         this.state = {
             storage: ''
-            ,profileData : {}
-            ,sellerProducts : []
+            , profileData: {}
+            , sellerProducts: []
+            , keyword: ''
         };
-
-        // this.onChangeName = this.onChangeName.bind(this);
-        // this.onChangeAddress = this.onChangeAddress.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.uploadButton = this.uploadButton.bind(this);
-        // this.onCancelClick = this.onCancelClick.bind(this);
-        // this.onUploadClick = this.onUploadClick.bind(this);
-        // this.onProfilePicUpload = this.onProfilePicUpload.bind(this);
     }
 
-    componentDidMount(){
-        this.setState({ 
-            storage : localStorage
+    handleSearch = (e) => {
+        debugger;
+        e.preventDefault();
+        this.setState({
+            keyword: e.target.value,
+            sellerProducts: [],
+
         }, () => {
-            const {storage} = this.state;
-            if(!storage.token){
+            var sellerId = this.props.sellerId;
+            var data = {
+                productName: this.state.keyword
+                ,sellerId: [sellerId]
+            }
+            debugger;
+            axios.post(`${backendurl}/product/search-product`, data).then(resp => {
+                if (resp.status === 200 && resp.data) {
+                    //console.log("Response in front end is: ", resp.data.message);
+                    this.setState({
+                        sellerProducts: resp.data.message,
+                    });
+                    //console.log("handle search  ", this.state, " Value :  ", this.state.keyword); 
+                } else {
+                    notification['error']({
+                        message: 'ERROR!',
+                        description: 'Oops! Something went wrong.!',
+                        duration: 2,
+                    });
+                }
+            })
+        })
+
+    }
+
+    componentDidMount() {
+        this.setState({
+            storage: localStorage
+        }, () => {
+            const { storage } = this.state;
+            if (!storage.token) {
                 Router.push('/account/login')
             } else {
                 var sellerId = this.props.sellerId;
-                axios.get(backendurl+'/seller/getProfileData/'+sellerId)
-                .then((res) => {
-                    console.log(res);
-                   if(res.status == 500 || res.status == 204 ){
-                       console.log(res.data.message);
-                    } else {
-                        this.setState({
-                            profileData: res.data.message
-                        });
-                    }
-                });
+                axios.get(backendurl + '/seller/getProfileData/' + sellerId)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.status == 500 || res.status == 204) {
+                            console.log(res.data.message);
+                        } else {
+                            this.setState({
+                                profileData: res.data.message
+                            });
+                        }
+                    });
 
                 var data = {
                     sellerId: [sellerId]
@@ -130,13 +156,13 @@ class VendorStore extends Component {
         debugger;
         var SellerRating = 0;
         var totalNumberOfRatings = 0;
-        if(this.state.sellerProducts && this.state.sellerProducts.length > 0){
+        if (this.state.sellerProducts && this.state.sellerProducts.length > 0) {
             var totalRating = 0;
-            for (let i = 0 ; i< this.state.sellerProducts.length; i++){
+            for (let i = 0; i < this.state.sellerProducts.length; i++) {
                 totalRating += this.state.sellerProducts[i].ratings;
                 totalNumberOfRatings += this.state.sellerProducts[i].ratingAndReviews.length;
             }
-            SellerRating = totalRating/this.state.sellerProducts.length;
+            SellerRating = totalRating / this.state.sellerProducts.length;
         }
 
         return (
@@ -147,14 +173,14 @@ class VendorStore extends Component {
                             <div className="ps-block--vendor">
                                 <div className="ps-block__thumbnail">
                                     <img
-                                        src={profileData && profileData.profilePicture !== ""?profileData.profilePicture:"/static/img/vendor/vendor-store.jpg"}
+                                        src={profileData && profileData.profilePicture !== "" ? profileData.profilePicture : "/static/img/vendor/vendor-store.jpg"}
                                         alt="Image Load Error"
                                     />
                                 </div>
                                 <div className="ps-block__container">
                                     <div className="ps-block__header">
-                                        <h4>{profileData?profileData.name:""}</h4>
-                                        <Rating ratings = {SellerRating}/>
+                                        <h4>{profileData ? profileData.name : ""}</h4>
+                                        <Rating ratings={SellerRating} />
                                         <p>
                                             ({totalNumberOfRatings} rating)
                                         </p>
@@ -172,7 +198,7 @@ class VendorStore extends Component {
                                         </p>
                                         <span className="ps-block__divider"></span> */}
                                         <p>
-                                            <strong>Address</strong> {profileData? profileData.addresses:""}
+                                            <strong>Address</strong> {profileData ? profileData.addresses : ""}
                                         </p>
                                         {/* <figure>
                                                 <figcaption>
@@ -241,7 +267,7 @@ class VendorStore extends Component {
                                     </ul>
                                 </div>
                                 <div className="ps-block__right">
-                                    {/* <form
+                                    <form
                                         className="ps-form--search"
                                         action="/"
                                         method="get">
@@ -249,11 +275,12 @@ class VendorStore extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Search in this shop"
+                                            onChange={this.handleSearch.bind(this)}
                                         />
                                         <button>
                                             <i className="fa fa-search"></i>
                                         </button>
-                                    </form> */}
+                                    </form>
                                 </div>
                             </div>
                             {/* <div className="ps-vendor-best-seller">
@@ -286,7 +313,7 @@ class VendorStore extends Component {
                                     </Slider>
                                 </div>
                             </div> */}
-                            <VendorProducts sellerProducts = {this.state.sellerProducts}/>
+                            <VendorProducts sellerProducts={this.state.sellerProducts} />
                         </div>
                     </div>
                 </div>

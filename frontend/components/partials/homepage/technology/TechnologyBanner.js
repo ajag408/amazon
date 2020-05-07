@@ -22,7 +22,7 @@ class TechnologyBanner extends Component {
                     <div
                         className="ps-banner--technology"
                         style={{ backgroundImage: "url('/static/img/slider/home-10/1.jpg')" }}>
-                        <img src="/static/img/slider/home-10/1.jpg" alt="martfury" />
+                        <img src="/static/img/slider/home-10/1.jpg" alt="Amazon" />
                         <div className="ps-banner__content">
                             <h4>Weekend Promotions</h4>
                             <h3>
@@ -37,7 +37,7 @@ class TechnologyBanner extends Component {
                     <div
                         className="ps-banner--technology"
                         style={{ backgroundImage: "url('/static/img/slider/home-10/2.jpg')" }}>
-                        <img src="/static/img/slider/home-10/2.jpg" alt="martfury" />
+                        <img src="/static/img/slider/home-10/2.jpg" alt="Amazon" />
                         <div className="ps-banner__content">
                             <h4>Weekend Promotions</h4>
                             <h3>

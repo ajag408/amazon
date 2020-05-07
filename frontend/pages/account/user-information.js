@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Newsletters from '../../components/partials/commons/Newletters';
-import FooterDefault from '../../components/shared/footers/FooterDefault';
+// import Newsletters from '../../components/partials/commons/Newletters';
+// import FooterDefault from '../../components/shared/footers/FooterDefault';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import BreadCrumb from '../../components/elements/BreadCrumb';
 import UserInformation from '../../components/partials/account/UserInformation';
@@ -28,8 +28,8 @@ const UserInformationPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <UserInformation />
             </div>
-            <Newsletters layout="container" />
-            <FooterDefault />
+            {/* <Newsletters layout="container" />
+            <FooterDefault /> */}
         </div>
     );
 };

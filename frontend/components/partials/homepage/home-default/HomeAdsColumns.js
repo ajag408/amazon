@@ -12,7 +12,7 @@ const HomeAds = () => (
                             <Lazyload>
                                 <img
                                     src="/static/img/collection/home-1/1.jpg"
-                                    alt="martfury"
+                                    alt="Amazon"
                                 />
                             </Lazyload>
                         </a>
@@ -24,7 +24,7 @@ const HomeAds = () => (
                             <Lazyload>
                                 <img
                                     src="/static/img/collection/home-1/2.jpg"
-                                    alt="martfury"
+                                    alt="Amazon"
                                 />
                             </Lazyload>
                         </a>
@@ -35,7 +35,7 @@ const HomeAds = () => (
                         <a className="ps-collection">
                             <img
                                 src="/static/img/collection/home-1/3.jpg"
-                                alt="martfury"
+                                alt="Amazon"
                             />
                         </a>
                     </Link>

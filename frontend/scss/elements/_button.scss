@@ -84,11 +84,12 @@ button.ps-btn {
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
-    color: #ffffff!important;
-    border: none;
+    color: #111 !important;
+    border: 1px solid;
     font-weight: 600;
-    border-radius: 4px;
-    background-color: $color-1st;
+    border-radius: 3px;
+    background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
+    border-color: #a88734 #9c7e31 #846a29;
     transition: all 0.4s ease;
     cursor: pointer;
 
@@ -138,12 +139,31 @@ button.ps-btn {
     &--xsm {
         width: 55px
     }
+    &--myAccount {
+        padding: 0.5rem 1.2rem;
+        font-size: 1.5rem;
+        width: 75px;
+
+        &.ps-btn--curve {
+            @include border-radius(3px);
+        }
+    }
 
     &.ps-btn--reverse {
         background-color: #576391;
 
         &:hover {
             background-color: $color-2nd;
+        }
+    }
+
+    &.ps-btn--grey{
+        background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+        border-color: #ADB1B8 #A2A6AC #8D9096;
+
+        &:hover {
+            background: linear-gradient(to bottom,#e7e9ec,#e7e9ec);
+            border-color: #a2a6ac #979aa1 #82858a;
         }
     }
 
@@ -154,11 +174,14 @@ button.ps-btn {
     }
 
     &.ps-btn--delete {
+        background: none;
+        border : none;
         background-color: #a02009;
         color: #fff;
 
         &:hover,
         &:active {
+        background: none;
         background-color: rgb(245, 120, 120);
         color: #0e0909;
 
@@ -169,11 +192,14 @@ button.ps-btn {
     }
 
     &.ps-btn--edit {
+        background: none;
         background-color: #0d4fa5;
+        border : none;
         color: #fff;
 
         &:hover,
         &:active {
+        background: none;
         background-color: #3285f3;
         color: #0e0909;
 
@@ -200,7 +226,8 @@ button.ps-btn {
 
     &:hover,
     &:active {
-        background-color: #222;
+        // background-color: #a8862f;
+        background: linear-gradient(to bottom,#eeb934,#eeb934);
         color: #fff;
 
         &.ps-btn--black {
@@ -305,4 +332,8 @@ button.ps-btn {
     @include media('<lg') {
         display: none;
     }
+}
+
+.btnProfilePic{
+    border-radius: 50%;
 }

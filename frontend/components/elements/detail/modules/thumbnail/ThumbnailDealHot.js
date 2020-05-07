@@ -78,7 +78,7 @@ class ThumbnailDealHot extends Component {
                                     <a href="#">
                                         <img
                                             src={variant.thumbnail}
-                                            alt="martfury"
+                                            alt="Amazon"
                                         />
                                     </a>
                                 </div>
@@ -103,7 +103,7 @@ class ThumbnailDealHot extends Component {
                     className="ps-product__variants">
                     {product.variants.map(variant => (
                         <div className="item" key={variant.thumbnail}>
-                            <img src={variant.thumbnail} alt="martfury" />
+                            <img src={variant.thumbnail} alt="Amazon" />
                         </div>
                     ))}
                 </Slider>
