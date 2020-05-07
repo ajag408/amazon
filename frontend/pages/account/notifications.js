@@ -1,6 +1,5 @@
 import React from 'react';
 
-import FooterDefault from '../../components/shared/footers/FooterDefault';
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import BreadCrumb from '../../components/elements/BreadCrumb';
 import Addresses from '../../components/partials/account/Addresses';
@@ -27,7 +26,8 @@ const AccountNotificationsPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Notifications />
             </div>
-            <FooterDefault />
+            {/* <Newsletters layout="container" />
+            <FooterDefault /> */}
         </div>
     );
 };

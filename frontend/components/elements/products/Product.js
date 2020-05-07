@@ -164,7 +164,7 @@ class Product extends Component {
         return (
 
             <div className="ps-product">
-                <div className="ps-product__thumbnail">
+                <div className="ps-product__thumbnail CustomHeight">
                     <Link href="/product/[pid]" as={`/product/${product._id}`}>
                         <a>
                             {hasImages}

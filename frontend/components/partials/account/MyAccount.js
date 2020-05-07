@@ -207,6 +207,17 @@ class MyAccount extends Component {
         }
     }
 
+    componentWillMount(){
+        let data = {};
+        if (typeof window !== 'undefined') {
+            data = localStorage;
+        }
+        if (!data.token || data.role === "Admin") {
+            //   || storage.role != "Customer"
+            Router.push('/account/login')
+        } 
+    }
+
     componentDidMount() {
         this.setState({
             storage: localStorage
@@ -288,7 +299,7 @@ class MyAccount extends Component {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/vendor/[vendorId]/"
+                    <Link href="/vendor/[vendorId]"
                         as={`/vendor/${this.state.storage ? this.state.storage.user_id : ""}`}>
                         <a>View Profile And Inventory</a>
                     </Link>

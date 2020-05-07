@@ -36,6 +36,13 @@ class NavigationDefault extends Component {
             <nav className="navigation">
                 <div className="ps-container">
                     <div className="navigation__left">
+                        {localStorage.getItem("role") === "Seller" ? (<Menu
+                            data={menuData.menuPrimary.menu_1}
+                            className="menu"
+                        />) : <Menu
+                        data={menuData.menuPrimary.menu_2}
+                        className="menu"
+                    />}
                         {/* <Menu
                             data={menuData.menuPrimary.menu_1}
                             className="menu"
