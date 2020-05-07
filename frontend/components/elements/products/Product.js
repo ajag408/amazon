@@ -72,7 +72,6 @@ class Product extends Component {
         //debugger;
         axios.post(backendurl + '/seller/deleteSellerProduct', data)
             .then((res) => {
-                //debugger;
                 if (res.status === 200) {
                     this.setState({
                         isDelete : false
@@ -82,6 +81,7 @@ class Product extends Component {
                         description: 'Product Deleted',
                         duration: 2,
                     });
+                   Router.push('/vendor/'+localStorage.getItem("user_id"));
                 } else {
                     this.setState({
                         isDelete : false
