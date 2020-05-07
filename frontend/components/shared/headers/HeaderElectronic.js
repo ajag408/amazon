@@ -71,7 +71,7 @@ class HeaderElectronic extends Component {
                 <div className="header__top">
                     <div className="container">
                         <div className="header__left">
-                            <p>Welcome to Martfury Online Shopping Store !</p>
+                            <p>Welcome to Amazon Online Shopping Store !</p>
                         </div>
                         <div className="header__right">
                             <ul className="header__top-links">
