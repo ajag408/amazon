@@ -22,13 +22,13 @@ async function handle_request(msg, callback) {
             });
             
         } else if(msg.params.path === 'add-product'){
-            Product.create(msg.body.productObj ,(err, savedStudent )=>{
+            Product.create(msg.body.productObj ,(err, result )=>{
                 if(err) {
                     res.message = err.message;
                     res.status = 400;
                     callback(null,res);
                 } else {
-                    res.message = savedStudent._id;
+                    res.message = result._id;
                     res.status = 200;
                     callback(null,res);
                 }   

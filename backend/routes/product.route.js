@@ -5,11 +5,12 @@ var multer = require('multer')
 const  multerS3 = require('multer-s3');
 const kafka = require('../kafka/client');
 // The name of the bucket that you have created
-const BUCKET_NAME = 'test-demo-amazon2';
+//const BUCKET_NAME = 'test-demo-amazon2';
 const s3 = new AWS.S3({
     accessKeyId: process.env.ID,
     secretAccessKey: process.env.SECRET
 });
+
 
 const fileFilter = (req,file,cb) => {
     if(file.mimetype === 'image/jpeg' ||file.mimetype === 'image/png')
@@ -21,7 +22,7 @@ const fileFilter = (req,file,cb) => {
 var multipleUpload  = multer({
     storage: multerS3({
       s3: s3,
-      bucket: BUCKET_NAME,
+      bucket: process.env.BUCKET_NAME,
       acl: 'public-read',
       contentType: multerS3.AUTO_CONTENT_TYPE,
       key: function (req, file, cb) {

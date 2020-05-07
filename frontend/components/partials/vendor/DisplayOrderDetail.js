@@ -9,8 +9,8 @@ class DisplayOrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          
-
+            address : {},
+            card : {}
         }
 
         this.orderItemDetails = this.orderItemDetails.bind(this);
@@ -19,7 +19,9 @@ class DisplayOrderDetail extends Component {
     componentDidMount() {
         console.log("In component",this.props);
        this.setState({
-           order : this.props.details
+           order : this.props.details,
+           address : JSON.parse(this.props.details.order.address),
+           card : JSON.parse(this.props.details.order.card)
        })
        console.log("In component",this.props.details)
     }
@@ -53,11 +55,24 @@ class DisplayOrderDetail extends Component {
                 </div>
                 <div>
                     <label className="h3"> Delivery Address : </label>
-                      <span>{this.props.details.order.address}</span>
+                      <span>{this.state.address.streetAddressLine_1},</span>
+                      <div>
+                      <span>{this.state.address.streetAddressLine_2}</span>
+                      </div>
+                      <span>{this.state.address.city} , </span>
+                      <span>{this.state.address.state}</span>
+                      <div>
+                      <span>{this.state.address.country} - </span>
+                      <span>{this.state.address.zipCode}</span>
+                      </div>
+                </div>
+                <div>
+                    <label className="h3"> Contact Number : </label>
+                      <span>{this.state.address.phoneNumber}</span>
                 </div>
                 <div>
                     <label className="h3"> Card Details : </label>
-                    <span>{this.props.details.order.card}</span>
+                    <span>{this.state.card.cardNumber}</span>
                 </div>
                 <div>
                     <label className="h3"> Order Amount : </label>

@@ -30,24 +30,36 @@ class VendorDashboard extends Component {
 
     componentDidMount() {
 
-        const id = '5e8187df8bea9e66dcedbf99';
-       // console.log("User Id" , this.state.storage.user_id);
+     if(!(typeof window !== 'undefined'&& localStorage.getItem("token") && localStorage.getItem("role") === "Seller")) {
+            Router.push('/account/login');
+        }
+        let id;
+      if(typeof window !== 'undefined') {
+        id = localStorage.getItem("user_id");
+        console.log("User Id" , id);
         axios.get(backendurl+'/order/seller/getAllOrder/'+id+'/0')
         .then((res)=> {
-            console.log("re")
              this.setState({
                 allOrders : res.data ,
              })
         })
         .catch((error)=> {
- 
+            this.setState({
+                errorMsg : error
+            })
         }) 
+      } else {
+        this.setState({
+            errorMsg : "error"
+        })
+      }
+       
     }
 
     render() {
                
      let  msg, displayAllOrders , editFields ;
-       
+    
         if(this.state.allOrders.length > 0) {
             displayAllOrders =   
             this.state.allOrders.map( (order,index) => {
@@ -82,9 +94,7 @@ class VendorDashboard extends Component {
                     </li>
                 </ul>
                 <div className="ps-block--vendor-dashboard">
-                    <div className="ps-block__header">
-                        <h3>Sale Report</h3>
-                    </div>
+                    
                     <div className="ps-block__content">
                         <div className="table-responsive">
                             <table className="table ps-table ps-table--vendor">
@@ -102,6 +112,7 @@ class VendorDashboard extends Component {
                                     {displayAllOrders}
                                 </tbody>
                             </table>
+                            {msg}
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,7 @@ class AddProductPage extends React.Component {
             //     url: '/shop',
             // },
             {
-                text: 'OrderDetails',
+                text: 'Add Product',
             },
         ];
 

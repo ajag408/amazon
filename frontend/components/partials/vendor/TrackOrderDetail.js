@@ -14,10 +14,8 @@ class TrackOrderDetail extends Component {
 
     componentDidMount() {
         console.log('tracking ID',this.props.trackId)
-        debugger;
         axios.get(backendurl+'/order/trackOrder/'+this.props.trackId)
         .then((res)=> {
-            debugger;
             if(parseInt(res.status) === 200) {
                 this.setState({
                     trackupdates : res.data.data,
@@ -42,25 +40,34 @@ class TrackOrderDetail extends Component {
     render() {
 
         let display;
-        debugger;
         if(this.state.trackupdates.length >0 ){
-            display = <ol>
+            display =  <tbody>
                 { 
                 this.state.trackupdates.map(trackupdate => {
-                    return <li>
-                      Order Placed :  {trackupdate.createdAt }
-                     <br/> <label> {trackupdate.message} </label>
-                    </li>;
+                    return <tr>
+                     <td> {trackupdate.message} </td>
+                     <td>  {trackupdate.createdAt.toString().substring(0,10) } </td>
+                    </tr>;
                 })
                 }
-            </ol>
+              </tbody>
         } else {
             display = <div>Sorry ! No details Found </div>
         }
         return (
            <div>
-               <div class="h2"> Order </div>
-             {display}
+            <div class="h2"> Tracking Deatils for #{this.props.trackId} </div>
+           <table className="table ps-table ps-table--vendor">
+               <thead>
+                    <tr>
+                        <th>Updates</th>
+                        <th>Time</th>
+                    </tr>
+               </thead>
+              
+               {display}
+            
+           </table>
            </div>
             
         )

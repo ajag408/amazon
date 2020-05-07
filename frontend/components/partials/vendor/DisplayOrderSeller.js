@@ -138,7 +138,7 @@ class DisplayOrderSeller extends Component {
                     </td>
                     <td> 
                     <button type="button" class="btn btn-outline-primary"  name="displayProductDetails" onClick={this.displayProduct}>
-                    {this.props.order.productId}
+                    {this.props.order.productName}
                     </button>
                        </td>
                     <td> {this.props.order.quantity}</td>
