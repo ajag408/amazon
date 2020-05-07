@@ -155,12 +155,8 @@ class Product extends Component {
         //         }
         //     });
         // }
-        let hasImages;
-        if (product.images && product.images.length > 0) {
-            hasImages = <img src={product.images[0].imageUrl} alt="ProductImage" />
-        }
-        //debugger;
-
+        let image_url = (product.images[0] || {imageUrl: '/static/img/products/noimage.jpg'}).imageUrl
+        let hasImages = <img src={image_url} alt="ProductImage" />
         return (
 
             <div className="ps-product">

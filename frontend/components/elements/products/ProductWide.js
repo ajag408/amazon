@@ -151,13 +151,8 @@ class ProductWide extends Component {
                 }
             });
         }
-
-        debugger;
-        let hasImages;
-        if(product.images && product.images.length >0)
-        {
-            hasImages = <img src={product.images[0].imageUrl} alt="ProductImage" />
-        }
+        let image_url = (product.images[0] || {imageUrl: '/static/img/products/noimage.jpg'}).imageUrl
+        let hasImages = <img src={image_url} alt="ProductImage" />
         return (
             <div className="ps-product ps-product--wide">
                 <div className="ps-product__thumbnail">
@@ -177,6 +172,10 @@ class ProductWide extends Component {
                         <div className="ps-product__rating">
                             <Rating ratings={product.ratings} /> <span>({product.ratingAndReviews ? product.ratingAndReviews.length : 0} rating)</span>
                         </div>
+                        <p className="ps-product__price">
+                            {currency ? currency.symbol : '$'}
+                            {product.price}
+                        </p>
                         <p className="ps-product__vendor">
                             {/* Sold by:
                             <Link href="#">
@@ -205,7 +204,7 @@ class ProductWide extends Component {
                             </div>
                         </div>) : (<div></div>)}
                     </div>
-                    <div className="ps-product__shopping">
+                    {/* <div className="ps-product__shopping">
                         {product.sale === true ? (
                             <p className="ps-product__price sale">
                                 {currency ? currency.symbol : '$'}
@@ -253,7 +252,7 @@ class ProductWide extends Component {
                         </div>
                         ):(<div></div>)}
                         
-                    </div>
+                    </div> */}
                 </div>
                 { this.state.storage && this.state.storage.role === "Seller" ?
                     (<Modal

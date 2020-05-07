@@ -73,7 +73,6 @@ class ShoppingCart extends Component {
         if (cartItems && cartItems.length > 0) {
             currentCartItems = cartItems;
         }
-       
         return (
             <div className="ps-section--shopping ps-shopping-cart">
                 <div className="container">
@@ -107,7 +106,7 @@ class ShoppingCart extends Component {
                                                             <a>
                                                                 <img
                                                                     src={
-                                                                        (cartItem.product.images || [{image_url: null}])[0].image_url
+                                                                        (cartItem.product.images[0] || {imageUrl: '/static/img/products/noimage.jpg'}).imageUrl
                                                                     }
                                                                     alt="amazon"
                                                                 />
