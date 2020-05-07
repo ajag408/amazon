@@ -207,16 +207,16 @@ class MyAccount extends Component {
         }
     }
 
-    componentWillMount(){
-        let data = {};
-        if (typeof window !== 'undefined') {
-            data = localStorage;
-        }
-        if (!data.token || data.role === "Admin") {
-            //   || storage.role != "Customer"
-            Router.push('/account/login')
-        } 
-    }
+    // componentWillMount(){
+    //     let data = {};
+    //     if (typeof window !== 'undefined') {
+    //         data = localStorage;
+    //     }
+    //     if (!data.token || data.role === "Admin") {
+    //         //   || storage.role != "Customer"
+    //         Router.push('/account/login')
+    //     } 
+    // }
 
     componentDidMount() {
         this.setState({
@@ -281,10 +281,14 @@ class MyAccount extends Component {
             </div>
                 <div className="row">
                     <div className="col-md-6">
-                        <div className="form-group"><button name="uploadButton" onClick={this.onUploadClick}>Upload</button></div>
+                        <div className="form-group"><button name="uploadButton" 
+                        className="ps-btn ps-btn--myAccount" 
+                        onClick={this.onUploadClick}>Upload</button></div>
                     </div>
                     <div className="col-md-6">
-                        <div className="form-group"><button name="cancelButton" onClick={this.onCancelClick}>Cancel</button></div>
+                        <div className="form-group"><button name="cancelButton"
+                        className="ps-btn ps-btn--grey ps-btn--myAccount" 
+                        onClick={this.onCancelClick}>Cancel</button></div>
                     </div>
                 </div>
             </div>);
@@ -494,7 +498,7 @@ class MyAccount extends Component {
                                     <aside className="ps-widget--account-dashboard">
                                         <div className="ps-widget__header">
                                             <div className="form-group">
-                                                <button onClick={this.uploadButton} >
+                                                <button className="btnProfilePic" onClick={this.uploadButton} >
                                                     <img src={profileData
                                                         && profileData.profilePicture
                                                         && profileData.profilePicture !== "" ? profileData.profilePicture : "/static/img/users/blankProfile.jpeg"} />
