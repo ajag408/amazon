@@ -66,15 +66,24 @@ class NavigationDefault extends Component {
                     </div>
                     <div className="navigation__right">
                         <ul className="navigation__extra">
-                            <li>
+                            {this.state.role === 'Customer' ? (<li>
                                 <Link href="/search/">
                                     <a>Product Search</a>
                                 </Link>
-                            </li>
-      
+                            </li>): (null)}
                             {this.state.role === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>
+                                </Link>
+                            </li>): (null)}
+                            {this.state.role === 'Seller' ? (<li>
+                                <Link href="/vendor/addproduct">
+                                    <a>Add Product</a>
+                                </Link>
+                            </li>): (null)}
+                            {this.state.role === 'Seller' ? (<li>
+                                <Link href="/vendor/allorders">
+                                    <a>Orders</a>
                                 </Link>
                             </li>): (null)}
                             {/* <li>

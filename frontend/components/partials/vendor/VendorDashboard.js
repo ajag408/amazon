@@ -78,7 +78,7 @@ class VendorDashboard extends Component {
         return (
           <div className="ps-vendor-dashboard">
         <div className="container">
-            <div className="ps-section__header" style={{padding : '10px'}}>
+            <div>
                 <h3> Order Details </h3>
             </div>
             <div className="ps-section__content">

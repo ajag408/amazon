@@ -14,7 +14,7 @@ const AllOrders = () => {
             url: '/',
         },
         {
-            text: 'Become a Vendor',
+            text: 'All Order',
         },
     ];
 

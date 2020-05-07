@@ -40,7 +40,7 @@ class VendorStorePage extends React.Component {
                 url: '/',
             },
             {
-                text: 'Vendor store',
+                text: 'Seller store',
             },
         ];
 
