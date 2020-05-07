@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {backendurl} from '../../../backendurl';
-import Router from 'next/router';
+import  Router  from 'next/router'
 
 class OpenOrders extends Component {
    
@@ -10,7 +10,7 @@ class OpenOrders extends Component {
         super(props);
         this.state = {
            allOrders : [],
-        //    storage : window.localStorage.user_id
+            storage : ''
         }
      
         this.inputChangeHandler = this.inputChangeHandler.bind(this);
@@ -29,11 +29,12 @@ class OpenOrders extends Component {
     }
 
     componentDidMount() {
-
-        debugger;
-        const id = '5e8187df8bea9e66dcedbf99';
-        // console.log("User Id" , this.state.storage);
-        axios.get(backendurl+'/order/seller/getAllOrder/'+id+'/1')
+        if(!(typeof window !== 'undefined'&& localStorage.getItem("token") && localStorage.getItem("role") === "Seller")) {
+             Router.push('/account/login');
+        }
+    
+        //console.log("User Id" , localStorage.getItem("user_id"));
+        axios.get(backendurl+'/order/seller/getAllOrder/'+localStorage.getItem("user_id")+'/1')
         .then((res)=> {
             console.log("re")
              this.setState({
@@ -65,9 +66,8 @@ class OpenOrders extends Component {
 
      render() {
                
-     let  msg, displayAllOrders , editFields ;
-       
-     debugger;
+     let  msg, displayAllOrders , editFields ; 
+
         if(this.state.allOrders.length > 0) {
             displayAllOrders =   
             this.state.allOrders.map( (order,index) => {

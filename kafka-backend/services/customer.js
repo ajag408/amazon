@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 function handle_request(msg, callback) {
     var res = {};
     if (msg.path === 'get-customerById') {
+        console.log('msg.paramID', msg.paramID)
         Customer.find({ _id: msg.paramID }, (err, customer) => {
             if (err) {
                 console.log(err);

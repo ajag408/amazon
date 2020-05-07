@@ -74,7 +74,7 @@ router.route('/deleteSellerProduct').post((req, res) => {
   });
 });
 
-const BUCKET_NAME = 'sellerpicsamazon';
+//const BUCKET_NAME = 'test-demo-amazon2';
 const s3 = new AWS.S3({
   accessKeyId: process.env.ID,
   secretAccessKey: process.env.SECRET
@@ -83,7 +83,7 @@ const s3 = new AWS.S3({
 var multipleUpload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: BUCKET_NAME,
+    bucket: process.env.BUCKET_NAME,
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
