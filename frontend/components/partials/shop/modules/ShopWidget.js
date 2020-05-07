@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import { connect } from 'react-redux';
 import {
     getProductsByPrice,
     getProductsByBrands,
 } from '../../../../store/product/action';
 import { Slider, Checkbox } from 'antd';
-import Link from 'next/link';
 import axios from 'axios';
 import { backendurl } from './../../../../backendurl';
 
@@ -15,22 +13,49 @@ class ShopWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            allRatings: [{
+                text: '1 star',
+                _id: 1,
+                checked: false,
+            },
+            {
+                text: '2 star',
+                _id: 2,
+                checked: false,
+            },
+            {
+                text: '3 star',
+                _id: 3,
+                checked: false,
+            },
+            {
+                text: '4 star',
+                _id: 4,
+                checked: false,
+            },
+            {
+                text: '5 star',
+                _id: 5,
+                checked: false,
+            }],
             sellers: [],
             shopCategories: [],
             priceMin: 0,
             priceMax: 2000,
-            selectedSellerIds : []
-        
+            selectedSellerIds: [],
+            selectedRatingIds: [],
+            selectedCategoryIds: []
+
         };
 
-       this.handleClick =  this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.searchApiCall();
     }
 
-    componentWillMount(){
+    componentWillMount() {
         let data = {
             searchCriteria: ""
         }
@@ -40,7 +65,7 @@ class ShopWidget extends Component {
                 if (response.status === 200) {
                     //let seller = response.data;
                     let allSeller = response.data.map(seller => {
-                        return { name: seller.name, Id : seller._id, checked: false }
+                        return { name: seller.name, Id: seller._id, checked: false }
                     });
                     this.setState({
                         sellers: allSeller
@@ -53,9 +78,12 @@ class ShopWidget extends Component {
 
         axios.get(`${backendurl}/admin/getAllProductCategories`).then(resp => {
             if (resp.status === 200 && resp.data) {
-                console.log("Sho widget Categories are: ", resp.data)
+                //console.log("Sho widget Categories are: ", resp.data)
+                let allCategory = resp.data.map(seller => {
+                    return { name: seller.name, Id: seller._id, checked: false }
+                });
                 this.setState({
-                    shopCategories: resp.data
+                    shopCategories: allCategory
                 });
             }
         })
@@ -70,11 +98,11 @@ class ShopWidget extends Component {
             priceMin: value[0],
             priceMax: value[1],
         }, () => { this.searchApiCall() })
-        
+
     }
 
-    handleFilterByBrand= (e) => {
-        
+    handleFilterByBrand = (e) => {
+
         var allSellers = this.state.sellers;
         allSellers.filter(seller => {
             if (seller.name === e.target.name)
@@ -82,122 +110,144 @@ class ShopWidget extends Component {
         })
         var sellerSelectedArray = this.state.selectedSellerIds
         if (e.target.checked)
-            sellerSelectedArray.push(e.target.id) 
+            sellerSelectedArray.push(e.target.id)
         else {
             sellerSelectedArray.splice(sellerSelectedArray.indexOf(e.target.id));
         }
 
         this.setState({
             selectedSellerIds: sellerSelectedArray,
-            sellers:  allSellers,
-             searchData: []
-           
+            sellers: allSellers,
+            searchData: []
+
         }, () => { this.searchApiCall() })
 
         //console.log("handleFilterBy seller" , event.target.id)
     }
+    handleFilterForRating = (e) => {
+        //console.log("handle Filter For rating", e.target.id, " ", e.target.checked);
 
-    searchApiCall(){
+        var ratingsAll = this.state.allRatings
+        ratingsAll.filter(rat => {
+            if (rat._id === e.target.id)
+                rat.checked = e.target.checked
+        })
+        debugger;
+        var ratingSelectedArray = this.state.selectedRatingIds;
+        if (e.target.checked)
+            ratingSelectedArray.push(e.target.id)
+        else {
+            ratingSelectedArray.splice(ratingSelectedArray.indexOf(e.target.id));
+        }
+        this.setState({
+            selectedRatingIds: ratingSelectedArray,
+            allRatings: ratingsAll,
+            searchData: []
+
+        }, () => { this.searchApiCall() })
+    }
+
+    handleFilterForCategory = (e) => {
+        //console.log("handle Filter For category", e.target.id, " ", e.target.checked);
+        var categories = this.state.shopCategories;
+       categories.filter(category => {
+            if (category.Id === e.target.id)
+                category.checked = e.target.checked
+        })
+        var categorySelectedArray = this.state.selectedCategoryIds;
+        if (e.target.checked)
+            categorySelectedArray.push(e.target.id)
+        else {
+            categorySelectedArray.splice(categorySelectedArray.indexOf(e.target.id));
+        }
+        this.setState({
+            selectedCategoryIds: categorySelectedArray,
+            shopCategories: categories,
+            searchData: []
+
+        }, () => { this.searchApiCall() })
+    }
+
+    searchApiCall() {
         var data = {
             sellerId: this.state.selectedSellerIds,
-            lowerPrice: this.state.priceMin, 
-            upperPrice: this.state.priceMax, 
-            productCategory: this.state.category, 
-            rating: this.state.rating
+            lowerPrice: this.state.priceMin,
+            upperPrice: this.state.priceMax,
+            productCategory: this.state.selectedCategoryIds,
+            ratings: this.state.selectedRatingIds
 
         };
-        //console.log("Before sending data to database, " , data);
+        //console.log("Before sending data to database, ", data);
 
         axios.post(`${backendurl}/product/search-product`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
-                console.log("  ShopWidget => response data is: ", resp.data)
+                //console.log("  ShopWidget => response data is: ", resp.data)
                 this.props.onChange(resp.data);
             }
         })
     }
 
     handleClick = item => event => {
-       
-        console.log("Inside handle Click  id is: ", event.target.id  , "  value:  ", item._id)
+
+        //console.log("Inside handle Click  id is: ", event.target.id, "  value:  ", item._id)
         this.setState({
-           [event.target.id]: item._id
+            [event.target.id]: item._id
         }, () => { this.searchApiCall() })
-       
+
     }
 
     render() {
 
-        const ratings = [
-            {
-                text: '1 star',
-                _id: 1,
-            },
-            {
-                text: '2 star',
-                _id: 2,
-            },
-            {
-                text: '3 star',
-                _id: 3,
-            },
-            {
-                text: '4 star',
-                _id: 4,
-            },
-            {
-                text: '5 star',
-                _id: 5,
-            }]
-        {console.log("Inside render, shop categories are: ", this.state.shopCategories)}
+        
         let allSellers = this.state.sellers.map(seller => {
             return (
                 <div>
                     <label>
-                    <Checkbox 
-                            checked={!!seller.checked} id={seller.Id} name ={seller.name}  onChange={this.handleFilterByBrand.bind(this)} />
+                        <Checkbox
+                            checked={!!seller.checked} id={seller.Id} name={seller.name} onChange={this.handleFilterByBrand.bind(this)} />
                         {seller.name}
                     </label>
                 </div>
             )
         })
-        let allCategories= "";
-        if(this.state.shopCategories && this.state.shopCategories.length >0){
-            //console.log("ShopCategories are there",this.state.shopCategories );
-            allCategories = 
-                this.state.shopCategories.map(category => (
-                    <li key={category.name} id ="category" onClick={this.handleClick(category)}>
+
+        let ratingFo = this.state.allRatings.map(rating => {
+            return (
+                <div>
+                    <label>
+                        <Checkbox
+                            checked={!!rating.checked} id={rating._id} name={rating.text} onChange={this.handleFilterForRating.bind(this)} />
+                        {rating.text}
+                    </label>
+                </div>
+            )
+        })
+
+        let allCategories = this.state.shopCategories.map(category => {
+            return (
+                <div>
+                    <label>
+                        <Checkbox
+                            checked={!!category.checked} id={category.Id} name={category.name} onChange={this.handleFilterForCategory.bind(this)} />
                         {category.name}
-                    </li>
-                ))
-            
-        }
+                    </label>
+                </div>
+            )
+        })
+       
         return (
             <div className="ps-layout__left">
                 <aside className="widget widget_shop">
                     <h4 className="widget-title">Categories</h4>
-                    <ul className="ps-list--categories">
-                        {/* {this.state. shopCategories.map(category => (
-                            <li key={category.text}>
-                                <Link href={category.url}>
-                                    <a>{category.text}</a>
-                                </Link>
-                            </li>
-                        ))} */}
+                    <figure>
                         {allCategories}
-                    </ul>
+                    </figure>
                 </aside>
                 <aside className="widget widget_shop">
-                    <h4 className="widget-title">Categories</h4>
-                    <ul className="ps-list--categories">
-                        {ratings.map(rating => (
-                            <li key={rating._id} id="rating" onClick={this.handleClick(rating)}>
-                                {rating.text}
-                                {/* <Link href={category.url}>
-                                    <a>{category.text}</a>
-                                </Link> */}
-                            </li>
-                        ))}
-                    </ul>
+                    <h4 className="widget-title">Ratings</h4>
+                    <figure>
+                        {ratingFo}
+                    </figure>
                 </aside>
                 <aside className="widget widget_shop">
                     <h4 className="widget-title">By Sellers</h4>
@@ -205,7 +255,7 @@ class ShopWidget extends Component {
                         {allSellers}
                     </figure>
 
-                   
+
                     <figure>
                         <h4 className="widget-title">By Price</h4>
                         <Slider

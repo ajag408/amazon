@@ -5,6 +5,8 @@ const Customer = mongoose.models.Customer;
 const ProductView = mongoose.models.ProductViews;
 async function handle_request(msg, callback) {
     try{
+
+       
         var res = {};
         if (msg.params.path === 'get-all-products') {
             //console.log("Product => Kafka Backend: ", msg);
@@ -185,26 +187,29 @@ async function handle_request(msg, callback) {
            if (msg.body.lowerPrice >=0 && msg.body.upperPrice >=0){
                filter.$and.push({ "price": { $gt: Number(msg.body.lowerPrice), $lt: Number(msg.body.upperPrice) }});
            }
-            if (msg.body.productCategory) {
-                //console.log("Inside product Category", msg.body.productCategory);
-                filter.$and.push({ "productCategory": msg.body.productCategory });
+            if (msg.body.productCategory && msg.body.productCategory.length>0) {
+                console.log("Inside product Category", msg.body.productCategory);
+                filter.$and.push({ "productCategory": {$in : msg.body.productCategory }});
             }
-
+            if (msg.body.rating && msg.body.ratings.length > 0) {
+                filter.$and.push({ "ratings": { $in: msg.body.ratings } })
+            }
+            //console.log("Filter is: ", filter);
             Product.find(filter).populate('seller').limit(12).exec((err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
-                    res.message = error.message;
+                    res.message = err.message;
                     res.status = 400;
                     callback(null, res);
                 }
                 if (results) {
-                    if (msg.body.rating){
-                     results.filter((product) =>{
-                            if(product.ratings = msg.body.rating){
-                                results.splice(results.indexOf(product), 1);
-                            }
-                        })
-                    }
+                    // if (msg.body.rating){
+                    //  results.filter((product) =>{
+                    //         if(product.ratings = msg.body.rating){
+                    //             results.splice(results.indexOf(product), 1);
+                    //         }
+                    //     })
+                    // }
                     //console.log("Output:  ", results);
                     res.status = 200;
                     res.message = results;
