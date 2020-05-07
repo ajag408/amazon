@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { backendurl } from '../../../backendurl';
 import Link from 'next/link';
+import Router from 'next/router';
 
 function CancelledOrders(props) {
   let [orderItems,setOrderItems] = useState([]);
@@ -35,7 +36,26 @@ function CancelledOrders(props) {
                           {orderItems.map(orderItem => (
                               <tr key={orderItem.id}>
                                   <td className="id" >
-                                    {orderItem.id}
+                                      <a onClick = {()=>{
+                                     
+                                     Router.push({
+                                        pathname: '/order/trackOrder',
+                                        query: { orderItemId : orderItem.id}
+                                    
+                                })
+                                     
+                                     
+                                     }}>
+                                          {orderItem.id}
+                                          
+                                          </a>
+                                  {/* <Link
+                                      href="/order/trackOrder"
+                                      as={`/order/trackOrder?orderItemId=${orderItem.id}`}>
+                                      <a className="ps-product__title">
+                                        {orderItem.id}
+                                      </a>
+                                  </Link> */}
                                   </td>
                                   <td style={{'text-align':'center'}}>
                                       <div className="ps-product--cart">

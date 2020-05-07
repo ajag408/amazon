@@ -26,7 +26,7 @@ class HomeBanner extends Component {
                                     <a>
                                         <img
                                             src="/static/img/slider/home-1/slide-1.jpg"
-                                            alt="martfury"
+                                            alt="Amazon"
                                         />
                                     </a>
                                 </Link>
@@ -36,7 +36,7 @@ class HomeBanner extends Component {
                                     <a>
                                         <img
                                             src="/static/img/slider/home-1/slide-2.jpg"
-                                            alt="martfury"
+                                            alt="Amazon"
                                         />
                                     </a>
                                 </Link>
@@ -46,7 +46,7 @@ class HomeBanner extends Component {
                                     <a>
                                         <img
                                             src="/static/img/slider/home-1/slide-3.jpg"
-                                            alt="martfury"
+                                            alt="Amazon"
                                         />
                                     </a>
                                 </Link>
@@ -58,7 +58,7 @@ class HomeBanner extends Component {
                             <a className="ps-collection">
                                 <img
                                     src="/static/img/slider/home-1/promotion-1.jpg"
-                                    alt="martfury"
+                                    alt="Amazon"
                                 />
                             </a>
                         </Link>
@@ -66,7 +66,7 @@ class HomeBanner extends Component {
                             <a className="ps-collection">
                                 <img
                                     src="/static/img/slider/home-1/promotion-2.jpg"
-                                    alt="martfury"
+                                    alt="Amazon"
                                 />
                             </a>
                         </Link>

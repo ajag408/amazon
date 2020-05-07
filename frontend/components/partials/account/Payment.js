@@ -68,8 +68,8 @@ handlePlaceOrder = e => {
                 customerId: this.state.storage.user_id,
                 address: this.state.shippingAddress,
                 card: this.state.orderPayment,
-                deliveryCharge: 20.00,
-                finalTotal: parseInt(this.state.cartTotal) + 20.00,
+                deliveryCharge: 0.00,
+                finalTotal: parseInt(this.state.cartTotal),
                 orderItems: this.state.cartItems,
                 customerName: this.state.customerName,
 
@@ -94,8 +94,8 @@ handlePlaceOrder = e => {
                         customerId: this.state.storage.user_id,
                         address: this.state.shippingAddress,
                         card: values,
-                        deliveryCharge: 20.00,
-                        finalTotal: parseInt(this.state.cartTotal) + 20.00,
+                        deliveryCharge: 0.00,
+                        finalTotal: parseInt(this.state.cartTotal),
                         orderItems: this.state.cartItems,
                         customerName: this.state.customerName,
 
@@ -162,7 +162,7 @@ handlePlaceOrder = e => {
                                             <small>
                                                 Standard Shipping
                                             </small>
-                                            <strong>$20.00</strong>
+                                            <strong>$0.00</strong>
                                         </figure>
                                     </div>
                                     <h3>Payment Methods</h3><br></br>
@@ -357,14 +357,14 @@ handlePlaceOrder = e => {
                                             <figure>
                                                 <figcaption>
                                                     <strong>Shipping</strong>
-                                                    <small>$20.00</small>
+                                                    <small>$0.00</small>
                                                 </figcaption>
                                             </figure>
                                             <figure className="ps-block__total">
                                                 <h3>
                                                     Total
                                                     <strong>
-                                                        ${parseInt(cartTotal) + 20}
+                                                        ${parseInt(cartTotal)}
                                                         .00
                                                     </strong>
                                                 </h3>

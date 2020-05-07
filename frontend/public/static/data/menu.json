@@ -50,6 +50,27 @@
                     }
                 ]
              }
+        ], "menu_2": [
+            {
+                "text": "Home",
+                "url": "/",
+                "alias" :  "/",
+                "name" : "Home",
+                "key" : "ab12",
+                "subClass": "sub-menu",
+                "extraClass": "menu-item-has-children",
+                "megaContent": [
+                    {
+
+                        "megaItems": [
+                            {
+                                "text": "Home",
+                                "url": "/"
+                            }
+                        ]
+                    }
+                ]
+             }
         ]
     },
     "product_categories": [

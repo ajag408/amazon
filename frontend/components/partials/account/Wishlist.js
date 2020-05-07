@@ -78,9 +78,9 @@ class Wishlist extends Component {
                                                                 <a>
                                                                     <img
                                                                         src={
-                                                                            wishlistItem.product.thumbnail
+                                                                            (wishlistItem.product.images[0] || {imageUrl: '/static/img/products/noimage.jpg'}).imageUrl
                                                                         }
-                                                                        alt="martfury"
+                                                                        alt="amazon"
                                                                     />
                                                                 </a>
                                                             </Link>

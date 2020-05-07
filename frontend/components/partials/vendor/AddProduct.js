@@ -45,13 +45,13 @@ class AddProduct extends Component {
         event.preventDefault();
         axios.post(backendurl+'/product/removeProductImages',data)
         .then((res)=> {
+            console.log(res.data, parseInt(res.data.status) === 200 );
             if(parseInt(res.data.status) === 200 ) {
                 console.log("It is inside Delete Image");
                 this.setState({
-                    images : this.state.images.filter(item => item._id !== event.target.id) 
+                    images : this.state.images.filter(item => item._id !== data.imageId) 
                 })
             }
-            
         })
         .catch((error)=> {
             
@@ -163,6 +163,7 @@ class AddProduct extends Component {
       } 
        
       if(this.state.images.length > 0) {
+          debugger;
           displayImages = <div>
               <div className="row">
               {

@@ -14,7 +14,7 @@ class ProductHorizontal extends Component {
                 <div className="ps-product__thumbnail">
                     <Link href="/shop">
                         <a>
-                            <img src={product.thumbnail} alt="martfury" />
+                            <img src={product.thumbnail} alt="Amazon" />
                         </a>
                     </Link>
                 </div>

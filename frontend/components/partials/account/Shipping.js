@@ -79,7 +79,7 @@ class Shipping extends Component {
                       <small>
                         Standard Shipping
                       </small>
-                      <strong>$20.00</strong>
+                      <strong>$0.00</strong>
                     </figure>
                   </div>
                   <div className="ps-block__footer">
@@ -145,7 +145,7 @@ class Shipping extends Component {
                       <figure>
                         <figcaption>
                           <strong>Shipping</strong>
-                          <small>$20.00</small>
+                          <small>$0.00</small>
                         </figcaption>
                       </figure>
                       <figure className="ps-block__total">
@@ -153,7 +153,7 @@ class Shipping extends Component {
                           Total
                           <strong>
                             $
-                            {parseInt(cartTotal) + 20}
+                            {parseInt(cartTotal)}
                             .00
                           </strong>
                         </h3>

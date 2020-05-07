@@ -165,14 +165,14 @@ class OrderSummary extends Component {
                           <strong>Subtotal</strong>
                           <small>
                             $
-                            {orderTotal}
+                            {parseFloat(orderTotal)}
                           </small>
                         </figcaption>
                       </figure>
                       <figure>
                         <figcaption>
                           <strong>Shipping</strong>
-                          <small>$20.00</small>
+                          <small>$0.00</small>
                         </figcaption>
                       </figure>
                       <figure className="ps-block__total">
@@ -182,7 +182,7 @@ class OrderSummary extends Component {
                           )
                           <strong>
                             $
-                            {parseInt(orderTotal) + 20}
+                            {parseFloat(orderTotal)}
                             .00
                           </strong>
                         </h3>

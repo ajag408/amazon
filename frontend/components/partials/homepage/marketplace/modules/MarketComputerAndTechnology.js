@@ -82,13 +82,13 @@ class MarketComputerAndTechnology extends Component {
                 <div className="ps-block__slider">
                     <Slider {...carouselSettings}>
                         <a>
-                            <img src="/static/img/slider/home-3/technology-1.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/technology-1.jpg" alt="Amazon" />
                         </a>
                         <a>
-                            <img src="/static/img/slider/home-3/technology-2.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/technology-2.jpg" alt="Amazon" />
                         </a>
                         <a>
-                            <img src="/static/img/slider/home-3/technology-3.jpg" alt="martfury" />
+                            <img src="/static/img/slider/home-3/technology-3.jpg" alt="Amazon" />
                         </a>
                     </Slider>
                 </div>

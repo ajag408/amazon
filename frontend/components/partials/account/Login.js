@@ -120,6 +120,7 @@ class Login extends Component {
                     <Form
                         className="ps-form--account"
                         onSubmit={this.handleLoginSubmit}>
+                        <div className="data-card-wrap">
                         <ul className="ps-tab-list">
                             <li className="active">
                                 <Link href="/account/login">
@@ -226,6 +227,7 @@ class Login extends Component {
                                 </ul> */}
                             </div>
                         </div>
+                    </div>
                     </Form>
                 </div>
             </div>

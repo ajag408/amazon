@@ -37,7 +37,7 @@ class ThumbnailOutOfStock extends Component {
                                 <a href="/static/img/products/detail/on-sale/1.jpg">
                                     <img
                                         src="/static/img/products/detail/on-sale/1.jpg"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </div>
@@ -45,7 +45,7 @@ class ThumbnailOutOfStock extends Component {
                                 <a href="/static/img/products/detail/on-sale/2.jpg">
                                     <img
                                         src="/static/img/products/detail/on-sale/2.jpg"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </div>
@@ -53,7 +53,7 @@ class ThumbnailOutOfStock extends Component {
                                 <a href="/static/img/products/detail/on-sale/3.jpg">
                                     <img
                                         src="/static/img/products/detail/on-sale/3.jpg"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </div>
@@ -61,7 +61,7 @@ class ThumbnailOutOfStock extends Component {
                                 <a href="/static/img/products/detail/on-sale/4.jpg">
                                     <img
                                         src="/static/img/products/detail/on-sale/4.jpg"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </div>
@@ -81,25 +81,25 @@ class ThumbnailOutOfStock extends Component {
                     <div className="item">
                         <img
                             src="/static/img/products/detail/on-sale/1.jpg"
-                            alt="martfury"
+                            alt="Amazon"
                         />
                     </div>
                     <div className="item">
                         <img
                             src="/static/img/products/detail/on-sale/2.jpg"
-                            alt="martfury"
+                            alt="Amazon"
                         />
                     </div>
                     <div className="item">
                         <img
                             src="/static/img/products/detail/on-sale/3.jpg"
-                            alt="martfury"
+                            alt="Amazon"
                         />
                     </div>
                     <div className="item">
                         <img
                             src="/static/img/products/detail/on-sale/4.jpg"
-                            alt="martfury"
+                            alt="Amazon"
                         />
                     </div>
                 </Slider>

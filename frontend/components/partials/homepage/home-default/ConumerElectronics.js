@@ -8,6 +8,7 @@ import { consumerElectronic } from '../../../../public/static/data/home-1';
 import { backendurl } from './../../../../backendurl';
 import Axios from 'axios';
 import { connect } from "react-redux";
+import Router from 'next/router';
 class ConsumerElectronics extends Component {
     constructor(props) {
         super(props);
@@ -20,33 +21,62 @@ class ConsumerElectronics extends Component {
         //this.getAllProducts();
     }
 
-    componentDidMount(){
-        //console.log("Consumer Electronics Component Did Mount is called")
-        Axios.get(`${backendurl}/product/getAllProducts`).then(resp => {
-            if (resp.status === 200 && resp.data) {
+    componentWillMount(){
+        let data = {};
+        if (typeof window !== 'undefined') {
+            data = localStorage;
+        }
+        this.setState({
+            storage: data
+        }, () => {
+            const { storage } = this.state;
+            if (!storage.token || storage.role === "Seller") {
+                //   || storage.role != "Customer"
+                Router.push('/account/my-account')
+            } 
+        })
+    }
 
-                //console.log("ConsumerElectronics response in front end is: ", resp.data.message);
-                this.setState({
-                    currentProducts: resp.data.message
-                });
+    componentDidMount() {
+        this.setState({
+            storage: localStorage
+        }, () => {
+            const { storage } = this.state;
+            if (!storage.token || storage.role === "Seller") {
+                //   || storage.role != "Customer"
+                Router.push('/account/my-account')
+            } else {
+                var data = {
+                    productName : ""
+                }
+                //console.log("Consumer Electronics Component Did Mount is called")
+                Axios.post(`${backendurl}/product/search-product`,data).then(resp => {
+                    if (resp.status === 200 && resp.data) {
+
+                        //console.log("ConsumerElectronics response in front end is: ", resp.data.message);
+                        this.setState({
+                            currentProducts: resp.data.message
+                        });
+                    }
+                })
             }
         })
     }
 
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         //console.log('ConsumerElectronics componentWillReceiveProps', this.state.category);
-        if(this.props.category){
+        if (this.props.category) {
             this.getProductsByCategory(this.props.category.itemId)
         }
     }
 
 
-    getProductsByCategory(id){
+    getProductsByCategory(id) {
 
         //console.log(" ConsumerElectronics getting product by Category", id);
         const data = {
-            categoryDetailsId:id
+            categoryDetailsId: id
         }
         //console.log("ConsumerElectronics Component Will receieve Props", this.props.category);
 
@@ -134,7 +164,7 @@ class ConsumerElectronics extends Component {
                 },
             ],
         };
-        
+
         const products = this.state.currentProducts;
         const { newArrivals, mostPopular, bestSeller } = consumerElectronic;
         const { activeCategory } = this.state;
@@ -161,8 +191,8 @@ class ConsumerElectronics extends Component {
                 {/* {console.log("ConsumerElectronics  Props received are:  ", this.props.category)} */}
                 <div className="ps-container">
                     <div className="ps-section__header">
-                        <h3>Consumer Electronics</h3>
-                        <ul className="ps-section__links">
+                        <h3>Home</h3>
+                        {/* <ul className="ps-section__links">
                             {sectionLinks.map(link => (
                                 <li
                                     className={
@@ -188,18 +218,18 @@ class ConsumerElectronics extends Component {
                                     <a>View All</a>
                                 </Link>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
                     <div className="ps-section__content">
-                        
+
                         {products.length > 0 ? (
 
                             <Slider
                                 {...carouselSetting}
                                 className="ps-carousel outside">
                                 {/* {console.log("products length is: ", products.length)} */}
-                                {products.map(product =>  (
-                                   
+                                {products.map(product => (
+
                                     // <div className="item" key={product._id}>
                                     //     <Product product={product} />
                                     // </div>
@@ -209,8 +239,8 @@ class ConsumerElectronics extends Component {
                                 ))}
                             </Slider>
                         ) : (
-                            <p>No products</p>
-                        )}
+                                <p>No products</p>
+                            )}
                     </div>
                 </div>
             </div>
