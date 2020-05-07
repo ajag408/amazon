@@ -57,11 +57,15 @@ class FormEditAddress extends Component {
         e.preventDefault();
         console.log("Inside handle Submit");
         console.log("state is ", this.state);
-       
+        let id= "";
+        if (typeof window !== 'undefined') {
+            id = localStorage.getItem('user_id');
+        }
         let data = {
-             //TODO take value from customer.
+           
+            customerId: id,
             addressId: this.state.addressId,
-            customerId: '5e9e36cf6b95206ad289645f',// Need to change to take from local storage
+            //customerId: '5e9e36cf6b95206ad289645f',// Need to change to take from local storage
             fullName:this.state.fullName,
             streetAddressLine_1 : this.state.streetAddressLine_1, 
             streetAddressLine_2 : this.state.streetAddressLine_2, 
@@ -84,6 +88,8 @@ class FormEditAddress extends Component {
                 })
             }); 
         }else {
+
+            console.log("Adding new Address", data);
         Axios.post(`${backendurl}/customer/add-address`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
                 this.setState({ product: resp.data, userRating: 1 })
@@ -107,12 +113,6 @@ class FormEditAddress extends Component {
 
     render() { 
         console.log("FormEditAddress is: ", this.state);
-        // if(this.state.)
-        // { console.log("FormEdit address render address is: ", this.props.router.query.address) } 
-        // if (!(this.props.router.query && this.props.router.query.address ))
-        // return (<div>
-
-        // </div>)
         return (
             
             <form onSubmit = {this.handleOnSubmit} >

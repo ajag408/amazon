@@ -107,9 +107,9 @@ class ShoppingCart extends Component {
                                                             <a>
                                                                 <img
                                                                     src={
-                                                                        cartItem.product.thumbnail
+                                                                        (cartItem.product.images || [{image_url: null}])[0].image_url
                                                                     }
-                                                                    alt="martfury"
+                                                                    alt="amazon"
                                                                 />
                                                             </a>
                                                         </Link>
