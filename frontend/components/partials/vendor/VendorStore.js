@@ -87,11 +87,9 @@ class VendorStore extends Component {
     }
 
     componentDidMount() {
-        debugger;
         this.setState({
             storage: localStorage
         }, () => {
-            debugger;
             const { storage } = this.state;
             if (!storage.token) {
                 Router.push('/account/login')
