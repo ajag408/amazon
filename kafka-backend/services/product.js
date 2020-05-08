@@ -181,6 +181,9 @@ async function handle_request(msg, callback) {
                     { active: true}
                 ]
             }
+        
+
+            
            if (msg.body.sellerId && msg.body.sellerId.length >0){
                filter.$and.push({"seller" : {$in : msg.body.sellerId}});
            }
@@ -205,7 +208,7 @@ async function handle_request(msg, callback) {
             }
 
             console.log("Start Row : ", startRow);
-            Product.find(filter).populate('seller').limit(rowCount).skip(startRow).exec(async (err, results) => {
+            Product.find(filter).populate('seller').limit(rowCount).sort(msg.body.sort).skip(startRow).exec(async (err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
                     res.message = err.message;
@@ -226,7 +229,6 @@ async function handle_request(msg, callback) {
                 }
             });
             
-
         }
     } catch(error){
         console.log("error occured in product ", error);

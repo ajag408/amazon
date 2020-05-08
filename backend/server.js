@@ -40,6 +40,7 @@ app.use(session({
 }));
 
 
+
 // app.use(multer({ dest: "./uploads/"}).single('photo'));
 
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
@@ -61,7 +62,14 @@ app.listen(port, () => {
   console.log(`Connected to port ${port}`);
 });
 
+app.get('/ping', function (req, res) 
+{
+    res.status(200);
+    res.send(" Hello from backend");
+}); 
+
 // 404 Error
+
 app.use((req, res, next) => {
   next(createError(404));
 });
