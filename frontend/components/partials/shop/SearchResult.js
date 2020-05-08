@@ -14,13 +14,18 @@ class SearchResult extends Component {
     state = {
         listView: true,
         pageNumber: 1,
+        pageCount: 0,
         results: {},
+        sortedValue: ""
     };
 
     constructor (props){
         super(props);
         // this.loadData = this.loadData.bind(this);
-        this.childCallback = this.childCallback.bind(this);
+        this.childCallback = this.childCallback.bind(this); 
+        // this.onPrevPageBtnClick = this.onPrevPageBtnClick.bind(this);
+        // this.onNextPageBtnClick = this.onNextPageBtnClick.bind(this);
+        // this.handleSorting = this.handleSorting.bind(this);
     }
 
     componentDidMount() {
@@ -38,30 +43,40 @@ class SearchResult extends Component {
 
 
     childCallback(data) {
-        //console.log("childCallback => called, refreshing data!", data);
+        console.log("childCallback => called, refreshing data!", data);
        this.setState({
-           results : {allProducts : data.message}
+           results : {allProducts : data.message},
+           pageCount:  data.pageCount
        })
     }
 
-    // onClickPrevious = async () => {
-    //     console.log("Inside onClick Previous");
-    //     await this.setState({
-    //         pageNumber: parseInt(this.state.pageNumber, 10) - 1
+    // onPrevPageBtnClick(e) {
+    //     debugger;
+    //     e.preventDefault();
+    //     this.setState({
+    //         pageNumber: this.state.pageNumber - 1
+    //         // , sellerProducts: []
     //     })
-    //     console.log("OnClick NExt: ", this.state.pageNumber);
-    //     //this.getCompanyEvents();
     // }
 
-
-    // onClickNext = async () => {
-    //     console.log("Inside onClick Next");
-    //     console.log("Increasing count: ", parseInt(this.state.pageNumber) + 1);
-    //     await this.setState({
-    //         pageNumber: parseInt(this.state.pageNumber, 10) + 1
+    // onNextPageBtnClick(e) {
+    //     debugger;
+    //     e.preventDefault();
+    //     this.setState({
+    //         pageNumber: this.state.pageNumber + 1
+    //         // , sellerProducts: []
     //     })
-    //     console.log("OnClick NExt: ", this.state.pageNumber);
-    //     //this.getCompanyEvents();
+    // }
+
+    // handleSorting( e){
+    //     console.log("sorted" , e.target.value);
+    //      this.setState({
+    //          sortedValue: e.target.value
+            
+    //     })
+
+    //     console.log("handle sorting" , this.state.sortedValue)
+        
     // }
 
 
@@ -69,9 +84,37 @@ class SearchResult extends Component {
         const { allProducts } = this.state.results;
         let currentProducts = this.state.products;
         const viewMode = this.state.listView;
+
+
+        // let paginationPrevBtnClass = ""
+        // let disabledPrev = ''
+        // if (this.state.pageNumber == 1) {
+        //     paginationPrevBtnClass = "btnDisabled"
+        //     disabledPrev = 'true'
+        // }
+        // else {
+        //     paginationPrevBtnClass = "btnPagination"
+        //     disabledPrev = ''
+        // }
+        // let paginationNextBtnClass = ""
+        // //debugger;
+        // let disabledNext = ''
+        // if (this.state.pageNumber == this.state.pageCount) {
+        //     paginationNextBtnClass = "btnDisabled"
+        //     disabledNext = 'true'
+        // }
+        // else {
+        //     paginationNextBtnClass = "btnPagination"
+        //     disabledNext = ''
+        // }
+
+        debugger;
         return (
             <div className="ps-layout--shop">
-                <ShopWidget onChange = {this.childCallback} />
+                {console.log("Render is: : ", this.state.sortedValue)}
+                <ShopWidget onChange={this.childCallback} 
+                sortedValu={this.state.sortedValue} pageNumber={this.state.pageNumber}
+                 />
                 <div className="ps-layout__right">
                     <div className="ps-shopping">
                         <div className="ps-shopping__header">
@@ -119,6 +162,14 @@ class SearchResult extends Component {
                                             </a>
                                         </li>
                                     </ul>
+                                    {/* <div>
+                                        <select onChange = {this.handleSorting}> 
+                                            <option>Sort By:</option>
+                                            <option value = "price"> Price Increasing</option>
+                                            <option value = "-price"> Price Decreasing</option>
+                                        </select>
+                                    </div> */}
+
                                 </div>
                             </div>
                         </div>
@@ -149,20 +200,17 @@ class SearchResult extends Component {
                                         : ''}
                                 </div>
                             )}
-                            <div className="ps-shopping__footer">
-                                <div className="ps-pagination">
-                                    <ul className="pagination">
-
-                                        {/* <li class="page-item">
-                                            <a class="page-link" href="#" onClick={() => { this.onClickPrevious() }}>Previous</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">{this.state.pageNumber}</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" onClick={() => { this.onClickNext() }}>Next</a>
-                                        </li> */}
-                                    </ul>
+                            {/* <div className="ps-shopping__footer">
+                                <div class="center-aligned">
+                                    <button class={paginationPrevBtnClass} disabled={disabledPrev} onClick={this.onPrevPageBtnClick}>
+                                        Prev
+                                </button>
+                                    <div class="divPageNumber">{this.state.pageNumber}/{this.state.pageCount}</div>
+                                    <button class={paginationNextBtnClass} disabled={disabledNext} onClick={this.onNextPageBtnClick}>
+                                        Next
+                                </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

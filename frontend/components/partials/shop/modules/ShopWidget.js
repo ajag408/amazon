@@ -12,6 +12,7 @@ import { backendurl } from './../../../../backendurl';
 class ShopWidget extends Component {
     constructor(props) {
         super(props);
+    
         this.state = {
             allRatings: [{
                 text: '1 star',
@@ -44,14 +45,21 @@ class ShopWidget extends Component {
             priceMax: 2000,
             selectedSellerIds: [],
             selectedRatingIds: [],
-            selectedCategoryIds: []
+            selectedCategoryIds: [], 
+            pageNumber: 1,
+            pageCount: 0,
+            sortedValue: ""
 
         };
 
         this.handleClick = this.handleClick.bind(this);
+        this.onPrevPageBtnClick = this.onPrevPageBtnClick.bind(this);
+        this.onNextPageBtnClick = this.onNextPageBtnClick.bind(this);
+        this.handleSorting = this.handleSorting.bind(this);
     }
 
-    componentDidMount() {
+    componentWillReceiveProps() {
+        //console.log("Shop Widget: Component Did Mount: ", this.props.pageNumber)
         this.searchApiCall();
     }
 
@@ -132,7 +140,7 @@ class ShopWidget extends Component {
             if (rat._id === e.target.id)
                 rat.checked = e.target.checked
         })
-        debugger;
+        //debugger;
         var ratingSelectedArray = this.state.selectedRatingIds;
         if (e.target.checked)
             ratingSelectedArray.push(e.target.id)
@@ -169,34 +177,90 @@ class ShopWidget extends Component {
     }
 
     searchApiCall() {
+        //debugger;
+        //console.log("Values received from Parent ", this.state.pageNumber, " sort  ", this.state.sortedValue)
         var data = {
+            sort: this.state.sortedValue,
             sellerId: this.state.selectedSellerIds,
             lowerPrice: this.state.priceMin,
             upperPrice: this.state.priceMax,
             productCategory: this.state.selectedCategoryIds,
-            ratings: this.state.selectedRatingIds
+            ratings: this.state.selectedRatingIds, 
+            pageNumber : this.state.pageNumber
 
         };
-        //console.log("Before sending data to database, ", data);
+        //console.log("Before sending data to database, Data received from parent:  ", this.props.pageNumber);
 
         axios.post(`${backendurl}/product/search-product`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
                 //console.log("  ShopWidget => response data is: ", resp.data)
                 this.props.onChange(resp.data);
+                this.setState({
+                    pageCount: resp.data.pageCount
+                })
             }
         })
     }
 
     handleClick = item => event => {
-
-        //console.log("Inside handle Click  id is: ", event.target.id, "  value:  ", item._id)
         this.setState({
             [event.target.id]: item._id
         }, () => { this.searchApiCall() })
 
     }
 
+
+    onPrevPageBtnClick(e) {
+        //debugger;
+        e.preventDefault();
+        this.setState({
+            pageNumber: this.state.pageNumber - 1
+            // , sellerProducts: []
+        },  () => this.searchApiCall())
+    }
+
+    onNextPageBtnClick(e) {
+        //debugger;
+        e.preventDefault();
+        this.setState({
+            pageNumber: this.state.pageNumber + 1
+        } , () => this.searchApiCall())
+    }
+
+    handleSorting(e) {
+        //console.log("sorted", e.target.value);
+        this.setState({
+            sortedValue: e.target.value
+
+        }, () => this.searchApiCall())
+        //console.log("handle sorting", this.state.sortedValue)
+
+    }
+
     render() {
+
+
+        let paginationPrevBtnClass = ""
+        let disabledPrev = ''
+        if (this.state.pageNumber == 1) {
+            paginationPrevBtnClass = "btnDisabled"
+            disabledPrev = 'true'
+        }
+        else {
+            paginationPrevBtnClass = "btnPagination"
+            disabledPrev = ''
+        }
+        let paginationNextBtnClass = ""
+        //debugger;
+        let disabledNext = ''
+        if (this.state.pageNumber == this.state.pageCount) {
+            paginationNextBtnClass = "btnDisabled"
+            disabledNext = 'true'
+        }
+        else {
+            paginationNextBtnClass = "btnPagination"
+            disabledNext = ''
+        }
 
         
         let allSellers = this.state.sellers.map(seller => {
@@ -237,6 +301,15 @@ class ShopWidget extends Component {
        
         return (
             <div className="ps-layout__left">
+                 <aside>
+                    <div>
+                        <select onChange={this.handleSorting}>
+                            <option>Sort By:</option>
+                            <option value="price"> Price Increasing</option>
+                            <option value="-price"> Price Decreasing</option>
+                        </select>
+                    </div>
+                 </aside>
                 <aside className="widget widget_shop">
                     <h4 className="widget-title">Categories</h4>
                     <figure>
@@ -268,6 +341,18 @@ class ShopWidget extends Component {
                             Price: ${this.state.priceMin} - ${this.state.priceMax}
                         </p>
                     </figure>
+                </aside>
+
+                <aside>
+                    <div class="center-aligned">
+                        <button class={paginationPrevBtnClass} disabled={disabledPrev} onClick={this.onPrevPageBtnClick}>
+                            Prev
+                                </button>
+                        <div class="divPageNumber">{this.state.pageNumber}/{this.state.pageCount}</div>
+                        <button class={paginationNextBtnClass} disabled={disabledNext} onClick={this.onNextPageBtnClick}>
+                            Next
+                                </button>
+                    </div>
                 </aside>
             </div>
         );
