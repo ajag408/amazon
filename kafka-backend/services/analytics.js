@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 let models = require('../models')
 const ProductCategory = require('../models/productCategory');
-const Product=require('../models/product');
 const Sellers=require('../models/seller');
 const Order =models.Order;
 let OrderItem = models.OrderItem;
@@ -10,6 +9,7 @@ const Op = require('sequelize').Op;
 const { QueryTypes } = require('sequelize');
 const sequelize = require('sequelize');
 const ProductView = mongoose.models.ProductViews;
+const Product = mongoose.models.Product;
 
 async function handle_request(msg, callback) {
     var res = {};
@@ -143,7 +143,28 @@ if(msg.path==("product_views"))
      res.message = "Database Error";
      callback(null, res);
    }    
+  }
 
+  if(msg.path==("product_ratings"))
+    {
+ 
+    let result=await Product.find({}).limit(10).sort({ratings: -1})
+     console.log(result);
+ 
+     if(result)
+     {
+     let payload=JSON.stringify(result);
+     console.log(payload)
+     res.status = 200;
+     res.message = payload;
+     callback(null, res);
+     }
+     else{
+       res.status = 500;
+       res.message = "Database Error";
+       callback(null, res);
+     }    
+ 
 }
 }
 exports.handle_request = handle_request;
