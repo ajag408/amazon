@@ -44,43 +44,63 @@ class DisplayOrderDetail extends Component {
     render() {
 
         return (
-           <div>
+            <div className="ps-block--shipping">
                 <div>
-                    <label className="h3"> Product Name : </label>
-                      <span>{this.props.details.productId}</span>
+                   <div className="h2" style={{color :"black"}}> Product Name  : {this.props.details.productName}</div>
+                      &nbsp;&nbsp;<span></span>
                 </div>
-                <div>
-                    <label className="h3"> Quantity : </label>
-                      <span>{this.props.details.quantity}</span>
+                <h3>Ship To</h3>
+                  <div className="ps-block__panel">
+                    <figure>
+                      <small>{this.state.address.fullName}</small>
+
+                    </figure>
+                    <figure>
+                      <small>{this.state.address.streetAddressLine_1}</small>
+                    </figure>
+                    <figure><small>{this.state.address.streetAddressLine_2}</small></figure>
+                    <figure>
+                      <small>
+                        {this.state.address.city}
+                        ,
+                        {' '}
+                        {this.state.address.state}
+                        ,
+                        {' '}
+                        {this.state.address.country}
+                        {' '}
+                        {this.state.address.zipCode}
+                        {' '}
+                      </small>
+                    </figure>
+
+                  </div>
+                <div className="ps-block__panel">
+                    <h3> Contact Number : </h3>
+                    <figure>
+                      <small>{this.state.address.phoneNumber}
+                      </small>
+                      </figure>
                 </div>
-                <div>
-                    <label className="h3"> Delivery Address : </label>
-                      <span>{this.state.address.streetAddressLine_1},</span>
-                      <div>
-                      <span>{this.state.address.streetAddressLine_2}</span>
-                      </div>
-                      <span>{this.state.address.city} , </span>
-                      <span>{this.state.address.state}</span>
-                      <div>
-                      <span>{this.state.address.country} - </span>
-                      <span>{this.state.address.zipCode}</span>
-                      </div>
+                <div className="ps-block__panel">
+                    <h3>  Card Details :</h3>
+                    <figure>
+                      <small>{this.state.card.cardNumber}
+                      </small>
+                      </figure>
                 </div>
-                <div>
-                    <label className="h3"> Contact Number : </label>
-                      <span>{this.state.address.phoneNumber}</span>
+                <div className="ps-block__panel">
+                    <div>
+                    <div className="h4" style={{color :"black"}}> Quantity <span>{this.props.details.quantity}</span>    </div>           
                 </div>
-                <div>
-                    <label className="h3"> Card Details : </label>
-                    <span>{this.state.card.cardNumber}</span>
-                </div>
-                <div>
-                    <label className="h3"> Order Amount : </label>
+                <div className="h4" style={{color :"black"}}>
+                   Order Amount : 
                     <span>{this.props.details.totalPrice}</span>
                 </div>
-                <div>
-                    <label className="h3"> Order Item Status : </label>
+                <div className="h4" style={{color :"black"}}>
+                    Order Item Status:
                     <span>{this.props.details.status}</span>
+                </div>
                 </div>
                 <div>
                     {/* <Link href="" target="_self">
