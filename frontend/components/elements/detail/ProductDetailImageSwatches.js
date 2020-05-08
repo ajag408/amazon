@@ -74,7 +74,7 @@ class ProductDetailImageSwatches extends Component {
                                                         <a href={item.image}>
                                                             <img
                                                                 src={item.image}
-                                                                alt="martfury"
+                                                                alt="Amazon"
                                                             />
                                                         </a>
                                                     </div>
@@ -99,7 +99,7 @@ class ProductDetailImageSwatches extends Component {
                                         className="ps-product__variants">
                                         {variant.thumbnail.map(item => (
                                             <div className="item" key={item.id}>
-                                                <img src={item.image} alt="martfury" />
+                                                <img src={item.image} alt="Amazon" />
                                             </div>
                                         ))}
                                     </Slider>
@@ -165,7 +165,7 @@ class ProductDetailImageSwatches extends Component {
                                             <span className="ps-variant__tooltip">
                                                 {variant.title}
                                             </span>
-                                            <img src={variant.image} alt="martfury" />
+                                            <img src={variant.image} alt="Amazon" />
                                         </div>
                                     );
                                 })}

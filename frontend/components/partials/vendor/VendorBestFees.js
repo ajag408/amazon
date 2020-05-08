@@ -38,12 +38,12 @@ const VendorBestFrees = () => (
                     </figure>
                 </div>
                 <div className="ps-section__highlight">
-                    <img src="img/icons/vendor-4.png" alt="martfury" />
+                    <img src="img/icons/vendor-4.png" alt="Amazon" />
                     <figure>
                         <p>
                             We process payments with PayPal, an external payments platform that
                             allows you to process transactions with a variety of payment methods.
-                            Funds from PayPal sales on Martfury will be deposited into your PayPal
+                            Funds from PayPal sales on Amazon will be deposited into your PayPal
                             account.
                         </p>
                     </figure>

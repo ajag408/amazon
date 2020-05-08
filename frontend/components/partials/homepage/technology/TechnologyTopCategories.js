@@ -43,7 +43,7 @@ class TechnologyTopCategories extends Component {
                                 key={category.title}>
                                 <div className="ps-block--category" data-mh="categories">
                                     <div className="ps-block__thumbnail">
-                                        <img src={category.imagePath} alt="martfury" />
+                                        <img src={category.imagePath} alt="Amazon" />
                                     </div>
                                     <div className="ps-block__content">
                                         <p>{category.title}</p>

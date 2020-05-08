@@ -207,6 +207,17 @@ class MyAccount extends Component {
         }
     }
 
+    // componentWillMount(){
+    //     let data = {};
+    //     if (typeof window !== 'undefined') {
+    //         data = localStorage;
+    //     }
+    //     if (!data.token || data.role === "Admin") {
+    //         //   || storage.role != "Customer"
+    //         Router.push('/account/login')
+    //     } 
+    // }
+
     componentDidMount() {
         this.setState({
             storage: localStorage
@@ -252,6 +263,7 @@ class MyAccount extends Component {
         e.preventDefault();
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
+        localStorage.removeItem('role');
         Router.push('/account/login')
     };
 
@@ -269,10 +281,14 @@ class MyAccount extends Component {
             </div>
                 <div className="row">
                     <div className="col-md-6">
-                        <div className="form-group"><button name="uploadButton" onClick={this.onUploadClick}>Upload</button></div>
+                        <div className="form-group"><button name="uploadButton" 
+                        className="ps-btn ps-btn--myAccount" 
+                        onClick={this.onUploadClick}>Upload</button></div>
                     </div>
                     <div className="col-md-6">
-                        <div className="form-group"><button name="cancelButton" onClick={this.onCancelClick}>Cancel</button></div>
+                        <div className="form-group"><button name="cancelButton"
+                        className="ps-btn ps-btn--grey ps-btn--myAccount" 
+                        onClick={this.onCancelClick}>Cancel</button></div>
                     </div>
                 </div>
             </div>);
@@ -287,7 +303,7 @@ class MyAccount extends Component {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/vendor/[vendorId]/"
+                    <Link href="/vendor/[vendorId]"
                         as={`/vendor/${this.state.storage ? this.state.storage.user_id : ""}`}>
                         <a>View Profile And Inventory</a>
                     </Link>
@@ -314,6 +330,11 @@ class MyAccount extends Component {
                 <li>
                     <Link href="/account/addresses">
                         <a>Manage Addresses</a>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/account/save-payments">
+                        <a>Manage Payments</a>
                     </Link>
                 </li>
                 <li>
@@ -477,7 +498,7 @@ class MyAccount extends Component {
                                     <aside className="ps-widget--account-dashboard">
                                         <div className="ps-widget__header">
                                             <div className="form-group">
-                                                <button onClick={this.uploadButton} >
+                                                <button className="btnProfilePic" onClick={this.uploadButton} >
                                                     <img src={profileData
                                                         && profileData.profilePicture
                                                         && profileData.profilePicture !== "" ? profileData.profilePicture : "/static/img/users/blankProfile.jpeg"} />

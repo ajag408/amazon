@@ -4,7 +4,6 @@ import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import BreadCrumb from '../../components/elements/BreadCrumb';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
 import NavigationList from '../../components/shared/navigation/NavigationList';
-import DisplayOrderDetail from '../../components/partials/vendor/DisplayOrderDetail';
 import AddProduct from '../../components/partials/vendor/AddProduct';
 
 
@@ -38,7 +37,7 @@ class AddProductPage extends React.Component {
             //     url: '/shop',
             // },
             {
-                text: 'OrderDetails',
+                text: 'Add Product',
             },
         ];
 

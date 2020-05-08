@@ -59,6 +59,11 @@ const ProductSchema = new mongoose.Schema({
     type: [RatingAndReviewSchema],
     default: [],
   },
+  ratings: {
+    type: Number,
+    required: true,
+    default: 0.0
+  },
   active: {
     type: Boolean,
     required: true,
@@ -70,20 +75,6 @@ const ProductSchema = new mongoose.Schema({
   toObject: { virtuals: true },
   toJSON: { virtuals: true }
 });
-
-ProductSchema.virtual('ratings').get(function(){
-  if(!this.ratingAndReviews || this.ratingAndReviews.length < 1){
-    return 0;
-  }
-  let totalRating = (this.ratingAndReviews || []).reduce((totalRating,ratingAndReview)=>{
-    return totalRating + ratingAndReview.rating;
-  },0)
-  return roundHalf(totalRating/this.ratingAndReviews.length);
-});
-
-function roundHalf(num) {
-  return Math.round(num*2)/2;
-}
 
 function arrayLimit(val) {
   return val.length <= 5;

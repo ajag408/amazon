@@ -5,6 +5,8 @@ const Customer = mongoose.models.Customer;
 const ProductView = mongoose.models.ProductViews;
 async function handle_request(msg, callback) {
     try{
+
+       
         var res = {};
         if (msg.params.path === 'get-all-products') {
             //console.log("Product => Kafka Backend: ", msg);
@@ -22,13 +24,13 @@ async function handle_request(msg, callback) {
             });
             
         } else if(msg.params.path === 'add-product'){
-            Product.create(msg.body.productObj ,(err, savedStudent )=>{
+            Product.create(msg.body.productObj ,(err, result )=>{
                 if(err) {
                     res.message = err.message;
                     res.status = 400;
                     callback(null,res);
                 } else {
-                    res.message = savedStudent._id;
+                    res.message = result._id;
                     res.status = 200;
                     callback(null,res);
                 }   
@@ -156,6 +158,8 @@ async function handle_request(msg, callback) {
                         rating: msg.body.rating,
                         review: msg.body.review
                     })
+                    
+                    product.ratings = averageRatings(product.ratingAndReviews);
                     await product.save().catch(err => {
                         console.log("error is saving review and rating: ", err);
                         callback(null, {error : err});
@@ -183,29 +187,41 @@ async function handle_request(msg, callback) {
            if (msg.body.lowerPrice >=0 && msg.body.upperPrice >=0){
                filter.$and.push({ "price": { $gt: Number(msg.body.lowerPrice), $lt: Number(msg.body.upperPrice) }});
            }
-            if (msg.body.productCategory) {
-                //console.log("Inside product Category", msg.body.productCategory);
-                filter.$and.push({ "productCategory": msg.body.productCategory });
+            if (msg.body.productCategory && msg.body.productCategory.length>0) {
+                console.log("Inside product Category", msg.body.productCategory);
+                filter.$and.push({ "productCategory": {$in : msg.body.productCategory }});
+            }
+            if (msg.body.rating && msg.body.ratings.length > 0) {
+                filter.$and.push({ "ratings": { $in: msg.body.ratings } })
+            }
+            //console.log("Filter is: ", filter);
+            var rowCount = 12;
+            if(msg.body.rowCount){
+                rowCount = msg.body.rowCount;
+            }
+            var startRow = 0;
+            if(msg.body.pageNumber) {
+                startRow = (msg.body.pageNumber - 1) * rowCount;
             }
 
-            Product.find(filter).populate('seller').limit(12).exec((err, results) => {
+            console.log("Start Row : ", startRow);
+            Product.find(filter).populate('seller').limit(rowCount).skip(startRow).exec(async (err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
-                    res.message = error.message;
+                    res.message = err.message;
                     res.status = 400;
                     callback(null, res);
                 }
                 if (results) {
-                    if (msg.body.rating){
-                     results.filter((product) =>{
-                            if(product.ratings = msg.body.rating){
-                                results.splice(results.indexOf(product), 1);
-                            }
-                        })
+                    var productCount = await Product.find(filter).count().exec();
+                    var pageCount = parseInt((productCount / rowCount));
+                    if(pageCount === 0 ){
+                        pageCount = 1;
                     }
                     //console.log("Output:  ", results);
                     res.status = 200;
                     res.message = results;
+                    res.pageCount = pageCount;
                     callback(null, res);
                 }
             });
@@ -216,6 +232,20 @@ async function handle_request(msg, callback) {
         console.log("error occured in product ", error);
         callback(null, { error: error });
     }
+}
+
+function averageRatings(ratingAndReviews){
+    if(!ratingAndReviews || ratingAndReviews.length < 1){
+        return 0;
+    }
+    let totalRating = (ratingAndReviews || []).reduce((totalRating,ratingAndReview)=>{
+        return totalRating + ratingAndReview.rating;
+    },0)
+    return roundHalf(totalRating/ratingAndReviews.length);
+};
+
+function roundHalf(num) {
+    return Math.round(num*2)/2;
 }
 
 exports.handle_request = handle_request;

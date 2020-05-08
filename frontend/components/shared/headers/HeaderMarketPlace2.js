@@ -79,7 +79,7 @@ class HeaderMarketPlace2 extends Component {
                 <div className="header__top">
                     <div className="container">
                         <div className="header__left">
-                            <p>Welcome to Martfury Online Shopping Store !</p>
+                            <p>Welcome to Amazon Online Shopping Store !</p>
                         </div>
                         <div className="header__right">
                             <ul className="header__top-links">
@@ -108,7 +108,7 @@ class HeaderMarketPlace2 extends Component {
                         <div className="header__content-left">
                             <Link href="/home/market-place-2">
                                 <a className="ps-logo">
-                                    <img src="/static/img/logo.png" alt="martfury" />
+                                    <img src="/static/img/logo.png" alt="Amazon" />
                                 </a>
                             </Link>
                             <div className="menu--product-categories">

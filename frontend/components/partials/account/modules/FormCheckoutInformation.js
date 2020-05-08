@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import axios from 'axios';
-import { Form, Input, Collapse,Popconfirm, message } from 'antd';
+import { Form, Input, Collapse,Popconfirm, message, Select } from 'antd';
 import {backendurl} from './../../../../backendurl';
 const { Panel } = Collapse;
-
-
+import stateData from '../../../../public/static/data/states.json';
+const { Option } = Select;
 class FormCheckoutInformation extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +27,7 @@ class FormCheckoutInformation extends Component {
         });
     }
 
-    handleLoginSubmit = e => {
+    handleLoginSubmit = (e) => {
         e.preventDefault();
         if(this.state.orderAddress){
             localStorage.setItem("shippingAddress", JSON.stringify(this.state.orderAddress));
@@ -169,11 +169,11 @@ class FormCheckoutInformation extends Component {
                                                 },
                                             ],
                                         })(
-                                            <Input
-                                                className="form-control"
-                                                type="text"
-                                                placeholder="State"
-                                            />,
+                                            <Select placeholder="Select U.S. State">
+                                                {stateData.states.map((obj) => <Option value={obj.name}   >{obj.name}</Option>)}
+                    
+                    
+                                          </Select>,
                                         )}
                                     </Form.Item>
                                 </div>
@@ -230,7 +230,8 @@ class FormCheckoutInformation extends Component {
                                                             {
                                                                 required: true,
                                                                 message:
-                                                                    'Enter a postal code!',
+                                                                    'Enter a valid postal code!',
+                                                                   
                                                             },
                                                         ],
                                                     },
@@ -239,6 +240,7 @@ class FormCheckoutInformation extends Component {
                                                         className="form-control"
                                                         type="postalCode"
                                                         placeholder="Postal Code"
+                                                        pattern = "(^\d{5}$)|(^\d{5}-\d{4}$)"
                                                     />,
                                                 )}
                                             </Form.Item>

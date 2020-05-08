@@ -45,13 +45,13 @@ class AddProduct extends Component {
         event.preventDefault();
         axios.post(backendurl+'/product/removeProductImages',data)
         .then((res)=> {
+            console.log(res.data, parseInt(res.data.status) === 200 );
             if(parseInt(res.data.status) === 200 ) {
                 console.log("It is inside Delete Image");
                 this.setState({
-                    images : this.state.images.filter(item => item._id !== event.target.id) 
+                    images : this.state.images.filter(item => item._id !== data.imageId) 
                 })
             }
-            
         })
         .catch((error)=> {
             
@@ -75,7 +75,9 @@ class AddProduct extends Component {
 
     componentDidMount(){
         console.log("Inside Add Product", this.props.product)
-        debugger;
+        if(!(typeof window !== 'undefined' && localStorage.getItem("token") && localStorage.getItem("role") === "Seller")) {
+             Router.push('/account/login');
+          }
         this.setState({
             name : !!this.props.product.name ?  this.props.product.name :'' ,
             price: !!this.props.product.price ?  this.props.product.price :'' ,
@@ -92,12 +94,6 @@ class AddProduct extends Component {
        .catch((error)=> {
 
        }) 
-    }
-
-    componentWillMount() {
-        this.setState({
-            authFlag: false
-        })
     }
 
     addProduct = (e) => {
@@ -153,10 +149,11 @@ class AddProduct extends Component {
 
     render() {
                
-     let  msg , displayCatagory, displayImages;
- 
+     let  msg , displayCatagory, displayImages ;
+    
       if(this.state.productCatagories.length > 0) {
           displayCatagory = <select name="productCatagory" value={this.state.productCatagory} onChange={this.inputChangeHandler}>
+             <option value= "">  </option>
               {this.state.productCatagories.map(item=> {
                  return <option value={item._id}> {item.name} </option>
               })}    
@@ -166,6 +163,7 @@ class AddProduct extends Component {
       } 
        
       if(this.state.images.length > 0) {
+          debugger;
           displayImages = <div>
               <div className="row">
               {

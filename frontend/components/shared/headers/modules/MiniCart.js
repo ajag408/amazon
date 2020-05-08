@@ -42,7 +42,7 @@ class MiniCart extends Component {
                                                           src={
                                                               product.thumbnail
                                                           }
-                                                          alt="martfury"
+                                                          alt="Amazon"
                                                       />
                                                   </a>
                                               </Link>

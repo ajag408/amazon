@@ -47,7 +47,7 @@ class HeaderFurniture extends Component {
                                 <a className="ps-logo">
                                     <img
                                         src="/static/img/logo-furniture.png"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </Link>
@@ -84,7 +84,7 @@ class HeaderFurniture extends Component {
                             <ul className="navigation__extra">
                                 <li>
                                     <Link href="/page/blank">
-                                        <a>Sell on Martfury</a>
+                                        <a>Sell on Amazon</a>
                                     </Link>
                                 </li>
                                 <li>

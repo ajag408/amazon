@@ -10,6 +10,17 @@ import LanguageSwicher from '../headers/modules/LanguageSwicher';
 class NavigationDefault extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            customerId: null,
+            role: null,
+        }
+    }
+
+    componentDidMount(){
+        this.setState({
+            customerId: localStorage.getItem('user_id'),
+            role: localStorage.getItem('role'),
+        })
     }
 
     handleFeatureWillUpdate(e) {
@@ -20,16 +31,26 @@ class NavigationDefault extends Component {
             duration: 500,
         });
     }
-
     render() {
+        let data = {};
+        if (typeof window !== 'undefined') {
+            data = localStorage;
+        }
         return (
             <nav className="navigation">
                 <div className="ps-container">
                     <div className="navigation__left">
-                        <Menu
+                        {data.role === "Seller" ? (<Menu
                             data={menuData.menuPrimary.menu_1}
                             className="menu"
-                        />
+                        />) : <Menu
+                        data={menuData.menuPrimary.menu_2}
+                        className="menu"
+                    />}
+                        {/* <Menu
+                            data={menuData.menuPrimary.menu_1}
+                            className="menu"
+                        /> */}
                         {/* <div className="menu--product-categories">
                             <div className="menu__toggle">
                                 <i className="icon-menu"></i>
@@ -45,19 +66,24 @@ class NavigationDefault extends Component {
                     </div>
                     <div className="navigation__right">
                         <ul className="navigation__extra">
-                            <li>
+                            {this.state.role === 'Customer' ? (<li>
                                 <Link href="/search/">
-                                    <a>Search By Seller</a>
+                                    <a>Product Search</a>
                                 </Link>
-                            </li>
-                            <li>
-                                <Link href="/vendor/become-a-vendor">
-                                    <a>Sell on Amazon</a>
-                                </Link>
-                            </li>
-                            {typeof window !== 'undefined' && localStorage.getItem('role') === 'Customer' ? (<li>
+                            </li>): (null)}
+                            {this.state.role === 'Customer' ? (<li>
                                 <Link href="/account/my-orders">
                                     <a>My Orders</a>
+                                </Link>
+                            </li>): (null)}
+                            {this.state.role === 'Seller' ? (<li>
+                                <Link href="/vendor/addproduct">
+                                    <a>Add Product</a>
+                                </Link>
+                            </li>): (null)}
+                            {this.state.role === 'Seller' ? (<li>
+                                <Link href="/vendor/allorders">
+                                    <a>Orders</a>
                                 </Link>
                             </li>): (null)}
                             {/* <li>

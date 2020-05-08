@@ -68,12 +68,11 @@ class ProductDealOfDay extends Component {
                 }
             });
         }
-        return (
-            <div className="ps-product ps-product--inner">
+        return ( <div className="ps-product ps-product--inner">
                 <div className="ps-product__thumbnail">
                     <Link href="/product/[pid]" as={`/product/${product.id}`}>
                         <a>
-                            <img src={product.thumbnail} alt="martfury" />
+                            <img src={product.thumbnail} alt="Amazon" />
                         </a>
                     </Link>
                     {product.badge ? productBadge : ''}

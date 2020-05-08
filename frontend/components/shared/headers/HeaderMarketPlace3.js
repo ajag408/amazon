@@ -59,7 +59,7 @@ class HeaderMarketPlace3 extends Component {
                                 <a className="ps-logo">
                                     <img
                                         src="/static/img/logo_light.png"
-                                        alt="martfury"
+                                        alt="Amazon"
                                     />
                                 </a>
                             </Link>
@@ -109,7 +109,7 @@ class HeaderMarketPlace3 extends Component {
                             <ul className="navigation__extra">
                                 <li>
                                     <Link href="/vendor/become-a-vendor">
-                                        <a>Sell on Martfury</a>
+                                        <a>Sell on Amazon</a>
                                     </Link>
                                 </li>
                                 <li>

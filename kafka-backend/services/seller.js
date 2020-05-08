@@ -13,41 +13,9 @@ let OrderItem = models.OrderItem;
 
 
 function handle_request(msg, callback) {
-//   if (msg.path === 'getProfileData') {
 //     //msg.emailId = msg.email;
   
 //   //Seller.find().populate('user').exec((err, categories) => {
-
-//   User.findOne({_id: msg.userId}, (err, user) => {
-//     var res = {};
-//     if (err) {
-//       res.status = 500;
-//       res.message = "Database Error";
-//       callback(null, res);
-//     }
-//     else if(user){
-//       //res.status = 409;
-
-//       Seller.findOne({_id: msg.userId}).populate('user').exec((err, seller) =>{
-//         if(err){
-//           res.status = 500;
-//           res.message = "Database Error";
-//           callback(null, res);
-//         } else if(seller){
-//           res.status = 200;
-//           seller.user.password = undefined;
-//           seller.user.salt = undefined;
-//           res.message = seller;
-//           callback(null,res);
-//         } else {
-//           res.status = 204;
-//           res.message = "User not found";
-//           callback(null,res);
-//         }
-//       })
-//     }
-// })  
-// }
 
   if (msg.path === 'getProfileData') {
     var res = {};
@@ -149,15 +117,15 @@ function handle_request(msg, callback) {
         })   
   }
   else if (msg.params.path  === 'getSalesDetails') {
-    console.log( "Kafka Backed get Sales Details " , msg)
+    //console.log( "Kafka Backed get Sales Details " , msg)
     var res = {};
     OrderItem.findAll({
-      attributes: ['productId', [sequelize.fn('sum', sequelize.col('quantity')), 'quantityTotal'],
+      attributes: ['productName', [sequelize.fn('sum', sequelize.col('quantity')), 'quantityTotal'],
         [sequelize.fn('sum', sequelize.col('totalPrice')), 'amount'],
         [sequelize.fn('MONTH', sequelize.col('createdAt')),  ' month'] 
       ],
-      where: { 'sellerId': '5e8187df8bea9e66dcedbf99' },
-      group: ['OrderItem.productId', [sequelize.fn('MONTH', sequelize.col('createdAt'))]],
+      where: { 'sellerId': msg.body.sellerId },
+      group: ['OrderItem.productId', 'OrderItem.productName', [sequelize.fn('MONTH', sequelize.col('createdAt'))]],
       raw: true,
       //order: sequelize.literal('total DESC')
     }).then(result => {

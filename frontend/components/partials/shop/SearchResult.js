@@ -13,7 +13,7 @@ import ShopWidget from './modules/ShopWidget';
 class SearchResult extends Component {
     state = {
         listView: true,
-        pageNumber: 0,
+        pageNumber: 1,
         results: {},
     };
 
@@ -43,6 +43,26 @@ class SearchResult extends Component {
            results : {allProducts : data.message}
        })
     }
+
+    // onClickPrevious = async () => {
+    //     console.log("Inside onClick Previous");
+    //     await this.setState({
+    //         pageNumber: parseInt(this.state.pageNumber, 10) - 1
+    //     })
+    //     console.log("OnClick NExt: ", this.state.pageNumber);
+    //     //this.getCompanyEvents();
+    // }
+
+
+    // onClickNext = async () => {
+    //     console.log("Inside onClick Next");
+    //     console.log("Increasing count: ", parseInt(this.state.pageNumber) + 1);
+    //     await this.setState({
+    //         pageNumber: parseInt(this.state.pageNumber, 10) + 1
+    //     })
+    //     console.log("OnClick NExt: ", this.state.pageNumber);
+    //     //this.getCompanyEvents();
+    // }
 
 
     render() {
@@ -132,21 +152,14 @@ class SearchResult extends Component {
                             <div className="ps-shopping__footer">
                                 <div className="ps-pagination">
                                     <ul className="pagination">
-                                        <li className="active">
-                                            <a href="#">1</a>
+
+                                        {/* <li class="page-item">
+                                            <a class="page-link" href="#" onClick={() => { this.onClickPrevious() }}>Previous</a>
                                         </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Next Page
-                                                <i className="icon-chevron-right"></i>
-                                            </a>
-                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">{this.state.pageNumber}</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" onClick={() => { this.onClickNext() }}>Next</a>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>

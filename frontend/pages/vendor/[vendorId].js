@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FooterDefault from '../../components/shared/footers/FooterDefault';
+
 import BreadCrumb from '../../components/elements/BreadCrumb';
-import Newletters from '../../components/partials/commons/Newletters';
+
 import HeaderDefault from '../../components/shared/headers/HeaderDefault';
 import VendorStore from '../../components/partials/vendor/VendorStore';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
@@ -40,7 +40,7 @@ class VendorStorePage extends React.Component {
                 url: '/',
             },
             {
-                text: 'Vendor store',
+                text: 'Seller store',
             },
         ];
 

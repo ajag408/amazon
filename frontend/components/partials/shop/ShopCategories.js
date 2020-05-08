@@ -11,7 +11,7 @@ const ShopCategories = () => (
                     <div className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 " key={category.id}>
                         <div className="ps-block--category-2" data-mh="categories">
                             <div className="ps-block__thumbnail">
-                                <img src={category.thumbnail} alt="martfury" />
+                                <img src={category.thumbnail} alt="Amazon" />
                             </div>
                             <div className="ps-block__content">
                                 <h4>{category.title}</h4>

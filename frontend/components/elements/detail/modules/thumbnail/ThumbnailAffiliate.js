@@ -93,7 +93,7 @@ class ThumbnailAffiliate extends Component {
                                         onClick={e =>
                                             this.handleOpenLightbox(e, index)
                                         }>
-                                        <img src={variant.thumbnail} alt="martfury" />
+                                        <img src={variant.thumbnail} alt="Amazon" />
                                     </a>
                                 </div>
                             ))}
@@ -112,7 +112,7 @@ class ThumbnailAffiliate extends Component {
                     className="ps-product__variants">
                     {product.variants.map(variant => (
                         <div className="item" key={variant.thumbnail}>
-                            <img src={variant.thumbnail} alt="martfury" />
+                            <img src={variant.thumbnail} alt="Amazon" />
                         </div>
                     ))}
                 </Slider>

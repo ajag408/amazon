@@ -18,42 +18,98 @@ class VendorStore extends Component {
         super(props);
         this.state = {
             storage: ''
-            ,profileData : {}
-            ,sellerProducts : []
+            , profileData: {}
+            , sellerProducts: []
+            , keyword: ''
+            , pageNumber : 1
+            , pageCount : 0
         };
 
-        // this.onChangeName = this.onChangeName.bind(this);
-        // this.onChangeAddress = this.onChangeAddress.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.uploadButton = this.uploadButton.bind(this);
-        // this.onCancelClick = this.onCancelClick.bind(this);
-        // this.onUploadClick = this.onUploadClick.bind(this);
-        // this.onProfilePicUpload = this.onProfilePicUpload.bind(this);
+        this.onPrevPageBtnClick = this.onPrevPageBtnClick.bind(this);
+        this.onNextPageBtnClick = this.onNextPageBtnClick.bind(this);
     }
 
-    componentDidMount(){
-        this.setState({ 
-            storage : localStorage
+    onPrevPageBtnClick(e){
+        debugger;
+        e.preventDefault();
+        this.setState({
+            pageNumber : this.state.pageNumber -1
+            ,sellerProducts : []
+        },() => {this.searchApiCall()})
+    }
+
+    onNextPageBtnClick(e){
+        debugger;
+        e.preventDefault();
+        this.setState({
+            pageNumber : this.state.pageNumber +1
+            ,sellerProducts : []
+        },() => {this.searchApiCall()})
+    }
+
+
+    handleSearch = (e) => {
+        debugger;
+        e.preventDefault();
+        this.setState({
+            keyword: e.target.value,
+            sellerProducts: [],
+            pageNumber : 1
+        }, () => {this.searchApiCall()})
+    }
+
+    searchApiCall(){
+        debugger;
+        var sellerId = this.props.sellerId;
+            var data = {
+                productName: this.state.keyword
+                ,sellerId: [sellerId]
+                ,pageNumber : this.state.pageNumber
+            }
+            debugger;
+            axios.post(`${backendurl}/product/search-product`, data).then(resp => {
+                debugger;
+                if (resp.status === 200 && resp.data) {
+                    //console.log("Response in front end is: ", resp.data.message);
+                    this.setState({
+                        sellerProducts: resp.data.message,
+                        pageCount : resp.data.pageCount
+                    });
+                    //console.log("handle search  ", this.state, " Value :  ", this.state.keyword); 
+                } else {
+                    notification['error']({
+                        message: 'ERROR!',
+                        description: 'Oops! Something went wrong.!',
+                        duration: 2,
+                    });
+                }
+            })
+    }
+
+    componentDidMount() {
+        this.setState({
+            storage: localStorage
         }, () => {
-            const {storage} = this.state;
-            if(!storage.token){
+            const { storage } = this.state;
+            if (!storage.token) {
                 Router.push('/account/login')
             } else {
                 var sellerId = this.props.sellerId;
-                axios.get(backendurl+'/seller/getProfileData/'+sellerId)
-                .then((res) => {
-                    console.log(res);
-                   if(res.status == 500 || res.status == 204 ){
-                       console.log(res.data.message);
-                    } else {
-                        this.setState({
-                            profileData: res.data.message
-                        });
-                    }
-                });
+                axios.get(backendurl + '/seller/getProfileData/' + sellerId)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.status == 500 || res.status == 204) {
+                            console.log(res.data.message);
+                        } else {
+                            this.setState({
+                                profileData: res.data.message
+                            });
+                        }
+                    });
 
                 var data = {
                     sellerId: [sellerId]
+                    ,pageNumber : this.state.pageNumber
                 };
                 debugger;
                 axios.post(backendurl + '/product/search-product/', data)
@@ -62,6 +118,7 @@ class VendorStore extends Component {
                         if (res.status === 200 && res.data) {
                             this.setState({
                                 sellerProducts: res.data.message
+                                ,pageCount : res.data.pageCount
                             })
                         } else {
                             console.log(res.data.message);
@@ -130,13 +187,35 @@ class VendorStore extends Component {
         debugger;
         var SellerRating = 0;
         var totalNumberOfRatings = 0;
-        if(this.state.sellerProducts && this.state.sellerProducts.length > 0){
+        if (this.state.sellerProducts && this.state.sellerProducts.length > 0) {
             var totalRating = 0;
-            for (let i = 0 ; i< this.state.sellerProducts.length; i++){
+            for (let i = 0; i < this.state.sellerProducts.length; i++) {
                 totalRating += this.state.sellerProducts[i].ratings;
                 totalNumberOfRatings += this.state.sellerProducts[i].ratingAndReviews.length;
             }
-            SellerRating = totalRating/this.state.sellerProducts.length;
+            SellerRating = totalRating / this.state.sellerProducts.length;
+        }
+
+        let paginationPrevBtnClass = ""
+        let disabledPrev = ''
+        if(this.state.pageNumber == 1){
+            paginationPrevBtnClass = "btnDisabled"
+            disabledPrev = 'true'
+        }
+        else{
+            paginationPrevBtnClass = "btnPagination"
+            disabledPrev = ''
+        }
+        let paginationNextBtnClass = ""
+        //debugger;
+        let disabledNext = ''
+        if(this.state.pageNumber == this.state.pageCount){
+            paginationNextBtnClass = "btnDisabled"
+            disabledNext = 'true'
+        }
+        else{
+            paginationNextBtnClass = "btnPagination"
+            disabledNext = ''
         }
 
         return (
@@ -147,81 +226,24 @@ class VendorStore extends Component {
                             <div className="ps-block--vendor">
                                 <div className="ps-block__thumbnail">
                                     <img
-                                        src={profileData && profileData.profilePicture !== ""?profileData.profilePicture:"/static/img/vendor/vendor-store.jpg"}
+                                        src={profileData && profileData.profilePicture !== "" ? profileData.profilePicture : "/static/img/vendor/vendor-store.jpg"}
                                         alt="Image Load Error"
                                     />
                                 </div>
                                 <div className="ps-block__container">
                                     <div className="ps-block__header">
-                                        <h4>{profileData?profileData.name:""}</h4>
-                                        <Rating ratings = {SellerRating}/>
+                                        <h4>{profileData ? profileData.name : ""}</h4>
+                                        <Rating ratings={SellerRating} />
                                         <p>
                                             ({totalNumberOfRatings} rating)
                                         </p>
                                     </div>
                                     <div className="ps-block__divider"></div>
                                     <div className="ps-block__content">
-                                        {/* <p>
-                                            <strong>Digiworld US</strong>, New
-                                            York’s no.1 online retailer was
-                                            established in May 2012 with the aim
-                                            and vision to become the one-stop
-                                            shop for retail in New York with
-                                            implementation of best practices
-                                            both online
-                                        </p>
-                                        <span className="ps-block__divider"></span> */}
                                         <p>
-                                            <strong>Address</strong> {profileData? profileData.addresses:""}
+                                            <strong>Address</strong> {profileData ? profileData.addresses : ""}
                                         </p>
-                                        {/* <figure>
-                                                <figcaption>
-                                                Foloow us on social
-                                            </figcaption>
-                                            <ul className="ps-list--social-color">
-                                                <li>
-                                                    <a
-                                                        className="facebook"
-                                                        href="#">
-                                                        <i className="fa fa-facebook"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="twitter"
-                                                        href="#">
-                                                        <i className="fa fa-twitter"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="linkedin"
-                                                        href="#">
-                                                        <i className="fa fa-linkedin"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a
-                                                        className="feed"
-                                                        href="#">
-                                                        <i className="fa fa-feed"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </figure> */}
                                     </div>
-                                    {/* <div className="ps-block__footer">
-                                        <p>
-                                            Call us directly
-                                            <strong>(+053) 77-637-3300</strong>
-                                        </p>
-                                        <p>or Or if you have any question</p>
-                                        {/* <a
-                                            className="ps-btn ps-btn--fullwidth"
-                                            href="">
-                                            Contact Seller
-                                        </a>
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -232,16 +254,10 @@ class VendorStore extends Component {
                                         <li className="active">
                                             <a href="#">Products</a>
                                         </li>
-                                        {/* <li>
-                                            <a href="#">Reviews</a>
-                                        </li> */}
-                                        {/* <li>
-                                            <a href="#">About</a>
-                                        </li> */}
                                     </ul>
                                 </div>
                                 <div className="ps-block__right">
-                                    {/* <form
+                                    <form
                                         className="ps-form--search"
                                         action="/"
                                         method="get">
@@ -249,44 +265,24 @@ class VendorStore extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Search in this shop"
+                                            onChange={this.handleSearch.bind(this)}
                                         />
                                         <button>
                                             <i className="fa fa-search"></i>
                                         </button>
-                                    </form> */}
+                                    </form>
                                 </div>
                             </div>
-                            {/* <div className="ps-vendor-best-seller">
-                                <div className="ps-section__header">
-                                    <h3>Best Seller items</h3>
-                                     <div className="ps-section__nav">
-                                        <a
-                                            className="ps-carousel__prev"
-                                            href="#vendor-bestseller">
-                                            <i className="icon-chevron-left"></i>
-                                        </a>
-                                        <a
-                                            className="ps-carousel__next"
-                                            href="#vendor-bestseller">
-                                            <i className="icon-chevron-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="ps-section__content">
-                                    <Slider
-                                        {...carouselSetting}
-                                        className="ps-carousel outside">
-                                        {relatedProduct &&
-                                            relatedProduct.map(product => (
-                                                <Product
-                                                    product={product}
-                                                    key={product.id}
-                                                />
-                                            ))}
-                                    </Slider>
-                                </div>
-                            </div> */}
-                            <VendorProducts sellerProducts = {this.state.sellerProducts}/>
+                            <div class="center-aligned">
+                                <button class={paginationPrevBtnClass} disabled={disabledPrev} onClick={this.onPrevPageBtnClick}>
+                                    Prev
+                                </button>
+                                <div class="divPageNumber">{this.state.pageNumber}/{this.state.pageCount}</div>
+                                <button class={paginationNextBtnClass} disabled={disabledNext} onClick={this.onNextPageBtnClick}>
+                                    Next
+                                </button>
+                            </div>
+                            <VendorProducts sellerProducts={this.state.sellerProducts} />
                         </div>
                     </div>
                 </div>
