@@ -41,7 +41,6 @@ componentDidMount(){
             this.getBestSellers();
             this.getBestCustomers();
             this.getBestViewedProducts();
-            this.getBestRatedProducts();
         }
     });
      
@@ -285,11 +284,11 @@ this.state.bestViewedProducts[i].productName=this.state.bestViewedProducts[i].pr
    <h2>Top 10 Products Based On Ratings</h2>
     <BarChart width={730} height={250} data={ this.state.bestRatedProducts}>
   <CartesianGrid strokeDasharray="3 3" />
-  <XAxis dataKey="name"/>
+  <XAxis dataKey="productName"/>
   <YAxis />
   <Tooltip />
   <Legend />
-  <Bar dataKey="ratings" fill="#D41792" />
+  <Bar dataKey="productRatings" fill="#D41792" />
   
 </BarChart>
 <br></br>

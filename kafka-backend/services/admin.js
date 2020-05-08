@@ -141,7 +141,7 @@ else
   if(msg.path==("category_details"))
   {
 
-    let productCategoryDetails = await Product.find({"productCategory":msg.categoryDetailsId}).populate('seller','name').limit(20).skip(20*(msg.pageIndex-1));
+    let productCategoryDetails = await Product.find({"productCategory":msg.categoryDetailsId}).populate('seller','name').limit(50).skip(50*(msg.pageIndex-1));
     console.log(productCategoryDetails);
     if(productCategoryDetails)
     {
@@ -201,10 +201,7 @@ if(msg.searchCriteria==""){
 if(msg.path==("seller_products"))
 {
 
-  let products = await Product.find({$and: [
-    { "seller":msg.sellerId}, 
-    { active: true}
-]}).limit(20).skip(20*(msg.pageIndex-1));
+  let products = await Product.find({"seller":msg.sellerId}).limit(50).skip(50*(msg.pageIndex-1));
   console.log(products);
   if(products)
   {

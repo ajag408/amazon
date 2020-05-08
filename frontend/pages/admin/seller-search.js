@@ -109,7 +109,7 @@ viewProducts=()=>
 }
 pageCountInc=async()=>{
     
-    if((this.state.products.length)==20)
+    if((this.state.products.length)==50)
     {
    await this.setState({
     

@@ -6,8 +6,7 @@ import {backendurl} from '../../backendurl';
 import axios from 'axios';
 import Router from 'next/router';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
-import {Popconfirm, message } from 'antd';
+import Dropdown from 'react-bootstrap/Dropdown'
 class OrderSearch extends Component {
     constructor(props) {
         super(props);
@@ -98,11 +97,10 @@ onUpdateStatus=(e)=>{
     .then(response => {
         console.log("Status Code : ",response.status);
         if(response.status === 200){
-            
+            alert("updated status")
             this.setState({
                 openStatus:false 
             });
-            message.success('Order Status Updated');
         }
 this.viewOrders();
     })
@@ -178,7 +176,7 @@ handleCancelled=()=>{
 
 render()
 {
-let message;let orderList;let orderStatusFilter;let pop;
+let message;let orderList;let orderStatusFilter;
 orderStatusFilter=(
     <Dropdown>
     <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -233,7 +231,6 @@ if(this.state.orders)
                      </tbody>
                 </table>   
     )
-    
 }
     return (
         
