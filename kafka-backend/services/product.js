@@ -194,7 +194,7 @@ async function handle_request(msg, callback) {
                 console.log("Inside product Category", msg.body.productCategory);
                 filter.$and.push({ "productCategory": {$in : msg.body.productCategory }});
             }
-            if (msg.body.rating && msg.body.ratings.length > 0) {
+            if (msg.body.ratings && msg.body.ratings.length > 0) {
                 filter.$and.push({ "ratings": { $in: msg.body.ratings } })
             }
             //console.log("Filter is: ", filter);
@@ -207,7 +207,7 @@ async function handle_request(msg, callback) {
                 startRow = (msg.body.pageNumber - 1) * rowCount;
             }
 
-            console.log("Start Row : ", startRow);
+            //console.log("Start Row : ", startRow);
             Product.find(filter).populate('seller').limit(rowCount).sort(msg.body.sort).skip(startRow).exec(async (err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
