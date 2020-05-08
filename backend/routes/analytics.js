@@ -100,4 +100,26 @@ router.get("/getOrdersPerDay", async (req, res) => {
       }
     });
   })
+  //10 Product based on views per day
+  router.post("/getBestViewedProducts", async (req, res) => {
+
+    let msg = req.body;
+    msg.route = "Adding new Product Category";
+    req.body.path="product_views";
+    
+    console.log('request reached add product category'+JSON.stringify(req.body));
+    kafka.make_request('analytics', req.body, (err, results) => {
+      if (err) {
+        res.status(500).end("System Error");
+      }
+      else if (results.status === 200) {
+        let payload = results.message;
+        
+        res.status(results.status).end(payload);
+      }
+      else {
+        res.status(results.status).end(results.message);
+      }
+    });
+  })
   module.exports = router;
