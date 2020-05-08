@@ -207,6 +207,11 @@ async function handle_request(msg, callback) {
                 startRow = (msg.body.pageNumber - 1) * rowCount;
             }
 
+            var sortObj = {};
+            if(msg.body.sort){
+                sortObj = msg.body.sort;
+            }
+
             console.log("Start Row : ", startRow);
             Product.find(filter).populate('seller').limit(rowCount).sort(msg.body.sort).skip(startRow).exec(async (err, results) => {
                 if (err) {
@@ -217,10 +222,17 @@ async function handle_request(msg, callback) {
                 }
                 if (results) {
                     var productCount = await Product.find(filter).count().exec();
-                    var pageCount = parseInt((productCount / rowCount));
-                    if(pageCount === 0 ){
-                        pageCount = 1;
-                    }
+                    console.log(productCount);
+                    console.log(rowCount);
+                    // if(productCount > rowCount){
+
+                    // }
+                    var pageCount = Math.ceil((productCount / rowCount));
+                    console.log(pageCount);
+                    // if(pageCount === 0 ){
+                    //     console.log("asdjasdjasdasd");
+                    //     pageCount = 1;
+                    // }
                     //console.log("Output:  ", results);
                     res.status = 200;
                     res.message = results;
