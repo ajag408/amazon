@@ -50,7 +50,7 @@ function handleTopicRequest(topic_name, fname) {
 handleTopicRequest('user', userService);
 handleTopicRequest('cart', cartService);
 handleTopicRequest('admin', admin);
-handleTopicRequest('product', productService);
+handleTopicRequest('productTest', productService);
 handleTopicRequest('seller', sellerService);
 handleTopicRequest('order', orderService);
 handleTopicRequest('customer', customerService);

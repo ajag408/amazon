@@ -194,8 +194,14 @@ async function handle_request(msg, callback) {
             if (msg.body.rating && msg.body.ratings.length > 0) {
                 filter.$and.push({ "ratings": { $in: msg.body.ratings } })
             }
-            //console.log("Filter is: ", filter);
-            Product.find(filter).populate('seller').limit(12).exec((err, results) => {
+            var rowCount = 12;
+            var startRow = 0;
+            if (msg.body.pageNumber) {
+                startRow = (msg.body.pageNumber - 1) * msg.body.rowCount;
+                rowCount = msg.body.rowCount;
+            }
+       
+            Product.find(filter).populate('seller').limit(rowCount).skip(startRow).exec((err, results) => {
                 if (err) {
                     console.log("Error is: ", err);
                     res.message = err.message;
@@ -203,14 +209,7 @@ async function handle_request(msg, callback) {
                     callback(null, res);
                 }
                 if (results) {
-                    // if (msg.body.rating){
-                    //  results.filter((product) =>{
-                    //         if(product.ratings = msg.body.rating){
-                    //             results.splice(results.indexOf(product), 1);
-                    //         }
-                    //     })
-                    // }
-                    //console.log("Output:  ", results);
+                    var productCount = await Product.find(filter).count().exec();
                     res.status = 200;
                     res.message = results;
                     callback(null, res);

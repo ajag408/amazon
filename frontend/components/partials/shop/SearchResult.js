@@ -38,31 +38,31 @@ class SearchResult extends Component {
 
 
     childCallback(data) {
-        //console.log("childCallback => called, refreshing data!", data);
+        console.log("childCallback => called, refreshing data!", data);
        this.setState({
            results : {allProducts : data.message}
        })
     }
 
-    // onClickPrevious = async () => {
-    //     console.log("Inside onClick Previous");
-    //     await this.setState({
-    //         pageNumber: parseInt(this.state.pageNumber, 10) - 1
-    //     })
-    //     console.log("OnClick NExt: ", this.state.pageNumber);
-    //     //this.getCompanyEvents();
-    // }
+    onClickPrevious = async () => {
+        console.log("Inside onClick Previous");
+        await this.setState({
+            pageNumber: parseInt(this.state.pageNumber, 10) - 1
+        })
+        console.log("OnClick NExt: ", this.state.pageNumber);
+        //this.getCompanyEvents();
+    }
 
 
-    // onClickNext = async () => {
-    //     console.log("Inside onClick Next");
-    //     console.log("Increasing count: ", parseInt(this.state.pageNumber) + 1);
-    //     await this.setState({
-    //         pageNumber: parseInt(this.state.pageNumber, 10) + 1
-    //     })
-    //     console.log("OnClick NExt: ", this.state.pageNumber);
-    //     //this.getCompanyEvents();
-    // }
+    onClickNext = async () => {
+        console.log("Inside onClick Next");
+        console.log("Increasing count: ", parseInt(this.state.pageNumber) + 1);
+        await this.setState({
+            pageNumber: parseInt(this.state.pageNumber, 10) + 1
+        })
+        console.log("OnClick Next: ", this.state.pageNumber);
+        //this.getCompanyEvents();
+    }
 
 
     render() {
@@ -71,7 +71,7 @@ class SearchResult extends Component {
         const viewMode = this.state.listView;
         return (
             <div className="ps-layout--shop">
-                <ShopWidget onChange = {this.childCallback} />
+                <ShopWidget onChange = {this.childCallback} pageNumber = {this.state.pageNumber} />
                 <div className="ps-layout__right">
                     <div className="ps-shopping">
                         <div className="ps-shopping__header">
@@ -153,13 +153,13 @@ class SearchResult extends Component {
                                 <div className="ps-pagination">
                                     <ul className="pagination">
 
-                                        {/* <li class="page-item">
+                                        <li class="page-item">
                                             <a class="page-link" href="#" onClick={() => { this.onClickPrevious() }}>Previous</a>
                                         </li>
                                         <li class="page-item"><a class="page-link" href="#">{this.state.pageNumber}</a></li>
                                         <li class="page-item">
                                             <a class="page-link" href="#" onClick={() => { this.onClickNext() }}>Next</a>
-                                        </li> */}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

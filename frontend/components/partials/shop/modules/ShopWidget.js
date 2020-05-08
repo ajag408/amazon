@@ -177,9 +177,9 @@ class ShopWidget extends Component {
             ratings: this.state.selectedRatingIds
 
         };
-        //console.log("Before sending data to database, ", data);
+        console.log("Before sending data to database, Data received from parent:  ", this.props.pageNumber);
 
-        axios.post(`${backendurl}/product/search-product`, data).then(resp => {
+        axios.post(`${backendurl}/product/search-product?limit=10&page=${this.props.pageNumber}`, data).then(resp => {
             if (resp.status === 200 && resp.data) {
                 //console.log("  ShopWidget => response data is: ", resp.data)
                 this.props.onChange(resp.data);
