@@ -14,8 +14,15 @@ class InformationDefault extends Component {
         super(props);
         this.state = {
             quantity: 1,
-            addedToCart: false
+            addedToCart: false,
+            role: ''
         };
+    }
+
+    componentDidMount(){
+        this.setState({
+            role: localStorage.getItem('role')
+        })
     }
 
     handleAddItemToCart = e => {
@@ -76,7 +83,7 @@ class InformationDefault extends Component {
                 {this.state.addedToCart ? 
                     (<h4 className='text-success'><b>Added to Cart!</b></h4>)
                     :
-                    (<div className="ps-product__shopping">
+                    (this.state.role === 'Customer' ? (<div className="ps-product__shopping">
                         <figure>
                             <figcaption>Quantity</figcaption>
                             <div className="form-group--number">
@@ -104,7 +111,7 @@ class InformationDefault extends Component {
                             onClick={this.handleAddItemToCart.bind(this)}>
                             Add to cart
                         </a>                    
-                    </div>)
+                    </div>) : (null))
                 }
             </div>
         );
