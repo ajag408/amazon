@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const conn = require('./connection');
 
-const TIMEOUT = 8000; // time to wait for response in ms
+const TIMEOUT = 8000*100; // time to wait for response in ms
 let self;
 
 
