@@ -191,7 +191,7 @@ console.log(data);
 
 pageCountInc=async()=>{
     console.log(this.state.categoryDetails);
-    if((this.state.categoryDetails.length)==50)
+    if((this.state.categoryDetails.length)==20)
     {
    await this.setState({
     

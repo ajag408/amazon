@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 let models = require('../models')
 const ProductCategory = require('../models/productCategory');
-const Product=require('../models/product');
 const Sellers=require('../models/seller');
 const Order =models.Order;
 let OrderItem = models.OrderItem;
@@ -10,6 +9,7 @@ const Op = require('sequelize').Op;
 const { QueryTypes } = require('sequelize');
 const sequelize = require('sequelize');
 const ProductView = mongoose.models.ProductViews;
+const Product = mongoose.models.Product;
 
 async function handle_request(msg, callback) {
     var res = {};
@@ -128,6 +128,28 @@ if(msg.path==("product_views"))
   const startOfDay = new Date(new Date(msg.viewDate).setUTCHours(0, 0, 0, 0)).toISOString()
   const endOfDay = new Date(new Date(msg.viewDate).setUTCHours(23, 59, 59, 999)).toISOString()         
   let result=await ProductView.find({ "createdAt": { $gte:startOfDay, $lt: endOfDay }}).populate('productId','name').limit(10).sort({viewCount: -1})
+   console.log(result);
+   
+   if(result)
+   {
+   let payload=JSON.stringify(result);
+   console.log(payload)
+   res.status = 200;
+   res.message = payload;
+   callback(null, res);
+   }
+   else{
+     res.status = 500;
+     res.message = "Database Error";
+     callback(null, res);
+   }    
+
+}
+
+if(msg.path==("product_ratings"))
+  {
+            
+  let result=await Product.find({}).limit(10).sort({ratings: -1})
    console.log(result);
    
    if(result)
