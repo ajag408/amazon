@@ -36,7 +36,7 @@ var multipleUpload  = multer({
 
 
 const makeKafkaRequestCart = async (req, res) => {
-    kafka.make_request('product', { body: req.body, params: req.params }, (err, results) => {
+    kafka.make_request('productTest', { body: req.body, params: req.params }, (err, results) => {
         if (err) {
             res.json({
                 status: 'error',
@@ -145,9 +145,40 @@ router.route('/:productId/add-review').post((req,res)=>{
 });
 
 router.route('/search-product').post((req, res) => {
-    //console.log("Backend searching products : ", req.body);
+    console.log("Backend searching products : ", req.body , " PageNumber: ", req.query.page ,   " limit : ", req.query.limit);
     req.params.path = 'search-products';
-    makeKafkaRequestCart(req, res);
+    kafka.make_request('productTest', { body: req.body, params: req.params }, (err, results) => {
+        if (err) {
+            res.json({
+                status: 'error',
+                msg: 'System Error, Try Again.',
+            });
+        } else {
+
+            const page = parseInt(req.query.page);
+            const limit = parseInt(req.query.limit);
+            const startIndex = (page - 1) * limit;
+            const endIndex = page * limit;
+            const pResult = {};
+            if (endIndex < results.message.length) {
+                pResult.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+
+            if (startIndex > 0) {
+                pResult.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+
+            pResult.message = results.message.slice(startIndex, endIndex);
+            console.log("Result from product details are: ", pResult)
+            res.json(pResult);
+        }
+    });
 });
 
 
