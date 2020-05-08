@@ -21,7 +21,10 @@ class Analytics extends Component {
         ordersPerDay:[],
         mostSoldProducts:[],
         bestSellers:[],
-        bestCustomers:[]
+        bestCustomers:[],
+        bestViewedProducts:[],
+        bestRatedProducts:[],
+        viewDate:new Date().toISOString().slice(0, 10)
     };
     
 }
@@ -31,20 +34,19 @@ componentDidMount(){
     }, () => {
         const {storage} = this.state;
         if(!storage.token || storage.role != "Admin"){
-         //   || storage.role != "Customer"
             Router.push('/account/login')
         } else {
             this.getOrdersPerDay();
             this.getMostSoldProducts();
             this.getBestSellers();
             this.getBestCustomers();
+            this.getBestViewedProducts();
         }
     });
      
 }
 handleLogout(e){
     e.preventDefault();
-    console.log("hello")
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
     Router.push('/account/login')
@@ -118,18 +120,69 @@ getBestCustomers=()=>
         this.setState({errorMessage:"Categories could not be viewed"});
     });
 }
-
+getBestViewedProducts=async()=>
+{
+  
+    let data={
+        viewDate:this.state.viewDate
+    }
+    axios.post(backendurl +'/analytics/getBestViewedProducts',data)
+    .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
+            let bestViewedProducts=response.data;
+            this.setState({
+                bestViewedProducts  
+            });
+            console.log("bestViewedProducts",bestViewedProducts);
+        }
+    })
+    .catch(err => { 
+        this.setState({errorMessage:"Categories could not be viewed"});
+    });
+}
+getBestRatedProducts=()=>
+{
+    axios.get(backendurl +'/analytics/getBestRatedProducts')
+    .then(response => {
+        console.log("Status Code : ",response.status);
+        if(response.status === 200){
+            let bestRatedProducts=response.data;
+            this.setState({
+                bestRatedProducts  
+            });
+            console.log("bestRatedProducts",bestRatedProducts);
+        }
+    })
+    .catch(err => { 
+        this.setState({errorMessage:"Categories could not be viewed"});
+    });
+}
+dateChangeHandler = async(e) => {
+    await this.setState({
+        viewDate : e.target.value
+    })
+    this.getBestViewedProducts();
+}
 
 
 render()
 {
 let message;let orderList;let orderStatusFilter;
+console.log(this.state.viewDate)
 
 if(this.state.ordersPerDay)
 {
     for(let i=0;i<this.state.ordersPerDay.length;i++)
     {
 this.state.ordersPerDay[i].createdAt=this.state.ordersPerDay[i].createdAt.toString().slice(0,10);
+    }
+}
+if(this.state.bestViewedProducts)
+{
+    for(let i=0;i<this.state.bestViewedProducts.length;i++)
+    {
+this.state.bestViewedProducts[i].productName=this.state.bestViewedProducts[i].productId.name;
     }
 }
 
@@ -225,6 +278,35 @@ this.state.ordersPerDay[i].createdAt=this.state.ordersPerDay[i].createdAt.toStri
   <Tooltip />
   <Legend />
   <Bar dataKey="totalPurchase" fill="#FFB90F" />
+  
+</BarChart>
+<br></br>
+   <h2>Top 10 Products Based On Ratings</h2>
+    <BarChart width={730} height={250} data={ this.state.bestRatedProducts}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="productName"/>
+  <YAxis />
+  <Tooltip />
+  <Legend />
+  <Bar dataKey="productRatings" fill="#D41792" />
+  
+</BarChart>
+<br></br>
+   <h2>Top 10 Products Based On Views</h2>
+    <h4>For Date {this.state.viewDate}</h4>
+   <div className="input-group mb-2">
+    <div className="input-group-prepend">
+        <span className="input-group-text" id="basic-addon1"><b>Date</b></span>
+    </div>
+    <input type="date" size="50" name="Date" className="form-control" aria-label="Date" aria-describedby="basic-addon1" onChange={this.dateChangeHandler}   pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="YYYY-MM-DD" title="Enter a date in this formart YYYY-MM-DD" required />
+</div>
+    <BarChart width={730} height={250} data={ this.state.bestViewedProducts}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="productName"/>
+  <YAxis />
+  <Tooltip />
+  <Legend />
+  <Bar dataKey="viewCount" fill="#8c8c19" />
   
 </BarChart>
 </div>
