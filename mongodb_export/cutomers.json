@@ -1,0 +1,998 @@
+[{
+  "_id": {
+    "$oid": "5e9e36cf6b95206ad289645f"
+  },
+  "name": "test",
+  "user": {
+    "$oid": "5e9e0335512b5c1c94b64855"
+  },
+  "savedAddresses": [
+    {
+      "_id": {
+        "$oid": "5eaf9986713e99745ab89ea2"
+      },
+      "fullName": "Prachi Jain",
+      "streetAddressLine_1": "Milpitas",
+      "streetAddressLine_2": "sfhgs",
+      "city": "Milpitas",
+      "state": "Iowa",
+      "country": "asfajh",
+      "zipCode": "21323-4462",
+      "phoneNumber": "1324"
+    },
+    {
+      "_id": {
+        "$oid": "5eaf9c28713e99745ab89ec1"
+      },
+      "fullName": "Aditya Gupta",
+      "streetAddressLine_1": "Mangal Medical Hall",
+      "streetAddressLine_2": "HIndu Ashram Road",
+      "city": "Nahan",
+      "state": "Himachal Pradesh",
+      "country": "India",
+      "zipCode": "173001",
+      "phoneNumber": "2447327375"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a2decba1e8ad6eb8de97"
+      },
+      "fullName": "Salman Mal",
+      "streetAddressLine_1": "190 Ryland Street",
+      "streetAddressLine_2": "Fountain Plaza ",
+      "city": "San Jose",
+      "state": "California",
+      "country": "US",
+      "zipCode": "95112",
+      "phoneNumber": "74238495"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a3bd569931ae0872a5ae"
+      },
+      "fullName": "Salman Mal",
+      "streetAddressLine_1": "190 Ryland Street",
+      "streetAddressLine_2": "Fountain Plaza ",
+      "city": "San Jose",
+      "state": "California",
+      "country": "US",
+      "zipCode": "95112",
+      "phoneNumber": "74238495"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a46b569931ae0872a5cb"
+      },
+      "fullName": "Salman Mal",
+      "streetAddressLine_1": "135",
+      "streetAddressLine_2": "adsdg",
+      "city": "San Jose",
+      "state": "Arkansas",
+      "country": "US",
+      "zipCode": "23514",
+      "phoneNumber": "1324"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a557569931ae0872a5d0"
+      },
+      "fullName": "afa",
+      "streetAddressLine_1": "sf",
+      "streetAddressLine_2": "fdsag",
+      "city": "dfsd",
+      "state": "American Samoa",
+      "country": "asf",
+      "zipCode": "12131",
+      "phoneNumber": "3215521"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a5be2bd121aef689a6a5"
+      },
+      "fullName": "sfsd",
+      "streetAddressLine_1": "sfa",
+      "streetAddressLine_2": "dsga",
+      "city": "dgd",
+      "state": "",
+      "country": "s",
+      "zipCode": "21324",
+      "phoneNumber": "2422352"
+    },
+    {
+      "_id": {
+        "$oid": "5eb3a5e82bd121aef689a6a8"
+      },
+      "fullName": "Aditya",
+      "streetAddressLine_1": "hsfbs",
+      "streetAddressLine_2": "shbfdf",
+      "city": "safh",
+      "state": "",
+      "country": "sf",
+      "zipCode": "13124",
+      "phoneNumber": "2435"
+    }
+  ],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-20T23:57:13.978Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T06:17:06.935Z"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ea32df8eb193d4c9a8ce1e5"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": "",
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5eb39f8b1094cf832eded67c"
+        },
+        "product": {
+          "$oid": "5ea68a7166e6be721c3477d5"
+        },
+        "quantity": 1,
+        "individualPrice": 1
+      }
+    ],
+    "cartTotal": 0
+  }
+},{
+  "_id": {
+    "$oid": "5ea32fb4716ebc4f57fd8ae9"
+  },
+  "name": "ptest",
+  "user": {
+    "$oid": "5ea32f5c716ebc4f57fd8ae8"
+  },
+  "savedAddresses": [
+    {
+      "_id": {
+        "$oid": "5eaf7c69ea26c271be079cde"
+      },
+      "fullName": "Prachi",
+      "streetAddressLine_1": "190 safsfs st",
+      "city": "Milpitas",
+      "state": "CA",
+      "country": "US",
+      "zipCode": "95110",
+      "phoneNumber": "21324",
+      "streetAddressLine_2": "Hello"
+    },
+    {
+      "_id": {
+        "$oid": "5eaf7ca5ea26c271be079cdf"
+      },
+      "fullName": "Prachi",
+      "streetAddressLine_1": "190 gege st",
+      "streetAddressLine_2": "Hello",
+      "city": "Milpitas",
+      "state": "CA",
+      "country": "US",
+      "zipCode": "95110",
+      "phoneNumber": "21324"
+    }
+  ],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eab6442aa880bbe7f6d6024"
+      },
+      "NameOnCard": "Name",
+      "cardNumber": "123-345-456",
+      "expirationDate": {
+        "$date": "2020-04-30T23:50:26.966Z"
+      },
+      "cvv": 123
+    },
+    {
+      "_id": {
+        "$oid": "5eaf2f4415f0533be3253a30"
+      },
+      "NameOnCard": "Akash",
+      "cardNumber": "0123",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-62135596800000"
+        }
+      },
+      "cvv": 222
+    },
+    {
+      "_id": {
+        "$oid": "5eaf338d976c403e4a9ebcda"
+      },
+      "NameOnCard": "adf",
+      "cardNumber": "0123",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-62132832000000"
+        }
+      },
+      "cvv": 222
+    },
+    {
+      "_id": {
+        "$oid": "5eaf7552f961b4531847f9c1"
+      },
+      "NameOnCard": "AAAA",
+      "cardNumber": "2222",
+      "expirationDate": {
+        "$date": "2023-02-02T00:00:00Z"
+      },
+      "cvv": 222
+    },
+    {
+      "_id": {
+        "$oid": "5eaf7775f961b4531847fa0a"
+      },
+      "NameOnCard": "BBBB",
+      "cardNumber": "2349",
+      "expirationDate": {
+        "$date": "2024-02-02T00:00:00Z"
+      },
+      "cvv": 333
+    },
+    {
+      "_id": {
+        "$oid": "5eaf779df961b4531847fa19"
+      },
+      "NameOnCard": "CCCC",
+      "cardNumber": "34934",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-62101296000000"
+        }
+      },
+      "cvv": 333
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-04-24T18:28:04.872Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-05T00:22:06.659Z"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ea338f742834e5c142f02db"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": null,
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5ea55f085b70a15340ecadad"
+        },
+        "product": {
+          "$oid": "5ea38ecac3d810562d00f428"
+        },
+        "quantity": 4,
+        "individualPrice": 25.99
+      },
+      {
+        "isGift": 0,
+        "giftMessage": null,
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5eaa81ed32144c1680fc45c1"
+        },
+        "product": {
+          "$oid": "5ea68a7166e6be721c3477d5"
+        },
+        "quantity": 6,
+        "individualPrice": 1
+      }
+    ]
+  }
+},{
+  "_id": {
+    "$oid": "5ea33017d94b37510cf96a5f"
+  },
+  "shoppingCart": {
+    "cartTotal": 0,
+    "_id": {
+      "$oid": "5ea33017d94b37510cf96a5e"
+    },
+    "cartItems": []
+  },
+  "name": "p_test",
+  "user": {
+    "$oid": "5ea32f5c716ebc4f57fd8ae8"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-24T18:29:43.673Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T18:29:43.673Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea385b94270645719835969"
+  },
+  "name": "Reg2",
+  "user": {
+    "$oid": "5ea385b94270645719835968"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-25T00:35:05.588Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T00:35:05.588Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea3ab017c376a636208a017"
+  },
+  "name": "Narendra Modi",
+  "user": {
+    "$oid": "5ea3ab017c376a636208a016"
+  },
+  "savedAddresses": [
+    {
+      "_id": {
+        "$oid": "5eb469c2bda787b6b7bdbed0"
+      },
+      "fullName": "Akash Jagannathan",
+      "streetAddressLine_1": "808 Beaverton Court",
+      "streetAddressLine_2": "",
+      "city": "Sunnyvale",
+      "state": "California",
+      "country": "United States",
+      "zipCode": "94087",
+      "phoneNumber": "4086918882"
+    }
+  ],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eafa4dd32ed7763eba3284b"
+      },
+      "NameOnCard": "Narendra Modi",
+      "cardNumber": "222",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "1018156291200000"
+        }
+      },
+      "cvv": 3
+    },
+    {
+      "_id": {
+        "$oid": "5eafb069b186cc6898eecb14"
+      },
+      "NameOnCard": "Akash Jagannathan",
+      "cardNumber": "2323",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-61088860800000"
+        }
+      },
+      "cvv": 333
+    },
+    {
+      "_id": {
+        "$oid": "5eafb06cb186cc6898eecb17"
+      },
+      "NameOnCard": "Akash Jagannathan",
+      "cardNumber": "2323",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-61088860800000"
+        }
+      },
+      "cvv": 333
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-04-25T03:14:09.386Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T20:11:04.881Z"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eaf893fe177ac5956c12a13"
+    },
+    "cartItems": []
+  }
+},{
+  "_id": {
+    "$oid": "5ea54c43b7d8366d13f3cc3b"
+  },
+  "name": "cust123",
+  "user": {
+    "$oid": "5ea54c42b7d8366d13f3cc3a"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-26T08:54:27.092Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T08:54:27.092Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea614e6aa73e81409b90e89"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ea614e6aa73e81409b90e88"
+    },
+    "cartItems": []
+  },
+  "name": "Sourabh",
+  "user": {
+    "$oid": "5ea614e5aa73e81409b90e87"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-26T23:10:30.730Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T23:10:30.730Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea615f3aa73e81409b90e8d"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ea615f3aa73e81409b90e8c"
+    },
+    "cartItems": []
+  },
+  "name": "Sourabh",
+  "user": {
+    "$oid": "5ea615f2aa73e81409b90e8b"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-26T23:14:59.108Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T23:14:59.108Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea894ac14d06f0c30dd4f96"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ea894ac14d06f0c30dd4f95"
+    },
+    "cartItems": []
+  },
+  "name": "htest",
+  "user": {
+    "$oid": "5ea894ac14d06f0c30dd4f94"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-04-28T20:40:12.461Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-28T20:40:12.461Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eacfbbed89c0f1cc5241422"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eacfbbed89c0f1cc5241421"
+    },
+    "cartItems": []
+  },
+  "name": "Sardar Patel",
+  "user": {
+    "$oid": "5eacfbbdd89c0f1cc5241420"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-05-02T04:49:02.109Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T04:49:02.109Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ead4a39f6d4177e2139ffe6"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5ead4a39f6d4177e2139ffe5"
+    },
+    "cartItems": []
+  },
+  "name": "somyacust",
+  "user": {
+    "$oid": "5ead4a39f6d4177e2139ffe4"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-05-02T10:23:53.296Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T10:23:53.296Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eaf8999ffd6863b35ee5d10"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eaf8999ffd6863b35ee5d0f"
+    },
+    "cartItems": []
+  },
+  "name": "Customer Customer",
+  "user": {
+    "$oid": "5eaf8999ffd6863b35ee5d0e"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb33c219c3395064b908d1f"
+      },
+      "NameOnCard": "ABCD",
+      "cardNumber": "1234567890",
+      "expirationDate": {
+        "$date": "2020-12-12T00:00:00Z"
+      },
+      "cvv": 123
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-04T03:18:49.347Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:14:37.091Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb090b94985847124f81350"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb090b94985847124f8134f"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": "",
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5eb33647dbb3d35795552126"
+        },
+        "product": {
+          "$oid": "5ea68a7166e6be721c3477d5"
+        },
+        "quantity": 1,
+        "individualPrice": 1
+      }
+    ]
+  },
+  "name": "Sourabh Garg1",
+  "user": {
+    "$oid": "5eb090b94985847124f8134e"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb33711dbb3d35795552139"
+      },
+      "NameOnCard": "Sourabh Garg",
+      "cardNumber": "1231231231231231",
+      "expirationDate": {
+        "$date": "2023-12-20T00:00:00Z"
+      },
+      "cvv": 232
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-04T22:01:29.588Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T06:18:50.277Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb293a444fd7654041b0752"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb293a444fd7654041b0751"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": "",
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5eb293da44fd7654041b0757"
+        },
+        "product": {
+          "$oid": "5ea6a3576d7efac6ca1edbe0"
+        },
+        "quantity": 3,
+        "individualPrice": 271
+      }
+    ]
+  },
+  "name": "customerTest1",
+  "user": {
+    "$oid": "5eb293a444fd7654041b0750"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb2945a44fd7654041b0766"
+      },
+      "NameOnCard": "cust test1",
+      "cardNumber": "9800890089000",
+      "expirationDate": {
+        "$date": "2020-05-29T00:00:00Z"
+      },
+      "cvv": 900
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-06T10:38:28.793Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T10:41:30.146Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb33b9c3c07d7618314db28"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb33b9c3c07d7618314db27"
+    },
+    "cartItems": []
+  },
+  "name": "Paraneeta Raghav",
+  "user": {
+    "$oid": "5eb33b9b3c07d7618314db26"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb33dcd3aeb346316c9e286"
+      },
+      "NameOnCard": "Paraneet",
+      "cardNumber": "232",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "-61122902400000"
+        }
+      },
+      "cvv": 343
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-06T22:35:08.090Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T22:58:15.859Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb346b52ce6c8695eb3b04a"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb346b52ce6c8695eb3b049"
+    },
+    "cartItems": []
+  },
+  "name": "Other Paraneeta",
+  "user": {
+    "$oid": "5eb346b52ce6c8695eb3b048"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [],
+  "createdAt": {
+    "$date": "2020-05-06T23:22:29.441Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T23:22:29.441Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb354c3b2a9df3e4cfecb12"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb354c3b2a9df3e4cfecb11"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": "",
+        "isSavedForLater": false,
+        "_id": {
+          "$oid": "5eb36ed88fd24c979b15597e"
+        },
+        "product": {
+          "$oid": "5eb35f14e7bec38a55fab096"
+        },
+        "quantity": 1,
+        "individualPrice": 30
+      }
+    ]
+  },
+  "name": "Heli",
+  "user": {
+    "$oid": "5eb354c3b2a9df3e4cfecb10"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb36f4c8fd24c979b15598d"
+      },
+      "NameOnCard": "hjasd",
+      "cardNumber": "276424734666",
+      "expirationDate": {
+        "$date": "2020-03-21T00:00:00Z"
+      },
+      "cvv": 314
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-07T00:22:27.521Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T02:15:40.196Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb3bd021094cf832eded6a7"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb3bd021094cf832eded6a6"
+    },
+    "cartItems": []
+  },
+  "name": "Akash",
+  "user": {
+    "$oid": "5eb3bd021094cf832eded6a5"
+  },
+  "savedAddresses": [],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb3bd9f1094cf832eded6c7"
+      },
+      "NameOnCard": "aasdg",
+      "cardNumber": "25",
+      "expirationDate": {
+        "$date": {
+          "$numberLong": "677282540400000"
+        }
+      },
+      "cvv": 324
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-07T07:47:14.790Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:05:27.956Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb50865230629151d14ce96"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb50865230629151d14ce95"
+    },
+    "cartItems": [
+      {
+        "isGift": 0,
+        "giftMessage": "",
+        "isSavedForLater": true,
+        "_id": {
+          "$oid": "5eb5efc13245f32a3d1f0c51"
+        },
+        "product": {
+          "$oid": "5eb50f87230629151d14cf37"
+        },
+        "quantity": 3,
+        "individualPrice": 599
+      }
+    ]
+  },
+  "name": "Tony Stark",
+  "user": {
+    "$oid": "5eb50865230629151d14ce94"
+  },
+  "savedAddresses": [
+    {
+      "_id": {
+        "$oid": "5eb50ac3230629151d14ce9e"
+      },
+      "fullName": "Tony Stark",
+      "streetAddressLine_1": "10880 Malibu Point",
+      "streetAddressLine_2": "rgwjnr",
+      "city": "Oceanside",
+      "state": "Marshall Islands",
+      "country": "United States",
+      "zipCode": "94087-3452",
+      "phoneNumber": "5555555555"
+    },
+    {
+      "_id": {
+        "$oid": "5eb50b29230629151d14ceaa"
+      },
+      "fullName": "Ironman",
+      "streetAddressLine_1": "Point Dume",
+      "streetAddressLine_2": "",
+      "city": "Los Angeles",
+      "state": "California",
+      "country": "United States",
+      "zipCode": "90212",
+      "phoneNumber": "3945049384"
+    },
+    {
+      "_id": {
+        "$oid": "5eb50b76230629151d14cead"
+      },
+      "fullName": "Marvel Headquarters",
+      "streetAddressLine_1": "1290 Avenue of the Americas",
+      "streetAddressLine_2": "",
+      "city": "New York",
+      "state": "New York",
+      "country": "USA",
+      "zipCode": "10104",
+      "phoneNumber": "3495859605"
+    },
+    {
+      "_id": {
+        "$oid": "5eb5eb543245f32a3d1f0bf3"
+      },
+      "fullName": "Sourabh Garg",
+      "streetAddressLine_1": "190 Ryland Street",
+      "streetAddressLine_2": "Fountain Plaza",
+      "city": "san Jose",
+      "state": "California",
+      "country": "US",
+      "zipCode": "12345-2131",
+      "phoneNumber": "213551"
+    }
+  ],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb50bb3230629151d14cec0"
+      },
+      "NameOnCard": "Tony Stark",
+      "cardNumber": "3492039405943728",
+      "expirationDate": {
+        "$date": "2021-05-01T00:00:00Z"
+      },
+      "cvv": 123
+    },
+    {
+      "_id": {
+        "$oid": "5eb50be7230629151d14cec8"
+      },
+      "NameOnCard": "Marvel Headquarters",
+      "cardNumber": "4950695849586954",
+      "expirationDate": {
+        "$date": "2024-04-05T00:00:00Z"
+      },
+      "cvv": 384
+    },
+    {
+      "_id": {
+        "$oid": "5eb50c28230629151d14ced2"
+      },
+      "NameOnCard": "Ironman",
+      "cardNumber": "3948596059483948",
+      "expirationDate": {
+        "$date": "2024-01-03T00:00:00Z"
+      },
+      "cvv": 459
+    },
+    {
+      "_id": {
+        "$oid": "5eb51264230629151d14cf9d"
+      },
+      "NameOnCard": "Adoto",
+      "cardNumber": "6351464325",
+      "expirationDate": {
+        "$date": "2020-02-04T00:00:00Z"
+      },
+      "cvv": 245
+    },
+    {
+      "_id": {
+        "$oid": "5eb5eb113245f32a3d1f0bec"
+      },
+      "NameOnCard": "Akash",
+      "cardNumber": "1234354657",
+      "expirationDate": {
+        "$date": "2020-02-01T00:00:00Z"
+      },
+      "cvv": 234
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-08T07:21:09.741Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:48:35.248Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb5ee753245f32a3d1f0c24"
+  },
+  "shoppingCart": {
+    "_id": {
+      "$oid": "5eb5ee753245f32a3d1f0c23"
+    },
+    "cartItems": []
+  },
+  "name": "Peter parker",
+  "user": {
+    "$oid": "5eb5ee743245f32a3d1f0c22"
+  },
+  "savedAddresses": [
+    {
+      "_id": {
+        "$oid": "5eb5eef83245f32a3d1f0c34"
+      },
+      "fullName": "Somya ",
+      "streetAddressLine_1": "190 Ryland Street",
+      "streetAddressLine_2": "FOuntain plaza",
+      "city": "San Jose",
+      "state": "California",
+      "country": "USA",
+      "zipCode": "13245-3452",
+      "phoneNumber": "2135"
+    }
+  ],
+  "savedPaymentOptions": [
+    {
+      "_id": {
+        "$oid": "5eb5eec63245f32a3d1f0c2d"
+      },
+      "NameOnCard": "Prashanth",
+      "cardNumber": "123567352612",
+      "expirationDate": {
+        "$date": "2021-02-01T00:00:00Z"
+      },
+      "cvv": 231
+    }
+  ],
+  "createdAt": {
+    "$date": "2020-05-08T23:42:45.079Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:50:57.645Z"
+  }
+}]

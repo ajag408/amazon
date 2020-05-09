@@ -1,0 +1,785 @@
+[{
+  "_id": {
+    "$oid": "5e9e0335512b5c1c94b64855"
+  },
+  "emailId": "test@test.com",
+  "password": "00a2dc79f7d34f6bced3db35a536085d591b6f15ebeea361c792cf8279dec391",
+  "role": "Customer",
+  "createdAt": {
+    "$date": "2020-04-20T20:17:01.148Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-20T20:17:01.148Z"
+  },
+  "salt": "RWDeL/BLIlvetLLyJPE45g=="
+},{
+  "_id": {
+    "$oid": "5e9e40721f1ba281efb5d3fa"
+  },
+  "emailId": "test1@test.com",
+  "password": "34e19ba5e10fe817eab2facccb430c52ef8e239292200db854631032b2f2cc4e",
+  "role": "Customer",
+  "createdAt": {
+    "$date": "2020-04-21T00:38:17.900Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-21T00:38:17.900Z"
+  },
+  "salt": "ECCU7X7oku8dV3zGQRsJTw=="
+},{
+  "_id": {
+    "$oid": "5e9e847028ee24cbed2da90a"
+  },
+  "password": "5ba6725bf22f420a196cfe65ca2d25b6c5c613f6091d59a0cdf9d75031109212",
+  "role": "Customer",
+  "emailId": "a@a.com",
+  "createdAt": {
+    "$date": "2020-04-21T05:28:16.884Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-21T05:28:16.884Z"
+  },
+  "salt": "tMUcSqtEhzNbsdAaOreUdg=="
+},{
+  "_id": {
+    "$oid": "5ea0c271dc8770f43eeef9ee"
+  },
+  "password": "a30add3806ea003d1510286f98d0809b82fd63dcf0a56a4644421bf23b5144ad",
+  "role": "Customer",
+  "emailId": "new@new.com",
+  "createdAt": {
+    "$date": "2020-04-22T22:17:21.785Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-22T22:17:21.785Z"
+  },
+  "salt": "KA9y+2rrfl9luq86reex7A=="
+},{
+  "_id": {
+    "$oid": "5ea10afca919400d41c8ede9"
+  },
+  "password": "ee45007da919783be3f81433fda32c3200ad6748d9990e1f543825efa0a467f4",
+  "role": "Customer",
+  "emailId": "akash@google.com",
+  "createdAt": {
+    "$date": "2020-04-23T03:26:52.340Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-23T03:26:52.340Z"
+  },
+  "salt": "vAOSkRxqx/O2tuyeI43q6w=="
+},{
+  "_id": {
+    "$oid": "5ea1fd69c60f04f91ef1d89d"
+  },
+  "password": "3dd7574ec07154feb4e033e4189c7dd80e30bdd945d79f1e271a160d10863182",
+  "role": "Admin",
+  "emailId": "admin@amazon.com",
+  "createdAt": {
+    "$date": "2020-04-23T20:41:13.956Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-23T20:41:13.956Z"
+  },
+  "salt": "jqoUf6krxiRyjTVOcUEF5g=="
+},{
+  "_id": {
+    "$oid": "5ea20164c60f04f91ef1d89e"
+  },
+  "password": "de0d977c1cedbe20c016a5018c1ccdc803d675821d5b3c2666293b4549e527c7",
+  "role": "Customer",
+  "emailId": "somya@gmail.com",
+  "createdAt": {
+    "$date": "2020-04-23T20:58:13.231Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-23T20:58:13.231Z"
+  },
+  "salt": "BnfaVHGOgURb4gZKOk1xJw=="
+},{
+  "_id": {
+    "$oid": "5ea2218373dde53b98ef0a8a"
+  },
+  "password": "d735017bd555eb3bbb902d1b254e54a37fa39d9ab94d836fed3473139be50f1b",
+  "role": "Customer",
+  "emailId": "newuser@new.com",
+  "createdAt": {
+    "$date": "2020-04-23T23:15:15.375Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-23T23:15:15.375Z"
+  },
+  "salt": "J1ByiT2bLjRxV7TfPTlMiA=="
+},{
+  "_id": {
+    "$oid": "5ea24916670479720a93ad79"
+  },
+  "password": "90d0235054a98d42d10844ea755e161feae135e5f4164ce904a72f9bfb2a6106",
+  "role": "Customer",
+  "emailId": "prachi@123.com",
+  "createdAt": {
+    "$date": "2020-04-24T02:04:06.620Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T02:04:06.620Z"
+  },
+  "salt": "u12Ydpe0+rFVDnLl7BTgAw=="
+},{
+  "_id": {
+    "$oid": "5ea249fb76eb9f63945b699d"
+  },
+  "password": "1e05282e87b94184edb8474479ee5f47e957498652214bf0d769965695a1525f",
+  "role": "Customer",
+  "emailId": "test@try.com",
+  "createdAt": {
+    "$date": "2020-04-24T02:07:55.397Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T02:07:55.397Z"
+  },
+  "salt": "Ls7Ap510TSXU/RvvHRk8dA=="
+},{
+  "_id": {
+    "$oid": "5ea24e2928480f73a284b408"
+  },
+  "password": "64de5c525ba2a019674cafbe7a7c0f3a3f985cb0347d799201821c90115dbeca",
+  "role": "Customer",
+  "emailId": "S@1.com",
+  "createdAt": {
+    "$date": "2020-04-24T02:25:46.234Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T02:25:46.234Z"
+  },
+  "salt": "NDXERg6d6nUJJBgIsxDwAA=="
+},{
+  "_id": {
+    "$oid": "5ea26936a75cee7ae53322f7"
+  },
+  "password": "8131443c772957d57757c40ab4b6332acf6c9ace19580ed2461bdbb034165fa7",
+  "role": "Customer",
+  "emailId": "akshita@123.com",
+  "createdAt": {
+    "$date": "2020-04-24T04:21:10.706Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T04:21:10.706Z"
+  },
+  "salt": "CG2w2XZfeg8XahL+sUamDA=="
+},{
+  "_id": {
+    "$oid": "5ea273aebe02792e628ef913"
+  },
+  "password": "553f3ab2a25db18d1fa7417893d09557ab90412e030dcbc75a6902f18edb582e",
+  "role": "Customer",
+  "emailId": "harrypotter@hogwarts.edu",
+  "createdAt": {
+    "$date": "2020-04-24T05:05:50.246Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T05:05:50.246Z"
+  },
+  "salt": "Rgdsy9Mjyh1Yho52EX65fA=="
+},{
+  "_id": {
+    "$oid": "5ea27a86d3a4a846b05350ba"
+  },
+  "password": "353ca2379aef37c54e1b83c1986d4d461f5f6285f0b678771dc05742d769dba3",
+  "role": "Customer",
+  "emailId": "idk@idk.com",
+  "createdAt": {
+    "$date": "2020-04-24T05:35:03.044Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T05:35:03.044Z"
+  },
+  "salt": "FXCK/EWl90fpE9Mf5/7sFw=="
+},{
+  "_id": {
+    "$oid": "5ea32405c7921520c0787942"
+  },
+  "password": "433fa6310e002eddfcc0dbcf0426290fe151ab4f92ace96b5405402609aa8baa",
+  "role": "Seller",
+  "emailId": "seller123@gmail.com",
+  "createdAt": {
+    "$date": "2020-04-24T17:38:13.511Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T17:38:13.511Z"
+  },
+  "salt": "wKTQ8e/cdBhvVMA0WdnAig=="
+},{
+  "_id": {
+    "$oid": "5ea32f5c716ebc4f57fd8ae8"
+  },
+  "emailId": "p_test@test.com",
+  "password": "91f2d1b34c3e5d18385b175707bfb7accdf368629f31c92a2978ab7f8a98c605",
+  "role": "Customer",
+  "createdAt": {
+    "$date": "2020-04-24T18:26:36.269Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T18:26:36.269Z"
+  },
+  "salt": "fiZXUPenEP3tE/Dnegt5oA=="
+},{
+  "_id": {
+    "$oid": "5ea337be42834e5c142f02d8"
+  },
+  "emailId": "p_test_seller@test.com",
+  "password": "f4b7c80a39ed4874d970b84f572b0a6c1d57f4aecd024fbec5167c5b09bd67bb",
+  "role": "Seller",
+  "createdAt": {
+    "$date": "2020-04-24T19:02:22.915Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T19:02:22.915Z"
+  },
+  "salt": "bChHiQh5j5+wVb8e5c/lPg=="
+},{
+  "_id": {
+    "$oid": "5ea384d1368aa655e4f4d132"
+  },
+  "password": "ef3a6597f3c83bbcb8cfa91e9f81bdab9bb17622d5e1981cfe4b61f71ef70e28",
+  "role": "Customer",
+  "emailId": "r1@r1.com",
+  "createdAt": {
+    "$date": "2020-04-25T00:31:13.705Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T00:31:13.705Z"
+  },
+  "salt": "g3it4IRDybcr7KnRNWeo0w=="
+},{
+  "_id": {
+    "$oid": "5ea385b94270645719835968"
+  },
+  "password": "d8d659255b896de97fd91863de40117bbbbd1f2b39a91903a1013f37437ac34b",
+  "role": "Customer",
+  "emailId": "r2@r2.com",
+  "createdAt": {
+    "$date": "2020-04-25T00:35:05.482Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T00:35:05.482Z"
+  },
+  "salt": "aGjQOmmeuv3s8JjkF+4WuA=="
+},{
+  "_id": {
+    "$oid": "5ea38cdfa873f95cca34c2b7"
+  },
+  "password": "f4f4f83914a773483b938efc9b75abe6d88f18930c0a4c8e1aec8147929329c6",
+  "role": "Seller",
+  "emailId": "s1@s1.com",
+  "createdAt": {
+    "$date": "2020-04-25T01:05:35.519Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T01:05:35.519Z"
+  },
+  "salt": "onOwhMsxbEFYDdU9CgJrqA=="
+},{
+  "_id": {
+    "$oid": "5ea38d16a873f95cca34c2ba"
+  },
+  "password": "6ff29ce8da7cd368a6ebcbfd4ae4e23fb3b4b66c10a46aa5a7e49459b0e790c7",
+  "role": "Seller",
+  "emailId": "s2@s2.com",
+  "createdAt": {
+    "$date": "2020-04-25T01:06:30.091Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T01:06:30.091Z"
+  },
+  "salt": "gmefesC/rJz6iuxiHvF9kw=="
+},{
+  "_id": {
+    "$oid": "5ea3a8dc673bc42a5feb87f6"
+  },
+  "password": "cede3485c22d82525ffe92d3507eb4078275939717675f8939c00c74668870d1",
+  "role": "Customer",
+  "emailId": "check1@gmail.com",
+  "createdAt": {
+    "$date": "2020-04-25T03:05:00.844Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T03:05:00.844Z"
+  },
+  "salt": "1e5y6784TZa8DgTXkC3ldw=="
+},{
+  "_id": {
+    "$oid": "5ea3ab017c376a636208a016"
+  },
+  "password": "037ae0b49d16d1dc3c1fa748669b75dd26cded87e026adc81c4aa2d45b277efe",
+  "role": "Customer",
+  "emailId": "pm@bjp.com",
+  "createdAt": {
+    "$date": "2020-04-25T03:14:09.287Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T03:14:09.287Z"
+  },
+  "salt": "Ncut+APZkH5gXjiOd9eUmA=="
+},{
+  "_id": {
+    "$oid": "5ea54c42b7d8366d13f3cc3a"
+  },
+  "password": "175760954bca1a8832134950d9a17583c678fbc15322be0a996f5e4d93bef5ab",
+  "role": "Customer",
+  "emailId": "cust123@gmail.com",
+  "createdAt": {
+    "$date": "2020-04-26T08:54:26.987Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T08:54:26.987Z"
+  },
+  "salt": "UpNe01cMIZuF4mhXHFxl0w=="
+},{
+  "_id": {
+    "$oid": "5ea614e5aa73e81409b90e87"
+  },
+  "password": "780818ecd7ea51b4fdfbafc2f6e58f571f5ae946c42dfc8eaa0f49663288054a",
+  "role": "Customer",
+  "emailId": "Sourabh@amazon.com",
+  "createdAt": {
+    "$date": "2020-04-26T23:10:30.595Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T23:10:30.595Z"
+  },
+  "salt": "S5za9t3GVmlp9/m81u9B2A=="
+},{
+  "_id": {
+    "$oid": "5ea615f2aa73e81409b90e8b"
+  },
+  "password": "acb76710cb18e6dc9e540a51a8a434c7636554c904ae086ffb341bb8b0b82541",
+  "role": "Customer",
+  "emailId": "a@123qwe.com",
+  "createdAt": {
+    "$date": "2020-04-26T23:14:58.998Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T23:14:58.998Z"
+  },
+  "salt": "n0F/QPLmjiKyTe86nxCWxg=="
+},{
+  "_id": {
+    "$oid": "5ea696efaa59c5b7e9e6ddda"
+  },
+  "password": "f4cf53cd9fb79d1e9c970deff2b7a27a0145538f5e3967feaf1417536ea15af7",
+  "role": "Seller",
+  "emailId": "Shanna@melissa.tv",
+  "createdAt": {
+    "$date": "2020-04-27T08:25:19.808Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:25:19.808Z"
+  },
+  "salt": "v2uRhb3Io83wqaOdmF4SkA=="
+},{
+  "_id": {
+    "$oid": "5ea696f0aa59c5b7e9e6dddc"
+  },
+  "password": "f0c1f300e6189fa9611d6bc1cbbd703910177bdff93953e2a401e9173d0ec9b3",
+  "role": "Seller",
+  "emailId": "Nathan@yesenia.net",
+  "createdAt": {
+    "$date": "2020-04-27T08:25:20.260Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:25:20.260Z"
+  },
+  "salt": "Z/j4By8lX2LnmhVcQQ0GtQ=="
+},{
+  "_id": {
+    "$oid": "5ea69744aa59c5b7e9e6dde0"
+  },
+  "password": "8bba0dc3048ba2f02035473399b4370ebc29df59de8a3640cf6edc83c0617a70",
+  "role": "Seller",
+  "emailId": "Julianne.OConner@kory.org",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:44.139Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:44.139Z"
+  },
+  "salt": "ov868BhGHMXXNzGHD9zgMw=="
+},{
+  "_id": {
+    "$oid": "5ea69744aa59c5b7e9e6dde2"
+  },
+  "password": "be3e5dfaa88a37acd5244f4d8da24cf55c7ff4d3b84929838991411871a3931a",
+  "role": "Seller",
+  "emailId": "Lucio_Hettinger@annie.ca",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:44.621Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:44.621Z"
+  },
+  "salt": "b3VKD5tcjjlSIWlyNnAwcg=="
+},{
+  "_id": {
+    "$oid": "5ea69744aa59c5b7e9e6dde4"
+  },
+  "password": "2dbc6bf76512f206cb83f06b65ad4e4362c19c0a5552f14d22656c98236d4f70",
+  "role": "Seller",
+  "emailId": "Karley_Dach@jasper.info",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.042Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.042Z"
+  },
+  "salt": "9Nia5Om/zmFUt+KQLpLzzQ=="
+},{
+  "_id": {
+    "$oid": "5ea69745aa59c5b7e9e6dde6"
+  },
+  "password": "63267862ac755b941b8efcace5734d73fc124db58eb2263b46f8a22b9eca095c",
+  "role": "Seller",
+  "emailId": "Telly.Hoeger@billy.biz",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.431Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.431Z"
+  },
+  "salt": "46SAX6GdY3G5yDm2kqfeKQ=="
+},{
+  "_id": {
+    "$oid": "5ea69745aa59c5b7e9e6dde8"
+  },
+  "password": "385b48ca6ecb8dbab66961aa0fa00d5ff392be716577e6eee33088b7e6bc42b2",
+  "role": "Seller",
+  "emailId": "Sherwood@rosamond.me",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.823Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.823Z"
+  },
+  "salt": "gvPdD2Hq2mRpHDJYCkZhtw=="
+},{
+  "_id": {
+    "$oid": "5ea69746aa59c5b7e9e6ddea"
+  },
+  "password": "08d19b10a8f31b63582e3fc21754f5cec41476b5d1112b02b321b338c9c5706d",
+  "role": "Seller",
+  "emailId": "Chaim_McDermott@dana.io",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:46.185Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:46.185Z"
+  },
+  "salt": "UDmm0FdH9jGPWDM10hhBRw=="
+},{
+  "_id": {
+    "$oid": "5ea69746aa59c5b7e9e6ddec"
+  },
+  "password": "f870cacfaaa545e9d3ee75a2ae0d4c5e581c6dc7c6c31ff596b053a3e86dea94",
+  "role": "Seller",
+  "emailId": "Rey.Padberg@karina.biz",
+  "createdAt": {
+    "$date": "2020-04-27T08:26:46.544Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:46.544Z"
+  },
+  "salt": "oTja8PmmCx8PsKtIXuV0Rw=="
+},{
+  "_id": {
+    "$oid": "5ea7a9d952ac051816e52d4d"
+  },
+  "password": "718282870eb746d1c3a469901d403dc9f5afa9c06b667caba400b19b1bb8c2e8",
+  "role": "Seller",
+  "emailId": "apnakiranaStore@amazon.com",
+  "createdAt": {
+    "$date": "2020-04-28T03:58:17.226Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-28T03:58:17.226Z"
+  },
+  "salt": "PkBfCocgfNjg2SHL8ML0oA=="
+},{
+  "_id": {
+    "$oid": "5ea894ac14d06f0c30dd4f94"
+  },
+  "password": "59ac680d352b90ad43d8a2c747819a526d94d796a3d165339c4966c5de329952",
+  "role": "Customer",
+  "emailId": "h@test.com",
+  "createdAt": {
+    "$date": "2020-04-28T20:40:12.353Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-28T20:40:12.353Z"
+  },
+  "salt": "5bFMYygnqK43Gz8/FJvT1A=="
+},{
+  "_id": {
+    "$oid": "5eaa8e1ee5272e569c49724c"
+  },
+  "password": "5bb3f505be32990e1fbfe15679cfc549d00e2a04d7cdf6aba3d12525331019e6",
+  "role": "Seller",
+  "emailId": "sellerp1@seller.com",
+  "createdAt": {
+    "$date": "2020-04-30T08:36:46.877Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-30T08:36:46.877Z"
+  },
+  "salt": "g2Suhd7X6miJgS0Dbpzobw=="
+},{
+  "_id": {
+    "$oid": "5eac980537006701e4b2e902"
+  },
+  "password": "923008e56dbd25a70644fa9eb9328890c93b01f0befb3e80e6fbfb3335d41afb",
+  "role": "Seller",
+  "emailId": "aditi@123.com",
+  "createdAt": {
+    "$date": "2020-05-01T21:43:33.134Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-01T21:43:33.134Z"
+  },
+  "salt": "uPXpp4OsZGJkeFWia0TxXg=="
+},{
+  "_id": {
+    "$oid": "5eacfbbdd89c0f1cc5241420"
+  },
+  "password": "a0659cf155a5b135d9873dde23016031154f78345c0b0ad195d0326fa29f0948",
+  "role": "Admin",
+  "emailId": "sp@yahoo.com",
+  "createdAt": {
+    "$date": "2020-05-02T04:49:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T04:49:02.002Z"
+  },
+  "salt": "eW2TJYZyIbECxFgcL4i4XA=="
+},{
+  "_id": {
+    "$oid": "5ead4a39f6d4177e2139ffe4"
+  },
+  "password": "14336d5cfd57e05cd292f9372f9dda4ea6e1c73d5e374814bb78f46a997ba1c0",
+  "role": "Customer",
+  "emailId": "som@gmail.com",
+  "createdAt": {
+    "$date": "2020-05-02T10:23:53.171Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T10:23:53.171Z"
+  },
+  "salt": "T/n1dgsgTu9YR7ywR98WoA=="
+},{
+  "_id": {
+    "$oid": "5ead4ac4f6d4177e2139ffe7"
+  },
+  "password": "4d204240b6b4c1b180fa7f6b2dfeaf4e959df224cddb898974eabb5d40e42098",
+  "role": "Seller",
+  "emailId": "somsell@gmail.com",
+  "createdAt": {
+    "$date": "2020-05-02T10:26:12.563Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T10:26:12.563Z"
+  },
+  "salt": "Owye9IWIsN/0bv2s/e6pKw=="
+},{
+  "_id": {
+    "$oid": "5eaf8999ffd6863b35ee5d0e"
+  },
+  "password": "e096901d439e8f9a3d70d0b35a995a9207b99fdd1bd5f00599e659739b077b58",
+  "role": "Customer",
+  "emailId": "customer@customer.com",
+  "createdAt": {
+    "$date": "2020-05-04T03:18:49.239Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-04T03:18:49.239Z"
+  },
+  "salt": "5yK0BPihF5kQtOSySzwOHQ=="
+},{
+  "_id": {
+    "$oid": "5eafa92779f602644a68f952"
+  },
+  "password": "d50f75008019344728f93ac9c159a04ce15b32fc6176f0933bf18662113eeb9a",
+  "role": "Seller",
+  "emailId": "sellt@sellt.com",
+  "createdAt": {
+    "$date": "2020-05-04T05:33:27.791Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-04T05:33:27.791Z"
+  },
+  "salt": "R2CPKuhcDWBSHKzUtoS7Fw=="
+},{
+  "_id": {
+    "$oid": "5eb090b94985847124f8134e"
+  },
+  "password": "87f07323a50ea9a10bbd5b9864b7150396b1af7c81e96111d3a75287cf40a476",
+  "role": "Customer",
+  "emailId": "Sourabh_new@amazon.com",
+  "createdAt": {
+    "$date": "2020-05-04T22:01:29.472Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-04T22:01:29.472Z"
+  },
+  "salt": "SlYPkcw4Hkb/0q0yznARAA=="
+},{
+  "_id": {
+    "$oid": "5eb293a444fd7654041b0750"
+  },
+  "password": "d445d3df73e14e729110fdff1925de9f06ccdb19e0b6b60fcad7ea01ce03def0",
+  "role": "Customer",
+  "emailId": "cust1@gmail.com",
+  "createdAt": {
+    "$date": "2020-05-06T10:38:28.678Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T10:38:28.678Z"
+  },
+  "salt": "kzeFJGhfaTytOzksz8HSlg=="
+},{
+  "_id": {
+    "$oid": "5eb33b9b3c07d7618314db26"
+  },
+  "password": "31c01231e460eb3d50085b5585399e49cad91957da6dbc3a33e302398eb85775",
+  "role": "Customer",
+  "emailId": "pr@gmail.com",
+  "createdAt": {
+    "$date": "2020-05-06T22:35:07.989Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T22:35:07.989Z"
+  },
+  "salt": "UvIF8riEwga3hcaiKZg+ZA=="
+},{
+  "_id": {
+    "$oid": "5eb346b52ce6c8695eb3b048"
+  },
+  "password": "beaa4daba3f59e011a1d289d141e79a52b47b678d774dd23a6288717793e4764",
+  "role": "Customer",
+  "emailId": "op@op.com",
+  "createdAt": {
+    "$date": "2020-05-06T23:22:29.339Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T23:22:29.339Z"
+  },
+  "salt": "wNG+Q026Yq//4NyWrpuLMQ=="
+},{
+  "_id": {
+    "$oid": "5eb354c3b2a9df3e4cfecb10"
+  },
+  "password": "b47e2cfe83b67332c5534fe6d9edb99f9433cea47dd14f722b0490257fe8833d",
+  "role": "Customer",
+  "emailId": "htest@test.com",
+  "createdAt": {
+    "$date": "2020-05-07T00:22:27.404Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T00:22:27.404Z"
+  },
+  "salt": "68PTwRZlDV1Hiq/emtqsOg=="
+},{
+  "_id": {
+    "$oid": "5eb354e9b2a9df3e4cfecb13"
+  },
+  "password": "5c0bad512b78795d58351d63bb4feb172874444da647fb1d306e70f5a285e855",
+  "role": "Seller",
+  "emailId": "hseller@test.com",
+  "createdAt": {
+    "$date": "2020-05-07T00:23:06.208Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T00:23:06.208Z"
+  },
+  "salt": "y3tHTABcBwzD7vDPxktlqQ=="
+},{
+  "_id": {
+    "$oid": "5eb3b4541094cf832eded69a"
+  },
+  "password": "092b7f03ddafccae0a44bbc0ab8c27033c52e4a959793270c6166c323019780d",
+  "role": "Seller",
+  "emailId": "sd@sd.com",
+  "createdAt": {
+    "$date": "2020-05-07T07:10:12.733Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T07:10:12.733Z"
+  },
+  "salt": "dk3yzVjEla0Y6r1S6K2ETg=="
+},{
+  "_id": {
+    "$oid": "5eb3bd021094cf832eded6a5"
+  },
+  "password": "d92b437132b28880e7bd2481f51bb57e2c0467de0d91ca2d884a8a995ef726c4",
+  "role": "Customer",
+  "emailId": "ak@ak.com",
+  "createdAt": {
+    "$date": "2020-05-07T07:47:14.702Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T07:47:14.702Z"
+  },
+  "salt": "DVtRIhKXEGXITUzgkFGArg=="
+},{
+  "_id": {
+    "$oid": "5eb50827230629151d14ce90"
+  },
+  "password": "b40030d73c4a0b2f1df7b440c007f4dae5619343996072fb6010a2ed3e94e291",
+  "role": "Seller",
+  "emailId": "thor@amazon.com",
+  "createdAt": {
+    "$date": "2020-05-08T07:20:07.867Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:20:07.867Z"
+  },
+  "salt": "mG/6H0p5lUh8OxtAirYCCA=="
+},{
+  "_id": {
+    "$oid": "5eb50841230629151d14ce92"
+  },
+  "password": "d3536ba3e2cad54482cd62fcdebfd9bb0364104369c767d9453501f6584d3776",
+  "role": "Seller",
+  "emailId": "steve@amazon.com",
+  "createdAt": {
+    "$date": "2020-05-08T07:20:33.514Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:20:33.514Z"
+  },
+  "salt": "ZsmE8LGYY9eCZy5LEtQzhQ=="
+},{
+  "_id": {
+    "$oid": "5eb50865230629151d14ce94"
+  },
+  "password": "423bb0421d5da216d9dcac03a729904c11c13452e317ceaa85b6fc7fbf5d6e9c",
+  "role": "Customer",
+  "emailId": "tonystark@amazon.com",
+  "createdAt": {
+    "$date": "2020-05-08T07:21:09.672Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:21:09.672Z"
+  },
+  "salt": "VviloOf/8IAThFdtlYSv+Q=="
+},{
+  "_id": {
+    "$oid": "5eb5ee743245f32a3d1f0c22"
+  },
+  "password": "bbc661525d09990206c7f106fafa554468909baf10f4f52ea8b2a54998a215d1",
+  "role": "Customer",
+  "emailId": "peter@amazon.com",
+  "createdAt": {
+    "$date": "2020-05-08T23:42:44.995Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:42:44.995Z"
+  },
+  "salt": "Le6o3o2uygzSS4XA9HdcMw=="
+}]

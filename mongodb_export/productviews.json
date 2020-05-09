@@ -1,0 +1,463 @@
+[{
+  "_id": {
+    "$oid": "5eb30c0922381a1c9c1d3b08"
+  },
+  "productId": {
+    "$oid": "5ea68a18e159aa3f1c5c6f4a"
+  },
+  "createdAt": {
+    "$date": "2020-05-05T19:12:09.882Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-05T19:12:09.882Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb30f2ac9874e0a20900c0c"
+  },
+  "productId": {
+    "$oid": "5ea68a18e159aa3f1c5c6f4a"
+  },
+  "createdAt": {
+    "$date": "2020-05-06T19:25:30.474Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T22:59:05.034Z"
+  },
+  "viewCount": 11
+},{
+  "_id": {
+    "$oid": "5eb3252792762572c85576b3"
+  },
+  "productId": {
+    "$oid": "5ea68a7166e6be721c3477d5"
+  },
+  "createdAt": {
+    "$date": "2020-05-06T20:59:19.297Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T23:11:24.436Z"
+  },
+  "viewCount": 5
+},{
+  "_id": {
+    "$oid": "5eb3438fe6e39f1a1df182b7"
+  },
+  "productId": {
+    "$oid": "5ea6a4056d7efac6ca1edc2d"
+  },
+  "createdAt": {
+    "$date": "2020-05-06T23:09:03.449Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T23:10:30.529Z"
+  },
+  "viewCount": 3
+},{
+  "_id": {
+    "$oid": "5eb366963f5ac34964fd60bd"
+  },
+  "productId": {
+    "$oid": "5eb363acdec3ca8d341742fb"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T01:38:30.744Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T01:38:30.744Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb376ac80b7ff7ce08c5022"
+  },
+  "productId": {
+    "$oid": "5ea68a7166e6be721c3477d5"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T02:47:08.242Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T20:23:11.819Z"
+  },
+  "viewCount": 13
+},{
+  "_id": {
+    "$oid": "5eb3a42c1094cf832eded68f"
+  },
+  "productId": {
+    "$oid": "5ea68a18e159aa3f1c5c6f4a"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T06:01:16.989Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T13:15:07.923Z"
+  },
+  "viewCount": 3
+},{
+  "_id": {
+    "$oid": "5eb3a4481094cf832eded690"
+  },
+  "productId": {
+    "$oid": "5ea68a3cab98a88718607d49"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T06:01:44.429Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T06:01:44.429Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb3a4551094cf832eded691"
+  },
+  "productId": {
+    "$oid": "5ea338ce42834e5c142f02da"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T06:01:57.231Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T07:55:14.542Z"
+  },
+  "viewCount": 2
+},{
+  "_id": {
+    "$oid": "5eb3bb731094cf832eded6a2"
+  },
+  "productId": {
+    "$oid": "5eb3bb611094cf832eded69e"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T07:40:35.026Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T08:33:27.832Z"
+  },
+  "viewCount": 16
+},{
+  "_id": {
+    "$oid": "5eb3e182a69d1832658a66e3"
+  },
+  "productId": {
+    "$oid": "5eb3e0aaa69d1832658a66db"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T10:22:58.360Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T10:24:15.991Z"
+  },
+  "viewCount": 2
+},{
+  "_id": {
+    "$oid": "5eb460023808ce52d8387889"
+  },
+  "productId": {
+    "$oid": "5ea6a3596d7efac6ca1edbfc"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T19:22:42.660Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T20:14:04.733Z"
+  },
+  "viewCount": 6
+},{
+  "_id": {
+    "$oid": "5eb46da3e59d41d7d10b9a94"
+  },
+  "productId": {
+    "$oid": "5ea6933609e8deea661c7536"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T20:20:51.201Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T20:20:51.201Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb50001230629151d14ce22"
+  },
+  "productId": {
+    "$oid": "5ea68a7166e6be721c3477d5"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T06:45:21.105Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T08:49:29.416Z"
+  },
+  "viewCount": 15
+},{
+  "_id": {
+    "$oid": "5eb50332d0bdc27e9be2ab5c"
+  },
+  "productId": {
+    "$oid": "5ea6a3596d7efac6ca1edbf9"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T06:58:58.463Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:01:08.005Z"
+  },
+  "viewCount": 12
+},{
+  "_id": {
+    "$oid": "5eb50e79230629151d14cf10"
+  },
+  "productId": {
+    "$oid": "5eb3e0aaa69d1832658a66db"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:47:05.108Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:47:05.108Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb50f0c230629151d14cf1e"
+  },
+  "productId": {
+    "$oid": "5eb50cf3230629151d14ceef"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:49:32.395Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T08:15:25.705Z"
+  },
+  "viewCount": 4
+},{
+  "_id": {
+    "$oid": "5eb510c0230629151d14cf6a"
+  },
+  "productId": {
+    "$oid": "5eb50cab230629151d14cee9"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:56:48.200Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:56:48.200Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb510ca230629151d14cf6b"
+  },
+  "productId": {
+    "$oid": "5eb50eca230629151d14cf19"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:56:58.003Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:56:58.003Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb51200230629151d14cf81"
+  },
+  "productId": {
+    "$oid": "5ea4d52909e8deea661c7534"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T08:02:08.967Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T08:02:08.967Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb518fc026dd1170c37aef5"
+  },
+  "productId": {
+    "$oid": "5eb50b88230629151d14ceb4"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T08:31:56.382Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T08:45:04.019Z"
+  },
+  "viewCount": 10
+},{
+  "_id": {
+    "$oid": "5eb51eadeeae9b17cf3c9faa"
+  },
+  "productId": {
+    "$oid": "5eb50b17230629151d14cea8"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T08:56:13.414Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T08:56:13.414Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb51eb5eeae9b17cf3c9fab"
+  },
+  "productId": {
+    "$oid": "5eb50e4a230629151d14cf05"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T08:56:21.024Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T09:00:52.959Z"
+  },
+  "viewCount": 2
+},{
+  "_id": {
+    "$oid": "5eb5207aeeae9b17cf3c9fce"
+  },
+  "productId": {
+    "$oid": "5eb50d82230629151d14cef4"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T09:03:54.374Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T09:03:54.374Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb522a8f950703abcfd887a"
+  },
+  "productId": {
+    "$oid": "5eb36160b2a9df3e4cfecb29"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T09:13:12.762Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T09:13:12.762Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb5e9103245f32a3d1f0bd8"
+  },
+  "productId": {
+    "$oid": "5ea68a3cab98a88718607d49"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:19:44.287Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:19:49.577Z"
+  },
+  "viewCount": 2
+},{
+  "_id": {
+    "$oid": "5eb5e9833245f32a3d1f0bda"
+  },
+  "productId": {
+    "$oid": "5eb50c56230629151d14cedc"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:21:39.997Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:21:39.997Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb5eb923245f32a3d1f0bf6"
+  },
+  "productId": {
+    "$oid": "5eb50f87230629151d14cf37"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:30:26.182Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:49:21.574Z"
+  },
+  "viewCount": 5
+},{
+  "_id": {
+    "$oid": "5eb5ec9d3245f32a3d1f0c0c"
+  },
+  "productId": {
+    "$oid": "5eb50e1d230629151d14cf00"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:34:53.294Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:34:53.294Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb5eeed537e38d6adde10da"
+  },
+  "productId": {
+    "$oid": "5ea6a3596d7efac6ca1edbfc"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:44:45.014Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:59:52.938Z"
+  },
+  "viewCount": 2
+},{
+  "_id": {
+    "$oid": "5eb5ef283245f32a3d1f0c37"
+  },
+  "productId": {
+    "$oid": "5eb50eb4230629151d14cf14"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:45:44.304Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:45:44.304Z"
+  },
+  "viewCount": 1
+},{
+  "_id": {
+    "$oid": "5eb5ef993245f32a3d1f0c48"
+  },
+  "productId": {
+    "$oid": "5eb50ade230629151d14cea1"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:47:37.529Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:58:37.091Z"
+  },
+  "viewCount": 3
+},{
+  "_id": {
+    "$oid": "5eb5f02e3245f32a3d1f0c64"
+  },
+  "productId": {
+    "$oid": "5eb50b99230629151d14ceb9"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T23:50:06.106Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T23:51:57.301Z"
+  },
+  "viewCount": 2
+}]

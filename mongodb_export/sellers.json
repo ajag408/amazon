@@ -1,0 +1,295 @@
+[{
+  "_id": {
+    "$oid": "5ea337f842834e5c142f02d9"
+  },
+  "user": {
+    "$oid": "5ea337be42834e5c142f02d8"
+  },
+  "name": "ptest",
+  "createdAt": {
+    "$date": "2020-04-24T19:03:20.594Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-24T19:08:12.384Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea38cdfa873f95cca34c2b8"
+  },
+  "name": "Sell1",
+  "user": {
+    "$oid": "5ea38cdfa873f95cca34c2b7"
+  },
+  "createdAt": {
+    "$date": "2020-04-25T01:05:35.625Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T01:05:35.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea5418afe56da5e7cf33a5c"
+  },
+  "name": "seller1234",
+  "user": {
+    "$oid": "5ea54189fe56da5e7cf33a5b"
+  },
+  "createdAt": {
+    "$date": "2020-04-26T08:08:42.369Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-26T08:08:42.369Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea696efaa59c5b7e9e6dddb"
+  },
+  "name": "Ervin Howell",
+  "user": {
+    "$oid": "5ea696efaa59c5b7e9e6ddda"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:25:19.909Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-06T20:56:37.871Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea696f0aa59c5b7e9e6dddd"
+  },
+  "name": "Clementine Bauch",
+  "user": {
+    "$oid": "5ea696f0aa59c5b7e9e6dddc"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:25:20.352Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:25:20.352Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69744aa59c5b7e9e6dde1"
+  },
+  "name": "Patricia Lebsack",
+  "user": {
+    "$oid": "5ea69744aa59c5b7e9e6dde0"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:44.231Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:44.231Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69744aa59c5b7e9e6dde3"
+  },
+  "name": "Chelsey Dietrich",
+  "user": {
+    "$oid": "5ea69744aa59c5b7e9e6dde2"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:44.710Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:44.710Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69745aa59c5b7e9e6dde5"
+  },
+  "name": "Mrs. Dennis Schulist",
+  "user": {
+    "$oid": "5ea69744aa59c5b7e9e6dde4"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.130Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.130Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69745aa59c5b7e9e6dde7"
+  },
+  "name": "Kurtis Weissnat",
+  "user": {
+    "$oid": "5ea69745aa59c5b7e9e6dde6"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.516Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.516Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69745aa59c5b7e9e6dde9"
+  },
+  "name": "Nicholas Runolfsdottir V",
+  "user": {
+    "$oid": "5ea69745aa59c5b7e9e6dde8"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:45.912Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:45.912Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69746aa59c5b7e9e6ddeb"
+  },
+  "name": "Glenna Reichert",
+  "user": {
+    "$oid": "5ea69746aa59c5b7e9e6ddea"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:46.273Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:46.273Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69746aa59c5b7e9e6dded"
+  },
+  "name": "Clementina DuBuque",
+  "user": {
+    "$oid": "5ea69746aa59c5b7e9e6ddec"
+  },
+  "createdAt": {
+    "$date": "2020-04-27T08:26:46.634Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:26:46.634Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea7a9d952ac051816e52d4e"
+  },
+  "name": "Apna Bazar1",
+  "user": {
+    "$oid": "5ea7a9d952ac051816e52d4d"
+  },
+  "createdAt": {
+    "$date": "2020-04-28T03:58:17.334Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-30T01:37:36.951Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eaa8e1ee5272e569c49724d"
+  },
+  "name": "Seller p1",
+  "user": {
+    "$oid": "5eaa8e1ee5272e569c49724c"
+  },
+  "createdAt": {
+    "$date": "2020-04-30T08:36:46.995Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-30T08:36:46.995Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eac980537006701e4b2e903"
+  },
+  "name": "Aditi",
+  "user": {
+    "$oid": "5eac980537006701e4b2e902"
+  },
+  "createdAt": {
+    "$date": "2020-05-01T21:43:33.249Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-01T21:44:18.409Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ead4ac4f6d4177e2139ffe8"
+  },
+  "name": "somseller",
+  "user": {
+    "$oid": "5ead4ac4f6d4177e2139ffe7"
+  },
+  "createdAt": {
+    "$date": "2020-05-02T10:26:12.668Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-02T10:26:12.668Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eafa92779f602644a68f953"
+  },
+  "name": "selltest",
+  "user": {
+    "$oid": "5eafa92779f602644a68f952"
+  },
+  "createdAt": {
+    "$date": "2020-05-04T05:33:27.889Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-04T05:33:27.889Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb354eab2a9df3e4cfecb14"
+  },
+  "name": "Hseller",
+  "user": {
+    "$oid": "5eb354e9b2a9df3e4cfecb13"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T00:23:06.304Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T00:23:06.304Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb3b4541094cf832eded69b"
+  },
+  "name": "SellerDemo",
+  "user": {
+    "$oid": "5eb3b4541094cf832eded69a"
+  },
+  "createdAt": {
+    "$date": "2020-05-07T07:10:12.837Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T20:50:17.198Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb50827230629151d14ce91"
+  },
+  "name": "Thor Odison",
+  "user": {
+    "$oid": "5eb50827230629151d14ce90"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:20:07.946Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:23:31.006Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb50841230629151d14ce93"
+  },
+  "name": "Steve Rogers",
+  "user": {
+    "$oid": "5eb50841230629151d14ce92"
+  },
+  "createdAt": {
+    "$date": "2020-05-08T07:20:33.584Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:25:06.246Z"
+  }
+}]

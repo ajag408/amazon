@@ -1,0 +1,100 @@
+[{
+  "_id": {
+    "$oid": "5ea3c20831e08c30d9712c5f"
+  },
+  "name": "clothes",
+  "createdAt": {
+    "$date": "2020-04-25T04:52:24.125Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T04:52:24.125Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea3c29531e08c30d9712c60"
+  },
+  "name": "kids clothes ",
+  "createdAt": {
+    "$date": "2020-04-25T04:54:45.263Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T04:54:45.263Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea3e42a65e37833c8ad9d08"
+  },
+  "name": "appliances",
+  "createdAt": {
+    "$date": "2020-04-25T07:18:02.763Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-25T07:18:02.763Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea6291e084bce197404a880"
+  },
+  "name": "shoes",
+  "createdAt": {
+    "$date": "2020-04-27T00:36:46.535Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T00:36:46.535Z"
+  }
+},{
+  "_id": {
+    "$oid": "5ea69baf17e2464309d27acf"
+  },
+  "name": "electronics",
+  "createdAt": {
+    "$date": "2020-04-27T08:45:35.172Z"
+  },
+  "updatedAt": {
+    "$date": "2020-04-27T08:45:35.172Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb3b5ab1094cf832eded69d"
+  },
+  "name": "demo",
+  "createdAt": {
+    "$date": "2020-05-07T07:15:55.101Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-07T07:15:55.101Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb509a1230629151d14ce9b"
+  },
+  "name": "Books",
+  "createdAt": {
+    "$date": "2020-05-08T07:26:25.931Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:26:25.931Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb509aa230629151d14ce9c"
+  },
+  "name": "Mobiles",
+  "createdAt": {
+    "$date": "2020-05-08T07:26:34.210Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:26:34.210Z"
+  }
+},{
+  "_id": {
+    "$oid": "5eb509b0230629151d14ce9d"
+  },
+  "name": "Laptops",
+  "createdAt": {
+    "$date": "2020-05-08T07:26:40.876Z"
+  },
+  "updatedAt": {
+    "$date": "2020-05-08T07:26:40.876Z"
+  }
+}]
